@@ -6,7 +6,6 @@ from flask import Flask
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 import config
-from flask_session import Session
 from sqlalchemy import MetaData
 import requests
 # url = "https://kauth.kakao.com/oauth/token"
@@ -78,9 +77,6 @@ def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = "dev"
     app.config.from_object(config)
-    app.config['SESSION_TYPE'] = 'filesystem'
-    Session(app)
-
 
     # ORM
     db.init_app(app)
