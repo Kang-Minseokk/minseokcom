@@ -49,7 +49,6 @@ def index():
                 visit_list=f"[{g.user.id}]",
                 count=1
             )
-            db.session.add(today_visit)
             db.session.commit()
 
 
@@ -73,7 +72,17 @@ def index():
     # 일별 방문자 리스트
     daily_visit_list = []
     for i in range(8):
-        num = DailyVisit.query.filter_by(date=today_date).first().id - 7 + i
+        if DailyVisit.query.filter_by(date=today_date).first():
+            num = DailyVisit.query.filter_by(date=today_date).first().id - 7 + i
+        else:
+            today_visit = DailyVisit(
+                date=today_date,
+                visit_list="[]",
+                count=0
+            )
+            db.session.add(today_visit)
+            db.session.commit()
+            num = DailyVisit.query.filter_by(date=today_date).first().id - 7 + i
         daily_visit_count = DailyVisit.query.filter_by(id=num).first().count
         daily_visit_list.append(daily_visit_count)
     daily_visit_list = str(daily_visit_list)

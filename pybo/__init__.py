@@ -8,6 +8,8 @@ from flask_sqlalchemy import SQLAlchemy
 import config
 from sqlalchemy import MetaData
 import requests
+
+
 # url = "https://kauth.kakao.com/oauth/token"
 # data = {
 #     "grant_type": "authorization_code",
