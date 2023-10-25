@@ -112,3 +112,4 @@
 11:19, 17.8, 68, scattered clouds
 11:25, 17.8, 68, scattered clouds
 11:55, 18.1, 68, scattered clouds
+15:56, 21.0, 60, scattered clouds

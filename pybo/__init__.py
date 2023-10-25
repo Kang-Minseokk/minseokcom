@@ -5,7 +5,6 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-from flaskext.markdown import Markdown
 import config
 from flask_session import Session
 from sqlalchemy import MetaData
@@ -22,44 +21,44 @@ import requests
 # print(tokens)
 
 
-url = "https://kauth.kakao.com/oauth/token"
-data = {
-    "grant_type": "refresh_token",
-    "client_id": "ee7210a3098c1e359ac46aedab6b495b",
-    "refresh_token": "wKPCgJHfYQoOo3Syv1flwhzgQAvhVNNBHxwKPXVaAAABi2CqGI_o6jj-qNQmaA"
-}
-response = requests.post(url, data=data)
-tokens = response.json()
-# kakao_code.json 파일 저장
-with open("kakao_code.json", "w") as fp:
-    json.dump(tokens, fp)
-
-with open("kakao_code.json", "r") as fp:
-    tokens = json.load(fp)
-
-
-url = "https://kapi.kakao.com/v1/api/talk/friends" #친구 목록 가져오기
-header = {"Authorization": 'Bearer ' + tokens["access_token"]}
-result = json.loads(requests.get(url, headers=header).text)
-friends_list = result.get("elements")
-print(friends_list)
-uuid_value = friends_list[0]['uuid']
-
-# 카카오톡 메시지
-url= "https://kapi.kakao.com/v1/api/talk/friends/message/default/send"
-header = {"Authorization": 'Bearer ' + tokens["access_token"]}
-data={
-    'receiver_uuids': '["{}"]'.format(uuid_value),
-    "template_object": json.dumps({
-        "object_type":"text",
-        "text":"새로운 소식",
-        "link":{
-            "web_url" : "http://127.0.0.1:5000",
-            "mobile_web_url" : "http://127.0.0.1:5000"
-        },
-        "button_title": "글 보러 가기"
-    })
-}
+# url = "https://kauth.kakao.com/oauth/token"
+# data = {
+#     "grant_type": "refresh_token",
+#     "client_id": "ee7210a3098c1e359ac46aedab6b495b",
+#     "refresh_token": "wKPCgJHfYQoOo3Syv1flwhzgQAvhVNNBHxwKPXVaAAABi2CqGI_o6jj-qNQmaA"
+# }
+# response = requests.post(url, data=data)
+# tokens = response.json()
+# # kakao_code.json 파일 저장
+# with open("kakao_code.json", "w") as fp:
+#     json.dump(tokens, fp)
+#
+# with open("kakao_code.json", "r") as fp:
+#     tokens = json.load(fp)
+#
+#
+# url = "https://kapi.kakao.com/v1/api/talk/friends" #친구 목록 가져오기
+# header = {"Authorization": 'Bearer ' + tokens["access_token"]}
+# result = json.loads(requests.get(url, headers=header).text)
+# friends_list = result.get("elements")
+# print(friends_list)
+# uuid_value = friends_list[0]['uuid']
+#
+# # 카카오톡 메시지
+# url= "https://kapi.kakao.com/v1/api/talk/friends/message/default/send"
+# header = {"Authorization": 'Bearer ' + tokens["access_token"]}
+# data={
+#     'receiver_uuids': '["{}"]'.format(uuid_value),
+#     "template_object": json.dumps({
+#         "object_type":"text",
+#         "text":"새로운 소식",
+#         "link":{
+#             "web_url" : "http://127.0.0.1:5000",
+#             "mobile_web_url" : "http://127.0.0.1:5000"
+#         },
+#         "button_title": "글 보러 가기"
+#     })
+# }
 # response = requests.post(url, headers=header, data=data)
 # print(response.status_code)
 
@@ -81,7 +80,7 @@ def create_app():
     app.config.from_object(config)
     app.config['SESSION_TYPE'] = 'filesystem'
     Session(app)
-    Markdown(app, extensions=['nl2br', 'fenced_code'])
+
 
     # ORM
     db.init_app(app)
