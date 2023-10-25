@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<head>
+    <style>
+        .page-link[data-page="1"] {
+            color: blue;
+            font-weight: bold;
+        }
+        .current_page {
+            font-size: 20px;
+            color: white;
+        }
+        .back_button {
+            font-size: 20px;
+        }
+        a.back_button:hover {
+          text-decoration: none;
+          color: red;
+        }
+    </style>
+</head>
+
+<div class="col">
+    <a class="back_button" href="{{ url_for('goal.list') }}">◀</a>
+    {% if num == 1 %}
+    <span class="current_page">Goals for the Month</span>
+    {% endif %}
+    {% if num == 2 %}
+    <span class="current_page">Goals for the Year</span>
+    {% endif %}
+    {% if num == 3 %}
+    <span class="current_page">Books to Read</span>
+    {% endif %}
+    {% if num == 4 %}
+    <span class="current_page">Achieved Goals</span>
+    {% endif %}
+
+    <table class="table" style="background-color: white; margin-top: 20px; border-radius: 10px;">
+        <thead>
+        <tr class="text-center thead-dark">
+            <th style="width: 30%;">목표</th>
+            <th>설명</th>
+        </tr>
+        </thead>
+
+        <tbody style="height: 200px; overflow-y: auto;">
+        {% for goal in goal_list %}
+        <tr>
+            <td><a href="{{ url_for('goal.detail', goal_id=goal.id) }}">{{ goal.title }}</a></td>
+            <td style="white-space: nowrap; max-width: 100px; overflow: hidden; text-overflow: ellipsis;">{{ goal.content }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a class="btn btn-light" href="{{ url_for('goal.create') }}">✏ 목표 생성하기</a>
+
+    <ul class="pagination justify-content-center">
+
+        {% if goal_list.has_prev %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ goal_list.prev_num }}">이전</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">이전</a>
+            </li>
+        {% endif %}
+
+        {% for page_num in goal_list.iter_pages() %}
+            {% if page_num %}
+                {% if page_num != goal_list.page %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_num }}" data-page="{{ page_num }}">{{ page_num }}</a>
+                </li>
+                {% else %}
+                <li class="page-item active" aria-current="page">
+                    <a class="page-link" href="#" aria-current="true" >{{ page_num }}</a>
+                </li>
+                {% endif %}
+            {% else %}
+                <li class="disabled">
+                    <a class="page-link" href="#">...</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+
+        {% if goal_list.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ goal_list.next_num }}">다음</a>
+        </li>
+        {% else %}
+        <li class="page-item disable">
+            <a class="page-link" href="#" aria-disabled="true">다음</a>
+        </li>
+        {% endif %}
+    </ul>
+
+</div>
+
+{% endblock %}

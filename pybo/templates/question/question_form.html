@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% block content %}
+<head>
+    <style>
+        .checkbox {
+            margin: 10px;
+        }
+    </style>
+</head>
+<div class="col-md-10" id="full-content">
+    <div class="table-container m-5">
+        <h5 class="my-3 border-bottom pb-2">질문등록</h5>
+        <form method="post" class="post-form my-3">
+            {{ form.csrf_token }}
+            <!-- 오류표시 start -->
+            {% include "form_errors.html" %}
+            <!-- 오류표시 End -->
+            <div class="form-group">
+                <label for="subject">제목</label>
+                <input type="text" class="form-control" name="subject" id="subject" value="{{ form.subject.data or '' }}">
+            </div>
+            <div class="form-group">
+                <label for="category">카테고리</label>
+                <select class="form-control" name="category" id="category">
+                    <option value="">Select a category</option>
+                    <option value="Data Science">Data Science</option>
+                    <option value="Development">Development</option>
+                    <option value="Computer Science">Computer Science</option>
+                    <option value="Artificial Intelligence">Artificial Intelligence</option>
+                    <option value="Relaxation">Relaxation</option>
+                    <option value="Communication">Communication</option>
+                    <option value="Statistic">Statistic</option>
+                    # 드롭다운 메뉴에 새로운 카테고리 추가하기
+                    {% for category in category_list %}
+                        <option value="{{ category }}">{{ category }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>태그</label>
+                <select class="form-control" name="tag" id="tag">
+                    <option value="">Select a Tag</option>
+                    {% for tag in tag_list %}
+                    <option value="{{ tag }}">{{ tag }}</option>
+                    {% endfor %}
+                </select>
+                <input type="text" placeholder="Create a Tag" id="newTagInput">
+                <button type="button" id="addTagButton">Create</button>
+            </div>
+            <div class="form-group">
+                <label for="content">내용</label>
+                <textarea class="form-control" name="content" id="content" rows="15">{{ form.content.data or '' }}</textarea>
+            </div>
+            <a href="#" class="btn btn-secondary">코드 입력</a>
+            <button type="submit" class="btn btn-primary">저장하기</button>
+        </form>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var tagSelect = document.getElementById('tag');
+        var newTagInput = document.getElementById('newTagInput');
+        var addTagButton = document.getElementById('addTagButton');
+
+        addTagButton.addEventListener("click", function() {
+            var newTagValue = newTagInput.value.trim();
+            if (newTagValue !== "") {
+                // 중복 체크
+                var isDuplicate = Array.from(tagSelect.options).some(function(option) {
+                    return option.value.toLowerCase() === newTagValue.toLowerCase();
+                });
+                if (!isDuplicate) {
+                    var newOption = document.createElement("option");
+                    newOption.value = newTagValue;
+                    newOption.textContent = newTagValue;
+                    tagSelect.appendChild(newOption);
+                    newTagInput.value = "";
+                } else {
+                    alert("중복된 태그입니다.");
+                }
+            }
+        });
+    });
+</script>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

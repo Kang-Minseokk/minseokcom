@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<head>
+    <style>
+        .content_row {
+            padding: 10px;
+            margin: 10px;
+            border: 1px solid #fff;
+        }
+        .profile-image {
+            max-width: 100px;
+            max-height: 200px;
+            border-radius: 60%;
+            overflow: hidden;
+            padding: 5px;
+        }
+        .subscribe-btn {
+            margin-left: 10px;
+            display: inline;
+        }
+    </style>
+</head>
+
+<div class="col-md-10" id="full-content">
+    <div class="content_row">
+        <img class="profile-image" src="{{ url_for('static', filename='image/'+ profile_img_path) }}">
+        <form class="subscribe-btn" method="post" action="{{ url_for('auth.subscribe', from_user_id=g.user.id,
+        to_user_id=to_user_id) }}">
+            <button type="submit" class="btn" style="background-color: #ed9542; color: white;">Subscribe</button>
+        </form>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class="flashes">
+            {% for message in messages %}
+            <li style="color: white; font-family: monospace;">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        <div class="col-md-4" style="font-family: monospace; width: 30%; opacity: 0.9;">
+            <h6>Username: {{ user_name }}</h6>
+            <h6>Posts: {{ user_question_num }}</h6>
+            <h6>Followers: {{ user_subscribe_num }}</h6>
+            <h6>Recommended: {{ user_total_recommend }}</h6>
+        </div>
+        <div class="col-md-3">
+
+        </div>
+    </div>
+
+    <div class="content_row">
+        <h2 style="color: white;">{{ user_name }}의 활동</h2>
+        <table class="table">
+            <thead>
+            <tr class="thead thead-dark">
+                <th>순번</th>
+                <th>추천</th>
+                <th style="width:40%;">제목</th>
+                <th>글쓴이</th>
+                <th>작성일시</th>
+                <th>조회수</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if user_question_list %}
+                {% for question in user_question_list %}
+                    <tr class="text-center">
+                        <td>{{ user_question_list.total - ((user_question_list.page-1) * user_question_list.per_page) - loop.index0 }}</td>
+                        <td>
+                            {% if question.voter|length > 0 %}
+                            <span class="badge badge-warning px-2 py-1">{{ question.voter|length }}</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-left">
+                            <a href="{{ url_for('question.detail', question_id=question.id) }}" style="color: black;">{{ question.subject }}</a>
+                            {% if question.answer_set|length > 0 %}
+                            <span class="text-danger small ml-2">{{ question.answer_set|length }}</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-left"><a href="{{ url_for('auth.user_info', user_id=question.user.id) }}" style="color: black;">{{ question.user.username }}</a></td>
+                        <td class="text-left">{{ question.create_date|datetime }}</td>
+                        <td>{{ question.views }} </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+        <ul class="pagination justify-content-center">
+
+        {% if user_question_list.has_prev %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ user_question_list.prev_num }}" style="color: #ed9542;">이전</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">이전</a>
+            </li>
+        {% endif %}
+
+        {% for page_num in user_question_list.iter_pages() %}
+            {% if page_num %}
+                {% if page_num != user_question_list.page %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_num }}" data-page="{{ page_num }}" style="color: black;">{{ page_num }}</a>
+                </li>
+                {% else %}
+                <li class="page-item active" aria-current="page">
+                    <a class="page-link" href="#" aria-current="true" style="background-color: #ed9542; border: 1px solid #ed9542;">{{ page_num }}</a>
+                </li>
+                {% endif %}
+            {% else %}
+                <li class="disabled">
+                    <a class="page-link" href="#" style="color: #ed9542;">...</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+
+        {% if user_question_list.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ user_question_list.next_num }}" style="color: #ed9542;">다음</a>
+        </li>
+        {% else %}
+        <li class="page-item disable">
+            <a class="page-link" href="#" aria-disabled="true">다음</a>
+        </li>
+        {% endif %}
+    </ul>
+    </div>
+</div>
+
+{% endblock %}
+
+

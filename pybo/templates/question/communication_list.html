@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<head>
+    <style>
+        .col-md-3:hover {
+            cursor: pointer;
+            border: 3px solid #000;
+        }
+        .col-md-6:hover {
+            cursor: pointer;
+            border: 2px solid #000;
+        }
+        .col-md-3 {
+            height: 280px;
+            margin-right: 30px;
+            margin-bottom: 20px;
+            margin-left: 100px;
+            margin-top: 20px;
+            background-color: white;
+            border-radius: 10px;
+        }
+        .col-md-6 {
+            height: 280px;
+            margin-right: 30px;
+            margin-bottom: 20px;
+            margin-top: 20px;
+            background-color: white;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<div class="col-md-10" id="full-content">
+    <div class="row" style="height: 70px;">
+        <div class="col-md-4" style="margin: 10px;">
+            <span style="font-size: 30px; color: white;">Communication</span>
+        </div>
+        <div class="col-md-4 input-group" style="padding: 10px; margin-top: 10px;">
+            <input type="text" class="form-control kw" value="{{ kw or '' }}">
+            <div class="input-group-append">
+                <button class="btn btn-outline-light" type="button" id="btn_search" style="background-color: #8a8988;">찾기</button>
+            </div>
+        </div>
+        <div class="col-md-2" style="margin-top:20px;">
+            <a href="{{ url_for('question.create') }}" class="btn btn-light">✏️ 질문 등록하기</a>
+        </div>
+    </div>
+    {% for tag in tag_list %}
+    <a class="btn" href="{{ url_for('question.tagged_list', tag=tag if tag else 'etc',
+    category=category if category else 'default_category') }}" style="margin: 5px; background-color: #ed9542; color: white; font-family: monospace;">{{ tag or 'etc' }}</a>
+    {% endfor %}
+    <div class="row" style="border-top: 1px solid #fff; margin: 10px;">
+        {% for question in question_list %}
+            <div class="col-md-3 question-detail" data-uri="http://127.0.0.1:5000/question/detail/{{ question.id }}/">
+                <h4 style="height: 30px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{ question.subject }}</h4>
+                <h5 style="text-align: right; border-bottom: 1px solid #000;"><a href="{{ url_for('auth.user_info',
+                user_id=question.user.id) }}" style="color: black;">✎{{ question.user.username }}</a></h5>
+                <h6 style="height: 150px; overflow: hidden;">{{ question.content }}</h6>
+                <a href="#" class="recommend btn btn-secondary"
+                   data-uri="{{ url_for('vote.question', question_id=question.id) }}">👍 {{ question.voter|length }}</a>
+                <a href="{{ url_for('question.detail', question_id=question.id) }}" class="btn btn-secondary">💬 {{ question.answer_set|length }}</a>
+                <a href="#" class="btn btn-secondary">👀 {{ question.views }}</a>
+            </div>
+            <div class="col-md-6 answer-detail" data-uri="http://127.0.0.1:5000/question/detail/{{ question.id }}/#myAnchor"
+                 style="overflow: auto;">
+                <h4 style="border-bottom: 1px solid #000;">💬 Comments</h4>
+                {% if question.answer_set %}
+                {% for answer in question.answer_set %}
+                    <div class="row answer-detail" style="margin: 5px; margin-bottom: 10px;">
+                        <h6 style="margin-right: 5px; max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ answer.content }}</h6>
+                        <h6> | {{ answer.user.username }} </h6>
+                        <h6> | {{ answer.create_date|datetime }}</h6>
+                    </div>
+                {% endfor %}
+                {% else %}
+                    <h6 style="color: grey;">답변이 없습니다.</h6>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<form id="searchForm" method="get" action="{{ url_for(view_name) }}">
+    <input type="hidden" id="kw" name="kw" value="{{ kw or '' }}">
+</form>
+{% endblock %}
+
+{% block script %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var questionDetails = document.querySelectorAll('.question-detail');
+
+        questionDetails.forEach(function(question) {
+            question.addEventListener("click", function() {
+                var uri = question.getAttribute('data-uri');
+                if (uri) {
+                    window.location.href = uri;
+                }
+            });
+        });
+        var answerDetails = document.querySelectorAll('.answer-detail');
+        answerDetails.forEach(function(answer) {
+            answer.addEventListener("click", function() {
+                var uri = answer.getAttribute('data-uri');
+                if (uri) {
+                    window.location.href = uri;
+                };
+            });
+        });
+    });
+</script>
+
+
+<script type='text/javascript'>
+$(document).ready(function(){
+    $("#btn_search").on('click', function() {
+        $("#kw").val($(".kw").val());
+        $("#searchForm").submit();
+    });
+});
+</script>
+{% endblock %}

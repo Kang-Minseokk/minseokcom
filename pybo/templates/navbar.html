@@ -1,0 +1,38 @@
+<style>
+  #category-menu:hover {
+    text-decoration: none;
+  }
+  #big-category-menu:hover {
+    text-decoration: none;
+  }
+</style>
+<nav class="navbar navbar-expand-lg navbar-light" style="margin-top: 10px; background-color: #242424;">
+  <a href="#" id="category-menu" style="font-size: 30px; color: white; margin-right: 20px; ">☰</a>
+  <a href="#" id="big-category-menu" onclick="showContent()" style="font-size: 30px; color: #ed9542; margin-right: 20px; ">☰</a>
+  <a class="navbar-brand" href="{{ url_for('main.index') }}" style="color: white; margin-top: 5px;">Min</a>
+  <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse flex-grow-0" id="navbarNav" style="margin-left: 900px; overflow: auto; white-space: nowrap;">
+    {% if g.user %}
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('auth.logout') }}" style="color: #dbdbd9; font-size: 18px;">Logout</a>
+      </li>
+    </ul>
+    <a href="{{ url_for('main.index') }}" style="color: #dbdbd9; font-size: 18px; margin-left: 10px;">Home</a>
+    <img class="profile-image" src="{{ url_for('static', filename='image/' + g.user.profile_img) }}" style="margin-left: 30px; height: 20px; width: 20px; border-radius: 50%;">
+    <a href="{{ url_for('auth.user_info', user_id=g.user.id) }}" style="color: #dbdbd9; font-size: 18px; margin-left: 10px;">{{ g.user.username }}</a>
+    <a href="#" style="color: #dbdbd9; font-size: 18px; margin-left: 10px;"></a>
+    {% else %}
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('auth.signup') }}" style="color: #dbdbd9; font-size: 18px; margin-left: 10px;">계정생성</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('auth.login') }}" style="color: #dbdbd9; font-size: 18px; margin-left: 10px;">로그인</a>
+      </li>
+    </ul>
+    {% endif %}
+  </div>
+</nav>

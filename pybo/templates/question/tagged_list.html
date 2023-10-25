@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% block content %}
+<head>
+    <style>
+        .back-button {
+            font-size: 20px;
+            color: white;
+        }
+
+        a.back-button:hover {
+            color: orange;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<div class="col-md-10" id="full-content">
+    <!-- 질문 목록 컨테이너 -->
+    <div class="container-fluid">
+        <div class="table-container m-3">
+            <div class="row justify-content-between my-2">
+                <a class="back-button" id="back-button" href="#">◀Current Tag: {{ tag }}</a>
+                <div class="container-fluid tag_menu py-2">
+                    {% for tag in tag_list %}
+                    <a class="btn btn-primary" href="{{ url_for('question.tagged_list', tag=tag if tag else 'etc',
+                    category=category if category else 'default_category') }}">{{ tag or 'etc' }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            <table class="table" style="font-family: monospace;">
+                <thead>
+                <tr class="text-center thead-dark">
+                    <th style="width:10%">번호</th>
+                    <th style="width:10%">추천</th>
+                    <th style="width:30%;">제목</th>
+                    <th style="width:10%">글쓴이</th>
+                    <th style="width:20%">작성일시</th>
+                    <th style="width:10%">조회수</th>
+                    <th style="width:10%">카테고리</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if question_list %}
+                    {% for question in question_list.items %}
+                        <tr class="text-center">
+                            <td >{{ question_list.total - ((question_list.page-1) * question_list.per_page) - loop.index0 }}</td>
+                            <td>
+                                {% if question.voter|length > 0 %}
+                                <span class="badge badge-warning px-2 py-1">{{ question.voter|length }}</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-left">
+                                <a href="{{ url_for('question.detail', question_id=question.id) }}" style="color: black;">{{ question.subject }}</a>
+                                {% if question.answer_set|length > 0 %}
+                                <span class="text-danger small ml-2">{{ question.answer_set|length }}</span>
+                                {% endif %}
+                            </td>
+                            <td><a href="{{ url_for('auth.user_info', user_id=question.user.id) }}" style="color: black;">{{ question.user.username }}</a></td>
+                            <td style="width: 20%;">{{ question.create_date|datetime }}</td>
+                            <td>{{ question.views }}</td>
+                            <td>{{ question.category }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="3">질문이 없습니다.</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+
+            <!-- 페이징처리 시작 -->
+            <ul class="pagination justify-content-center">
+                <!-- 이전페이지 -->
+                {% if question_list.has_prev %}
+                <li class="page-item">
+                    <a class="page-link" data-page="{{ question_list.prev_num }}" href="#" style="color: #ed9542;">이전</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+                </li>
+                {% endif %}
+
+                {% for page_num in question_list.iter_pages() %}
+                    {% if page_num %}
+                        {% if page_num != question_list.page %}
+                        <li class="page-item">
+                            <a class="page-link" data-page="{{ page_num }}" href="#" style="color: black;">{{ page_num }}</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item active" aria-current="page">
+                            <a class="page-link" href="#" style="background-color: #ed9542; border:1px solid #ed9542;">{{ page_num }}</a>
+                        </li>
+                        {% endif %}
+                   {% else %}
+                        <li class="disabled">
+                            <a class="page-link" href="#">...</a>
+                        </li>
+                   {% endif %}
+                {% endfor %}
+
+                <!-- 다음페이지 -->
+                {% if question_list.has_next %}
+                <li class="page-item">
+                    <a class="page-link" data-page="{{ question_list.next_num }}" href="#" style="color: #ed9542;">다음</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+                </li>
+                {% endif %}
+            </ul>
+            <!-- 페이징처리 끝 -->
+            <a href="{{ url_for('question.create') }}" class="btn btn-light">✏️ 질문 등록하기</a>
+        </div>
+    </div>
+</div>
+
+<form id="searchForm" method="get" action="{{ url_for(view_name, tag=tag, category=category) }}">
+    <input type="hidden" id="page" name="page" value="{{ page }}">
+</form>
+
+
+{% endblock %}
+{% block script %}
+<script>
+    $(document).ready(function() {
+        $("#back-button").click(function () {
+            window.history.back();
+        });
+        $(".page-link").on('click', function() {
+            $("#page").val($(this).data("page"));
+            $("#searchForm").submit();
+        });
+    });
+</script>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    .sidebar {
+        width: 200px;
+        height: 400px;
+        background-color: #f0f0f0;
+        overflow: auto;
+    }
+
+    .category ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .category li {
+        margin-bottom: 10px;
+    }
+
+</style>
+{% endblock %}

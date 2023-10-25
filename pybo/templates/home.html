@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<head>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            position: relative;
+        }
+
+        .card {
+            opacity: 0.8;
+        }
+
+        .card:hover {
+            opacity: 1;
+            cursor: pointer;
+        }
+
+        .sidebar {
+            width: 200px;
+            height: 400px;
+            background-color: #f0f0f0;
+            overflow: auto;
+        }
+
+        .category {
+            position: relative;
+            transition: left 0.3s ease-in-out;
+        }
+
+        .category ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .category li {
+            margin-bottom: 10px;
+        }
+
+        /* 추가한 스타일 */
+        .category-details {
+            display: none;
+            padding-left: 15px;
+        }
+
+        .category.active .category-details {
+            display: block;
+
+        .content-container {
+            display: flex;
+        }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+</head>
+
+<body>
+    <div class="row col-md-10" id="full-content">
+        <div class="container-fluid" style="border-bottom: 1px solid #fff;">
+            <div class="card-deck">
+                {% for question in question_list %}
+                    <div class="card" style="height: 300px; margin: 15px;">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{{ url_for('question.detail', question_id=question.id) }}" style="color:black; font-size: 20px;">{{ question.subject }}</a>
+                            </h5>
+                            <p class="card-text">{{ question.user.username }}</p>
+                            <p class="card-text">{{ question.create_date|datetime }}</p>
+                            <p class="card-text">{{ question.category }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="container" style="display: flex; flex-direction: column; height: 300px;" >
+                <div style="border-radius: 10px; margin-top: 10px; background-color: #4a4a4a; color: #fff; padding: 5px; box-shadow: 0.5px 1px 1px 2px #636363;">
+                    <h5>오늘 방문자</h5>
+                    <h6> {{ today_visit_user_count }} 명</h6>
+                </div>
+                <div style="border-radius: 10px; margin-top: 10px; background-color: #4a4a4a; color: #fff; padding: 5px; box-shadow: 0.5px 1px 1px 2px #636363;">
+                    <h5>총 방문자</h5>
+                    <h6> {{ total_visit_count }} 명</h6>
+                </div>
+                <div style="border-radius: 10px; margin-top: 10px; background-color: #4a4a4a; color: #fff; padding: 5px; box-shadow: 0.5px 1px 1px 2px #636363;">
+                    <h5>전체 포스트</h5>
+                    <h6> {{ total_posts_count }} 개</h6>
+                </div>
+                <div style="border-radius: 10px; margin-top: 10px; background-color: #4a4a4a; color: #fff; padding: 5px; box-shadow: 0.5px 1px 1px 2px #636363;">
+                    <h5>활동 순위</h5>
+                    <h6>🥇{{ first_user }} (🪙 {{ first_score }})🥈{{ second_user }} (🪙 {{ second_score }})🥉{{ third_user }} (🪙 {{ third_score }})</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="container" style="display: flex; flex-direction: column; height: 300px;" >
+                <canvas id="line-chart" width="300" height="250"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div id="data" style="display: none;">{{ daily_visit_list }}</div>
+    <div id="post_list" style="display: none;">{{ post_list }}</div>
+
+
+    <script>
+        var dateList = [];
+        var today = new Date();
+        var visitCountList = document.getElementById('data').textContent.split(',').map(Number);
+        var postList = document.getElementById('post_list').textContent.split(',').map(Number);
+        console.log(visitCountList)
+
+        for (var i = 7; i > -1; i--) {
+            var date = new Date(today);
+            date.setDate(today.getDate() - i);
+            var month = date.getMonth() + 1;
+            var day = date.getDate();
+            var formattedDate = month + '/' + day;
+            dateList.push(formattedDate);
+        }
+
+        new Chart(document.getElementById("line-chart"), {
+            type: 'line',
+            data: {
+                labels: dateList,
+                datasets: [{
+                    data: visitCountList,
+                    label: "방문자",
+                    borderColor: "#ed9542",
+                    fill: false
+                },
+                {
+                    data: postList,
+                    label: "게시물 작성 수",
+                    borderColor: "#500aa6",
+                    fill: false
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: '방문 그래프'
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            stepSize: 10
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+</body>
+{% endblock %}

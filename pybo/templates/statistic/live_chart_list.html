@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block content %}
+<head>
+    <style>
+        .search_section {
+            margin-left: 20px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #fff;
+            height: 500px;
+        }
+
+        .chart_section {
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #fff;
+            height: 600px;
+            overflow: auto;
+        }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+</head>
+
+<body>
+
+    <div class="col-md-3 search_section input-group">
+        <input type="text" class="form-control kw" value="{{ kw or '' }}" style="margin-top: 10px;">
+        <div class="input-group-append" style="margin-top: 10px;">
+            <button class="btn btn-outline-light" type="button" id="btn_search" style="background-color: #8a8988; height: 38px;">찾기</button>
+        </div>
+    </div>
+
+    <div class="col-md-6 chart_section">
+        <canvas id="weather-chart" width="300" height="250"></canvas>
+        <canvas id="hot-topic" width="300" height="250"></canvas>
+    </div>
+
+
+    <div class="chart_data">
+        <h4 id="timeList" style="display: none">{{ time_list.replace("'",'') }}</h4>
+        <h4 id="temperatureList" style="display: none">{{ temperature_list.replace("'",'') }}</h4>
+        <h4 id="humidityList" style="display: none">{{ humidity_list.replace("'",'') }}</h4>
+        <h4 id="descriptionList" style="display: none">{{ description_list }}</h4>
+    </div>
+
+
+<script>
+    var timeList = document.getElementById('timeList').textContent.split(',')
+    var temperatureList = document.getElementById('temperatureList').textContent.split(',').map(Number)
+    var humidityList = document.getElementById('humidityList').textContent.split(',').map(Number)
+    new Chart(document.getElementById("weather-chart"), {
+        type: "line",
+        data: {
+            labels: timeList,
+            datasets: [{
+                data: temperatureList,
+                label: "Temperature",
+                borderColor: "#e07169",
+                fill: false,
+                backgroundColor: "#e8d9d5",
+                borderWidth: 1,
+            },
+            {
+                data: humidityList,
+                label: "Humidity",
+                borderColor: "#7eb8de",
+                fill: false,
+                backgroundColor: "#d5e1e8",
+                borderWidth: 1,
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: "Weather Information"
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        stepSize: 10
+                    }
+                }]
+            }
+        }
+    });
+
+
+</script>
+</body>
+{% endblock %}

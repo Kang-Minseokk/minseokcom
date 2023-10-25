@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+
+</style>
+
+<div class="col-md-10" id="full-content">
+  <div class="row">
+    <span style="font-size: 30px; margin-left: 20px; color: white; margin-bottom: 10px;">Relaxation</span>
+  </div>
+  {% for tag in tag_list %}
+  <a class="btn" href="{{ url_for('question.tagged_list', tag=tag if tag else 'etc',
+  category=category if category else 'default_category') }}" style="margin: 5px; background-color: #ed9542; color: white; font-family: monospace;">{{ tag or 'etc' }}</a>
+  {% endfor %}
+  <div class="row" style="margin: 50px;">
+    <div class="container" style="height: 400px; border: 1px solid #000; margin: 10px; border-radius: 10px; background-color: white;">
+      <div class="col-md-12">
+        <div class="row" style="height: 10%; border: 1px solid #000; margin: 10px; background-color: #f0f0f0;">
+          <h4 style="margin: 3px;">{{ question_list[num].subject }}</h4>
+        </div>
+        <div class="row" style="height: 280px; border: 1px solid #000; overflow-y:auto;">
+          <pre style="padding: 5px; white-space: pre-wrap; font-size: 15px;">{{ question_list[num].content }}</pre>
+        </div>
+        <a href="{{ url_for('vote.question', question_id=question_list[num].id) }}" class="recommend btn btn-secondary" data-uri="#">👍 {{ question_list[num].voter|length }}</a>
+        <a href="{{ url_for('question.detail', question_id=question_list[num].id) }}" class="btn btn-secondary" style="margin: 10px;">💬 {{ question_list[num].answer_set|length }}</a>
+        <a href="#" class="btn btn-secondary">👀 {{ question_list[num].views }}</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin: 10px;">
+    <h5 style="color: white; margin-left: 10px; margin-top: 10px;">Recent Posts</h5>
+    <div class="container" style="border: 1px solid #000; height: 200px; border-radius: 10px; margin: 10px; padding: 5px; background-color: white;">
+      <div class="col-md-4" style="border: 1px solid #000; overflow: auto;">
+        <h5 style="border-bottom: 1px solid #000; font-family: Verdana;">{{ question_list[0].subject }}</h5>
+        <h6>{{ question_list[0].content }}</h6>
+      </div>
+      <div class="col-md-4" style="border: 1px solid #000; overflow: auto;">
+        <h5 style="border-bottom: 1px solid #000;">{{ question_list[1].subject }}</h5>
+        <h6>{{ question_list[1].content }}</h6>
+      </div>
+      <div class="col-md-4" style="border: 1px solid #000; overflow: auto;">
+        <h5 style="border-bottom: 1px solid #000;">{{ question_list[2].subject }}</h5>
+        <h6>{{ question_list[2].content }}</h6>
+      </div>
+    </div>
+  </div>
+  <a href="{{ url_for('question.create') }}" class="btn btn-light" style="margin-top: 20px; margin-bottom: 5px; border: 1px solid #000;">✏️ 질문 등록하기</a>
+  <a href="{{ url_for('question.ds_list', category=category) }}" class="btn btn-light" style="margin-top: 20px; border: 1px solid #000; margin-bottom: 5px;">📃 목록 형식으로 보기</a>
+</div>
+{% endblock %}

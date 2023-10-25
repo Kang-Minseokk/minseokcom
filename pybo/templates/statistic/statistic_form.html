@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<head>
+    <style>
+        .full-border {
+            margin: 10px;
+            border: 1px solid white;
+            height: 700px;
+            border-radius: 10px;
+            box-shadow: 0.5px 1px 1px 2px #424242;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .form-area {
+            height: 650px;
+            margin-top: 20px;
+            border-right: 1px solid #b8b8b8;
+            overflow: auto;
+        }
+
+        .chart-area {
+            height: 650px;
+            margin-top: 20px;
+        }
+
+        .form-area-title {
+            margin-left: 15px;
+            color: black;
+            font-family: monospace;
+        }
+
+        .chart-area-title {
+            margin-left: 15px;
+            color: black;
+            font-family: monospace;
+        }
+
+
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+</head>
+<body>
+    <div class="col-md-9 full-border">
+        <div class="col-md-3 form-area">
+            <h5 class="form-area-title">그래프 속성 설정하기</h5>
+            <form method="post" class="post-form">
+                <div class="form-group">
+                    <label for="title">제목</label>
+                    <input type="text" class="form-control" name="title" id="title" value="{{ form.title.data or '' }}">
+                </div>
+                <div class="form-group">
+                    <label for="labels">가로축 인덱스</label>
+                    <input type="text" class="form-control" name="labels" id="labels" value="{{ form.labels.data or '' }}"
+                    placeholder="리스트 형식으로 입력하세요">
+                </div>
+                <div class="form-group">
+                    <label for="data_value">가로축 값</label>
+                    <input type="text" class="form-control" name="data_value" id="data_value" value="{{ form.data_value.data or '' }}"
+                    placeholder="리스트 형식으로 입력하세요">
+                </div>
+                <div class="form-group">
+                    <label for="stepsize">세로 눈금 간격</label>
+                    <input type="text" class="form-control" name="step_size" id="stepsize" value="{{ form.stepsize.data or '' }}"
+                    placeholder="숫자 형식으로 입력하세요">
+                </div>
+                <div class="form-group">
+                    <label for="border_color">그래프의 테두리 색</label>
+                    <input type="text" class="form-control" name="border_color" id="border_color" value="{{ form.border_color.data or '' }}">
+                </div>
+                <div class="form-group">
+                    <label for="type">그래프 형태</label>
+                    <input type="text" class="form-control" name="type" id="type" value="{{ form.type.data or '' }}">
+                </div>
+                <div class="form-group">
+                    <label for="background_color">그래프 채움 색</label>
+                    <input type="text" class="form-control" name="background_color" id="background_color" value="{{ form.background_color.data or '' }}">
+                </div>
+                <div class="form-group">
+                    <label for="border_width">그래프 두께</label>
+                    <input type="text" class="form-control" name="border_width" id="border_width" value="{{ form.title.data or '' }}">
+                </div>
+                <div class="submit-group" style="display: flex; flex-direction: row;">
+                    <button id="preload_btn" class="btn btn-warning" type="button">미리보기</button>
+                    <input class="btn btn-secondary" type="submit" value="그래프 생성하기">
+                </div>
+            </form>
+
+        </div>
+        <div class="col-md-9 chart-area">
+            <h5 class="chart-area-title">그래프 속성 미리보기</h5>
+            <canvas id="chart" width="300" height="250"></canvas>
+        </div>
+    </div>
+
+    <script>
+        var preloadBtn = document.getElementById('preload_btn')
+        preloadBtn.addEventListener('click', function() {
+            var title = document.getElementById('title').value;
+            var labels = document.getElementById('labels').value;
+            var dataValue = document.getElementById('data_value').value;
+            var stepSize = document.getElementById('stepsize').value;
+            var borderColor = document.getElementById('border_color').value;
+            var type = document.getElementById('type').value;
+            var backgroundColor = document.getElementById('background_color').value;
+            var borderWidth = document.getElementById('border_width').value;
+
+            var listed_labels = JSON.parse(labels)
+            var listed_dataValue = JSON.parse(dataValue)
+
+            new Chart(document.getElementById("chart"), {
+                type: type,
+                data: {
+                    labels: listed_labels,
+                    datasets: [{
+                        data: listed_dataValue,
+                        label: title,
+                        borderColor: borderColor,
+                        fill: false,
+                        backgroundColor: backgroundColor,
+                        borderWidth: borderWidth,
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: title
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                stepSize: stepSize
+                            }
+                        }]
+                    }
+                }
+            });
+        });
+
+
+
+
+    </script>
+</body>
+
+
+{% endblock %}

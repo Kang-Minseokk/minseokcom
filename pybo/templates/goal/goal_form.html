@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<head>
+    <style>
+        .container {
+            margin: 10px;
+            padding: 10px;
+        }
+
+        #content {
+            height: 300px;
+            width: 400px;
+            resize: none;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+
+<div class="col-md-9" style="margin: 20px;">
+    <div class="row">
+        <h4 style="color: white;">목표 생성하기</h4>
+    </div>
+
+    <div class="row">
+        <form method="post" class="post-form">
+            {{ form.csrf_token }}
+            <div class="form-group">
+                <label for="title"></label>
+                <input type="text" class="form-control" name="title" id="title" value="{{ form.title.data or '' }}"
+                       placeholder="제목을 입력하세요">
+            </div>
+            <div class="form-group">
+                <label for="content"></label>
+                    <textarea class="form-control" name="content" id="content"
+                              placeholder="목표의 자세한내용을 입력하세요"
+                              style="max-width: 400px; white-space: pre-wrap;">{{ form.content.data or '' }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="period">분류</label>
+                <select id="period" name="period">
+                    <option value="month">month</option>
+                    <option value="year">year</option>
+                    <option value="book">book</option>
+                </select>
+            </div>
+            <input type="submit" value="저장하기">
+        </form>
+    </div>
+
+
+</div>
+
+{% endblock %}

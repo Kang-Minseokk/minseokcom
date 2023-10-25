@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .tag_menu {
+            height: 10%;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+
+        .card {
+            width: 25%;
+            margin: 25px;
+            display: inline-block;
+            height: 200px;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .card:hover {
+            cursor: pointer;
+            border: 5px solid #fcba03;
+        }
+
+        .card:hover .tag-image-content {
+            opacity: 1;
+        }
+
+        .tag-image {
+            text-align: center;
+        }
+
+        .tag-image-content {
+            width: 100%;
+            height: 120px;
+            opacity: 0.5;
+        }
+
+        .add-btn {
+            width: 100px;
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-top: 10px;
+            margin-left: 30px;
+        }
+    </style>
+</head>
+<body>
+<!--for 문을 이용해서 태그에 대한 리스트를 루프돌며 a태그를 생성한다. 그렇게 하기 위해서는 해당 리스트는 view함수에서 인자로 전달해야 한다.-->
+<div class="col-md-10" id="full-content">
+    <div class="row" style="margin-top: 30px;">
+        <span style="font-size: 30px; margin-left: 35px; color: white;">Development</span>
+    </div>
+    <div class="container-fluid tag_menu">
+        {% for tag in tag_list %}
+        <a class="btn" href="{{ url_for('question.tagged_list', tag=tag if tag else 'etc',
+        category=category if category else 'default_category') }}" style="margin: 5px; background-color: #ed9542; color: white; font-family: monospace;">{{ tag or 'etc' }}</a>
+        {% endfor %}
+    </div>
+    <div class="container-fluid">
+<!--        # 나중에는 태그를 내가 원하는 대로 선택해서 6개를 올려놓을 수 있게끔 설정한다. 태그를 사용자가 6개 선택을 하면 그에 해당하는 6개의 태그를-->
+<!--        # 밑에 있는 6개의 카드에 각각 나타내준다.-->
+        <div class="row">
+            <div class="card" onclick="window.location.href = 'http://127.0.0.1:5000/question/tagged_list/python/Development';">
+                <div class="tag-image">
+                    <img class="tag-image-content" src="/static/image/python.png">
+                </div>
+                <div class="tag-title">
+                    <h5>Python</h5>
+                </div>
+                <div class="tag-info" style="margin-top: 25px; padding: 5px; border-top: 1px solid #d0d5db;">
+                    <span>👍 태그 총 좋아요 수  👀 태그 총 조회수</span>
+                </div>
+            </div>
+            <div class="card" onclick="window.location.href = 'http://127.0.0.1:5000/question/tagged_list/ai/Development';">
+                <div class="tag-image">
+                    <img class="tag-image-content" src="/static/image/ai.png">
+                </div>
+                <div class="tag-title">
+                    <h5>AI</h5>
+                </div>
+                <div class="tag-info" style="margin-top: 25px; padding: 5px; border-top: 1px solid #d0d5db;">
+                    <span>👍 태그 총 좋아요 수  👀 태그 총 조회수</span>
+                </div>
+            </div>
+            <div class="card" onclick="window.location.href = 'http://127.0.0.1:5000/question/tagged_list/html/Development';">
+                <div class="tag-image">
+                    <img class="tag-image-content" src="/static/image/html.png">
+                </div>
+                <div class="tag-title">
+                    <h5>HTML</h5>
+                </div>
+                <div class="tag-info" style="margin-top: 25px; padding: 5px; border-top: 1px solid #d0d5db;">
+                    <span>👍 태그 총 좋아요 수  👀 태그 총 조회수</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="card" onclick="window.location.href = 'http://127.0.0.1:5000/question/tagged_list/javascript/Development';">
+                <div class="tag-image">
+                    <img class="tag-image-content" src="/static/image/js.png">
+                </div>
+                <div class="tag-title">
+                    <h5>JavaScript</h5>
+                </div>
+                <div class="tag-info" style="margin-top: 25px; padding: 5px; border-top: 1px solid #d0d5db;">
+                    <span>👍 태그 총 좋아요 수  👀 태그 총 조회수</span>
+                </div>
+            </div>
+            <div class="card" onclick="window.location.href = 'http://127.0.0.1:5000/question/tagged_list/github/Development';">
+                <div class="tag-image">
+                    <img class="tag-image-content" src="/static/image/github.png">
+                </div>
+                <div class="tag-title">
+                    <h5>GitHub</h5>
+                </div>
+                <div class="tag-info" style="margin-top: 25px; padding: 5px; border-top: 1px solid #d0d5db;">
+                    <span>👍 태그 총 좋아요 수  👀 태그 총 조회수</span>
+                </div>
+            </div>
+            <div class="card" onclick="window.location.href = 'http://127.0.0.1:5000/question/tagged_list/java/Development';">
+                <div class="tag-image">
+                    <img class="tag-image-content" src="/static/image/java.png">
+                </div>
+                <div class="tag-title">
+                    <h5>Java</h5>
+                </div>
+                <div class="tag-info" style="margin-top: 25px; padding: 5px; border-top: 1px solid #d0d5db;">
+                    <span>👍 태그 총 좋아요 수  👀 태그 총 조회수</span>
+                </div>
+            </div>
+        </div>
+        <a href="{{ url_for('question.create') }}" class="btn btn-light" style="margin-top: 20px; box-shadow: 0.2px 0.2px 0.2px 1px; #d4d8d9;">✏️ 질문 등록하기</a>
+    </div>
+</div>
+</body>
+{% endblock %}
+
+
+{% block script %}
+<script>
+
+</script>
+{% endblock %}
