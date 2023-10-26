@@ -3,7 +3,7 @@ from datetime import datetime
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-from flask import Blueprint, render_template, request, url_for, g, flash, escape, make_response
+from flask import Blueprint, render_template, request, url_for, g, flash, make_response
 from sqlalchemy import func
 from werkzeug.utils import redirect
 
@@ -278,7 +278,7 @@ def detail(question_id):
     form_for_new_category = CategoryForm()
     question_content = question.content
     response = make_response(render_template('question/question_detail.html', question=question, form=form,
-                                             question_content=escape(question_content), form_for_new_category=form_for_new_category))
+                                             question_content=(question_content), form_for_new_category=form_for_new_category))
 
     cookie_name = str(g.user.id)
     if request.cookies.get(cookie_name) is not None:
@@ -296,7 +296,7 @@ def detail(question_id):
         return response
 
     return render_template('question/question_detail.html', question=question, form=form,
-                           question_content=escape(question_content), form_for_new_category=form_for_new_category)
+                           question_content=(question_content), form_for_new_category=form_for_new_category)
 
 
 @bp.route('/create/', methods=('GET', 'POST'))
@@ -354,7 +354,7 @@ def create():
                 <div class="container" style="max-width: 50%; border: 1px solid #000; padding: 20px; margin: 10px; 
                 background-color: #f5f2eb;">
                     <p>Title: {question.subject}</p>
-                    <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Content: {escape(question.content)}</p>
+                    <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Content: {(question.content)}</p>
                 </div>
                 <a href="http://127.0.0.1:5000/question/detail/{question.id}/" class="link-style">글 읽으러 가기</a>
             </div>
