@@ -1,11 +1,11 @@
 import datetime
 import json
 
-from flask import Blueprint, render_template, g, request, redirect, url_for
+from flask import Blueprint, render_template, g, request, redirect, url_for, jsonify, session
 
-from ..forms import CategoryForm
-from ..models import Question, DailyVisit, Category, question_voter, User, answer_voter, Answer
-from .. import db
+from ..forms import CategoryForm, KakaoForm
+from ..models import Question, DailyVisit, Category, question_voter, User, answer_voter, Answer, Kakao
+from pybo import db
 from collections import Counter
 
 
@@ -17,13 +17,21 @@ def hello_pybo():
     return 'Hello, Pybo!'
 
 
+@bp.before_app_request
+def load_logged_in_user():
+    user_id = session.get('user_id')
+    if user_id is None:
+        g.user = None
+    else:
+        g.user = User.query.get(user_id)
+
+
 @bp.route('/', methods=['POST', 'GET'])
 def index():
     question_list = Question.query.order_by(Question.create_date.desc()).limit(5).all()
     # 오늘 날짜
     today_date = datetime.datetime.now().strftime('%Y-%m-%d')
     today_visit_user = DailyVisit.query.filter_by(date=today_date).first()
-
     form_for_new_category = CategoryForm()
     if request.method == 'POST' and form_for_new_category.validate_on_submit():
         category = Category(
@@ -32,6 +40,7 @@ def index():
         db.session.add(category)
         db.session.commit()
         return redirect(url_for('main.index'))
+
 
     # 테이블에 방문자 추적하기
     if g.user:
@@ -143,10 +152,10 @@ def index():
     third_user = top3_user[2]
     third_score = top3_score[2]
 
-
-
     return render_template('home.html', question_list=question_list, total_posts_count=total_posts_count,
                            today_visit_user_count=today_visit_user_count, total_visit_count=total_visit_count,
                            daily_visit_list=daily_visit_list, category_list=category_list, form_for_new_category=form_for_new_category,
                            post_list=post_list, first_user=first_user, second_user=second_user, third_user=third_user,
                            first_score=first_score, second_score=second_score, third_score=third_score)
+
+

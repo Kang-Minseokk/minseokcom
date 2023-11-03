@@ -57,6 +57,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     subscribe_num = db.Column(db.Integer, default=0, nullable=True)
     score = db.Column(db.Integer, default=0, nullable=True)
+    kakao = db.Column(db.Integer, nullable=False)
 
 
 class Comment(db.Model):
@@ -110,3 +111,9 @@ class Statistic(db.Model):
     type = db.Column(db.String(20))
     background_color = db.Column(db.String(20))
     border_width = db.Column(db.Integer)
+
+
+class Kakao(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(100), nullable=False)
+    profile_img = db.Column(db.String(200), nullable=False)

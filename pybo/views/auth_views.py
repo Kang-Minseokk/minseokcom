@@ -1,10 +1,10 @@
 import os
 
+import requests
 from flask import Blueprint, url_for, render_template, flash, request, session, g
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import redirect
 import functools
-
 
 from pybo import db
 from pybo.forms import UserCreateForm, UserLoginForm, EmailForm, CategoryForm
@@ -21,7 +21,6 @@ def login_required(view):
         if g.user is None:
             return redirect(url_for('auth.login'))
         return view(**kwargs)
-
     return wrapped_view
 
 
@@ -78,7 +77,29 @@ def login():
             session['user_id'] = user.id
             return redirect(url_for('main.index'))
         flash(error)
+
     return render_template('auth/login.html', form=form, form_for_new_category=form_for_new_category)
+
+
+@bp.route('/kakao_login', methods=['GET', 'POST'])
+def kakao_login():
+    form_for_new_category = CategoryForm()
+
+    if request.method == 'POST':
+        data = request.get_json()
+        already_kakao_user = User.query.filter((User.kakao == 1) & (User.email == data["kakaoEmail"])).first()
+        # 이미 가입되어있는 사용자
+        if already_kakao_user:
+            session.clear()
+            session['user_id'] = already_kakao_user.id
+        else:
+            user = User(username=data["kakaoName"], password="None", email=data["kakaoEmail"],
+                        profile_img=data["kakaoImg"], kakao=1)
+            db.session.add(user)
+            db.session.commit()
+        return redirect(url_for('main.index'))
+        # 응답 반환
+    return render_template('auth/login_progress.html', form_for_new_category=form_for_new_category)
 
 
 @bp.route('/forgot/', methods=('GET', 'POST'))

@@ -32,6 +32,7 @@
             background-color: white;
         }
     </style>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 </head>
 
 <div class="col-md-10" id="full-content">
@@ -57,6 +58,10 @@
                 <div class="card">
                     <div class="card-body" style="overflow-y: auto;">
                         <div class="card-text"><pre style="white-space: pre-wrap;">{{ question.content }}</pre></div>
+                        <h6>카카오톡 공유하기</h6>
+                        <a id="kakao-link-btn" href="javascript:kakaoShare()">
+                            <img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"  style="height: 40px;"/>
+                        </a>
                         <div class="d-flex justify-content-end">
                             {% if question.modify_date %}
                             <div class="badge badge-light p-2 text-left mx-3">
@@ -196,20 +201,53 @@
 {% endblock %}
 {% block script %}
 <script type='text/javascript'>
-$(document).ready(function(){
-    $(".delete").on('click', function() {
-        if(confirm("정말로 삭제하시겠습니까?")) {
-            location.href = $(this).data('uri');
-        }
+    $(document).ready(function(){
+        $(".delete").on('click', function() {
+            if(confirm("정말로 삭제하시겠습니까?")) {
+                location.href = $(this).data('uri');
+            }
+        });
+        $(".recommend").on('click', function() {
+            if(confirm("정말로 추천하시겠습니까?")) {
+                location.href = $(this).data('uri');
+            }
+        });
+        $("#back-button").click(function () {
+            window.history.back();
+        });
     });
-    $(".recommend").on('click', function() {
-        if(confirm("정말로 추천하시겠습니까?")) {
-            location.href = $(this).data('uri');
-        }
-    });
-    $("#back-button").click(function () {
-        window.history.back();
-    });
-});
+</script>
+<script type="text/javascript">
+  // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+  Kakao.init('7f7c600441b7904920b551f122ba7559');
+
+  // SDK 초기화 여부를 판단합니다.
+  console.log(Kakao.isInitialized());
+
+  function kakaoShare() {
+    Kakao.Link.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: '카카오공유하기 시 타이틀',
+        description: '카카오공유하기 시 설명',
+        imageUrl: '카카오공유하기 시 썸네일 이미지 경로',
+        link: {
+          mobileWebUrl: 'http://minseok.com',
+          webUrl: 'http://minseok.com',
+        },
+      },
+      buttons: [
+        {
+          title: '웹으로 보기',
+          link: {
+            mobileWebUrl: 'http://minseok.com',
+            webUrl: 'http://minseok.com',
+          },
+        },
+      ],
+      // 카카오톡 미설치 시 카카오톡 설치 경로이동
+      installTalk: true,
+    })
+  }
 </script>
 {% endblock %}

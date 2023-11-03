@@ -1,5 +1,6 @@
 import datetime
 import json
+from flask_cors import CORS
 import pymysql
 import time
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -45,8 +46,8 @@ import requests
 # friends_list = result.get("elements")
 # print(friends_list)
 # uuid_value = friends_list[0]['uuid']
-#
-# # 카카오톡 메시지
+# #
+# # # 카카오톡 메시지
 # url= "https://kapi.kakao.com/v1/api/talk/friends/message/default/send"
 # header = {"Authorization": 'Bearer ' + tokens["access_token"]}
 # data={
@@ -79,6 +80,7 @@ migrate = Migrate()
 
 def create_app():
     app = Flask(__name__)
+    CORS(app)
     app.config['SECRET_KEY'] = "dev"
     app.config.from_object(config)
 
@@ -125,7 +127,6 @@ def create_app():
     scheduler.start()
     print('sched after~')
     return app
-
 
 
 def job2():

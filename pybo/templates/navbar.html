@@ -5,6 +5,9 @@
   #big-category-menu:hover {
     text-decoration: none;
   }
+  .kakao_login:hover {
+    cursor: pointer;
+  }
 </style>
 <nav class="navbar navbar-expand-lg navbar-light" style="margin-top: 10px; background-color: #242424;">
   <a href="#" id="category-menu" style="font-size: 30px; color: white; margin-right: 20px; ">☰</a>
@@ -13,17 +16,28 @@
   <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse flex-grow-0" id="navbarNav" style="margin-left: 900px; overflow: auto; white-space: nowrap;">
+  <div class="collapse navbar-collapse flex-grow-0" id="navbarNav" style="position: relative; left: 1100px; overflow: auto; white-space: nowrap;">
     {% if g.user %}
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('auth.logout') }}" style="color: #dbdbd9; font-size: 18px;">Logout</a>
-      </li>
-    </ul>
-    <a href="{{ url_for('main.index') }}" style="color: #dbdbd9; font-size: 18px; margin-left: 10px;">Home</a>
-    <img class="profile-image" src="{{ url_for('static', filename='image/' + g.user.profile_img) }}" style="margin-left: 30px; height: 20px; width: 20px; border-radius: 50%;">
-    <a href="{{ url_for('auth.user_info', user_id=g.user.id) }}" style="color: #dbdbd9; font-size: 18px; margin-left: 10px;">{{ g.user.username }}</a>
-    <a href="#" style="color: #dbdbd9; font-size: 18px; margin-left: 10px;"></a>
+      {% if g.user.kakao == 0 %}
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('auth.logout') }}" style="color: #dbdbd9; font-size: 18px;">Logout</a>
+          </li>
+        </ul>
+        <img class="profile-image" src="{{ url_for('static', filename='image/' + g.user.profile_img) }}" style="margin-left: 20px; height: 20px; width: 20px; border-radius: 50%;">
+        <a href="{{ url_for('auth.user_info', user_id=g.user.id) }}" style="color: #dbdbd9; font-size: 18px; margin-left: 10px;">{{ g.user.username }}</a>
+        <a href="#" style="color: #dbdbd9; font-size: 18px; margin-left: 10px;"></a>
+      {% else %}
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <button id="kakaoLogout" class="nav-link" onclick="kakaoLogout('7f7c600441b7904920b551f122ba7559')" style="background-color: #000; color: #fff; font-size: 18px;">Logout</button>
+          </li>
+        </ul>
+        <img class="profile-image" src="{{ g.user.profile_img }}" style="margin-left: 20px; height: 20px; width: 20px; border-radius: 50%;">
+        <a id="user-name" href="{{ url_for('auth.user_info', user_id=g.user.id) }}" style="color: #dbdbd9; font-size: 18px; margin-left: 10px;">{{ g.user.username }}</a>
+        <a href="#" style="color: #dbdbd9; font-size: 18px; margin-left: 10px;"></a>
+      {% endif %}
+
     {% else %}
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -36,3 +50,30 @@
     {% endif %}
   </div>
 </nav>
+
+<script>
+  function kakaoLogout(kakaoKey) {
+    sessionStorage.clear();
+    const YOUR_REST_API_KEY = "ee7210a3098c1e359ac46aedab6b495b"; // 자신의 REST API 키로 대체
+    const YOUR_LOGOUT_REDIRECT_URI = "http://127.0.0.1:5000"; // 자신의 로그아웃 리다이렉트 URI로 대체
+
+    const url = `https://kauth.kakao.com/oauth/logout?client_id=${YOUR_REST_API_KEY}&logout_redirect_uri=${YOUR_LOGOUT_REDIRECT_URI}`;
+
+    // AJAX를 사용하여 GET 요청을 보냅니다.
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+
+    xhr.onload = function () {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        console.log('로그아웃 요청이 성공적으로 완료되었습니다.');
+        window.location.href = "http://127.0.0.1:5000/auth/logout"
+      } else {
+        console.error('로그아웃 요청이 실패했습니다.');
+      }
+    };
+    xhr.send();
+
+  };
+
+</script>
+

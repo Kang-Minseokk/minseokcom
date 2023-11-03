@@ -24,7 +24,12 @@
 
 <div class="col-md-10" id="full-content">
     <div class="content_row">
-        <img class="profile-image" src="{{ url_for('static', filename='image/'+ profile_img_path) }}">
+        {% if g.user.kakao == 1 %}
+            <img class="profile-image" src="{{ g.user.profile_img }}">
+        {% else %}
+            <img class="profile-image" src="{{ url_for('static', filename='image/'+ profile_img_path) }}">
+        {% endif %}
+
         <form class="subscribe-btn" method="post" action="{{ url_for('auth.subscribe', from_user_id=g.user.id,
         to_user_id=to_user_id) }}">
             <button type="submit" class="btn" style="background-color: #ed9542; color: white;">Subscribe</button>

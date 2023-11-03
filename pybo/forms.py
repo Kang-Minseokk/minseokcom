@@ -65,3 +65,9 @@ class StatisticForm(FlaskForm):
     type = TextAreaField('그래프 형태')
     background_color = TextAreaField('그래프 색 채우기')
     border_width = IntegerField('그래프 두께')
+
+
+class KakaoForm(FlaskForm):
+    id = IntegerField('아이디')
+    email = TextAreaField('이메일')
+    profile_img = TextAreaField('프로필 사진')
