@@ -2,7 +2,7 @@ import os
 
 BASE_DIR = os.path.dirname(__file__)
 
-SQLALCHEMY_DATABASE_URI = 'mysql://user1:Minseok0920#@110.8.180.188/pybo_db'
+SQLALCHEMY_DATABASE_URI = 'mysql://user1:Minseok0920#@0.0.0.0/pybo_db'
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # STMP 서버의 url과 port 번호
