@@ -708,3 +708,5 @@
 08:17, 16.7, 84, scattered clouds
 10:05, 18.7, 81, overcast clouds
 10:05, 19.2, 83, broken clouds
+08:34, 17.4, 91, moderate rain
+08:34, 17.4, 91, moderate rain
