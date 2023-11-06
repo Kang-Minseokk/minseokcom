@@ -1,7 +1,7 @@
 import datetime
 import json
 from flask_cors import CORS
-import pymysql
+
 import time
 from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask
@@ -73,7 +73,7 @@ naming_convention = {
     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
     "pk": "pk_%(table_name)s"
 }
-pymysql.install_as_MySQLdb()
+
 db = SQLAlchemy(metadata=MetaData(naming_convention=naming_convention))
 migrate = Migrate()
 
