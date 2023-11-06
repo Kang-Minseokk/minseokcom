@@ -1,7 +1,7 @@
 import datetime
 import json
 from flask_cors import CORS
-
+import pymysql
 import time
 from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask
@@ -73,7 +73,7 @@ naming_convention = {
     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
     "pk": "pk_%(table_name)s"
 }
-
+pymysql.install_as_MySQLdb()
 db = SQLAlchemy(metadata=MetaData(naming_convention=naming_convention))
 migrate = Migrate()
 
@@ -142,7 +142,7 @@ def job2():
     EMAIL_ADDR = 'm23235180@gmail.com'
     EMAIL_PASSWORD = 'bpzwmnstpwrxmevk'
 
-    con = pymysql.connect(host='127.0.0.1', user='root', password='minseok0920#', db='pybo_db', charset='utf8')
+    con = pymysql.connect(host='110.8.180.188', user='user1', password='Minseok0920#', db='pybo_db', charset='utf8')
     cur = con.cursor()
     sql = "SELECT end_date, title, content FROM calendar"
     cur.execute(sql)
