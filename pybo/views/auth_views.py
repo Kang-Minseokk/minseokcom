@@ -191,6 +191,11 @@ def subscribe(from_user_id, to_user_id):
     return redirect(url_for('auth.user_info', user_id=to_user_id))
 
 
+@bp.route('/friends/')
+@login_required
+def friends():
+    form_for_new_category = CategoryForm()
+    return render_template('auth/friends.html', form_for_new_category=form_for_new_category)
 
 
 

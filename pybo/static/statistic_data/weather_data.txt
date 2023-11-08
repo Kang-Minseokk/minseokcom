@@ -710,3 +710,9 @@
 10:05, 19.2, 83, broken clouds
 08:34, 17.4, 91, moderate rain
 08:34, 17.4, 91, moderate rain
+09:14, 3.7, 29, clear sky
+09:14, 3.7, 29, clear sky
+09:44, 6.3, 68, clear sky
+11:26, 10.3, 40, clear sky
+11:44, 10.5, 40, clear sky
+11:56, 10.7, 40, clear sky

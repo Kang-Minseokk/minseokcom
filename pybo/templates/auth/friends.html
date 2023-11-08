@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<head>
+    <style>
+        .full-table {
+            margin-top: 10px;
+            margin-left: 20px;
+            border: 1px solid #bec4c0;
+            border-radius: 5px;
+            height: 400px;
+
+        }
+    </style>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+</head>
+<body>
+    <div class="col-md-4 full-table">
+        <h5 onclick="selectKakaoFriends()">친구 추가하기</h5>
+    </div>
+    <div class="col-md-4 full-table">
+
+    </div>
+
+
+<script>
+
+    function selectKakaoFriends() {
+        Kakao.Picker.selectFriends({
+            returnUrl: 'https://developers.kakao.com', // 필수
+            title: '친구 선택',
+            maxPickableCount: 10,
+            minPickableCount: 1,
+        })
+        .then(function(response) {
+            console.log(response);
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+    }
+
+
+</script>
+</body>
+{% endblock %}
