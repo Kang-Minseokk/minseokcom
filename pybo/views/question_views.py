@@ -356,7 +356,7 @@ def create():
                     <p>Title: {question.subject}</p>
                     <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Content: {(question.content)}</p>
                 </div>
-                <a href="http://127.0.0.1:5000/question/detail/{question.id}/" class="link-style">글 읽으러 가기</a>
+                <a href="http://3.34.12.179/question/detail/{question.id}/" class="link-style">글 읽으러 가기</a>
             </div>
         </body>
         </html>
