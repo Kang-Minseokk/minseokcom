@@ -58,10 +58,17 @@
                 <div class="card">
                     <div class="card-body" style="overflow-y: auto;">
                         <div class="card-text"><pre style="white-space: pre-wrap;">{{ question.content }}</pre></div>
-                        <h6>카카오톡 공유하기</h6>
-                        <a id="kakao-link-btn" href="javascript:kakaoShare()">
-                            <img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"  style="height: 40px;"/>
-                        </a>
+                        {% if g.user.kakao == 1 %}
+                            <h6>카카오톡 공유하기</h6>
+                            <a id="kakao-link-btn" href="javascript:kakaoShare()">
+                                <img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"  style="height: 40px;"/>
+                            </a>
+                        {% else %}
+                            <h6>카카오톡 공유하기</h6>
+                            <span style="pointer-events: none; opacity: 0.6;">
+                                <img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"  style="height: 40px;"/>
+                            </span>
+                        {% endif %}
                         <div class="d-flex justify-content-end">
                             {% if question.modify_date %}
                             <div class="badge badge-light p-2 text-left mx-3">
