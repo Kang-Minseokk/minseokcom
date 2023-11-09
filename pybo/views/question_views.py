@@ -7,7 +7,7 @@ from flask import Blueprint, render_template, request, url_for, g, flash, make_r
 from sqlalchemy import func
 from werkzeug.utils import redirect
 
-from config import SMTP_SERVER, SMTP_PORT, EMAIL_ADDR, EMAIL_PASSWORD
+from config.default import SMTP_SERVER, SMTP_PORT, EMAIL_ADDR, EMAIL_PASSWORD
 from .. import db
 from ..forms import QuestionForm, AnswerForm, CategoryForm
 from ..models import Question, Answer, User, question_voter, Subscriber, Category, Statistic

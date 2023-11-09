@@ -9,6 +9,7 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 import requests
+from config.default import SMTP_SERVER, SMTP_PORT, EMAIL_ADDR, EMAIL_PASSWORD
 
 
 # url = "https://kauth.kakao.com/oauth/token"
@@ -135,10 +136,6 @@ def job2():
     from email.mime.multipart import MIMEMultipart
     from email.mime.text import MIMEText
     import pymysql
-    SMTP_SERVER = 'smtp.gmail.com'
-    SMTP_PORT = 465
-    EMAIL_ADDR = 'm23235180@gmail.com'
-    EMAIL_PASSWORD = 'bpzwmnstpwrxmevk'
 
     con = pymysql.connect(host='110.8.180.188', user='user1', password='Minseok0920#', db='pybo_db', charset='utf8')
     cur = con.cursor()
