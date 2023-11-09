@@ -7,7 +7,6 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-import config
 from sqlalchemy import MetaData
 import requests
 
@@ -80,9 +79,8 @@ migrate = Migrate()
 
 def create_app():
     app = Flask(__name__)
+    app.config.from_envvar('APP_CONFIG_FILE')
     CORS(app)
-    app.config['SECRET_KEY'] = "dev"
-    app.config.from_object(config)
 
     # ORM
     db.init_app(app)
