@@ -137,7 +137,7 @@ def job2():
     from email.mime.text import MIMEText
     import pymysql
 
-    con = pymysql.connect(host='110.8.180.188', user='user1', password='Minseok0920#', db='pybo_db', charset='utf8')
+    con = pymysql.connect(host='localhost', user='root', password='minseok0920#', db='pybo_db', charset='utf8')
     cur = con.cursor()
     sql = "SELECT end_date, title, content FROM calendar"
     cur.execute(sql)
@@ -217,7 +217,7 @@ def get_weather_data():
         weather_description = data['weather'][0]['description']
 
         # 데이터를 파일에 쓰는 코드
-        with open('/Users/minseokkang/projects/myproject/pybo/static/statistic_data/weather_data.txt', 'a') as f:
+        with open('/projects/myproject/pybo/static/statistic_data/weather_data.txt', 'a') as f:
             f.write(f"{datetime.datetime.now().strftime('%H:%M')}, {round(temperature-273.15, 1)}, {humidity}, {weather_description}\n")
 
     else:
