@@ -23,7 +23,7 @@ def ds_list(category):
     kw = request.args.get('kw', type=str, default='')
     so = request.args.get('so', type=str, default='recent')
     form_for_new_category = CategoryForm()
-
+    3/0
     # 정렬
     if so == 'recommend':
         sub_query = db.session.query(question_voter.c.question_id, func.count('*').label('num_voter')) \
