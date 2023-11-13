@@ -107,6 +107,7 @@ def create_app():
     app.register_blueprint(goal_views.bp)
     app.register_blueprint(calendar_views.bp)
     app.register_blueprint(statistic_views.bp)
+    app.register_error_handler(404, page_not_found)
 
     # 필터
     from .filter import format_datetime
@@ -130,8 +131,6 @@ def create_app():
     scheduler.start()
     print('sched after~')
 
-    # 오류 페이지
-    app.register_error_handler(404, page_not_found)
     return app
 
 
