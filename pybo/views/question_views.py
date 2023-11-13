@@ -3,7 +3,7 @@ from datetime import datetime
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-from flask import Blueprint, render_template, request, url_for, g, flash, make_response
+from flask import Blueprint, render_template, request, url_for, g, flash, make_response, current_app
 from sqlalchemy import func
 from werkzeug.utils import redirect
 
@@ -23,7 +23,7 @@ def ds_list(category):
     kw = request.args.get('kw', type=str, default='')
     so = request.args.get('so', type=str, default='recent')
     form_for_new_category = CategoryForm()
-    3/0
+    current_app.logger.info("INFO 레벨로 출력")
     # 정렬
     if so == 'recommend':
         sub_query = db.session.query(question_voter.c.question_id, func.count('*').label('num_voter')) \
