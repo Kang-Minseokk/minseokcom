@@ -9,8 +9,7 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 import requests
-from config.default import SMTP_SERVER, SMTP_PORT, EMAIL_ADDR, EMAIL_PASSWORD
-
+from config.default import SMTP_SERVER, SMTP_PORT, EMAIL_ADDR, EMAIL_PASSWORD, BASE_DIR
 
 # url = "https://kauth.kakao.com/oauth/token"
 # data = {
@@ -215,6 +214,7 @@ def get_weather_data():
     base_url = "http://api.openweathermap.org/data/2.5/weather?"
     complete_url = base_url + "q=" + city_name + "&appid=" + api_key
     response = requests.get(complete_url)
+    url_path = BASE_DIR + "pybo/static/static_data/weather_data.txt"
     if response.status_code == 200:
         data = response.json()
         main = data['main']
@@ -223,7 +223,7 @@ def get_weather_data():
         weather_description = data['weather'][0]['description']
 
         # 데이터를 파일에 쓰는 코드
-        with open('/projects/myproject/pybo/static/statistic_data/weather_data.txt', 'a') as f:
+        with open(url_path, 'a') as f:
             f.write(f"{datetime.datetime.now().strftime('%H:%M')}, {round(temperature-273.15, 1)}, {humidity}, {weather_description}\n")
 
     else:

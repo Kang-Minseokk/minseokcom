@@ -79,8 +79,9 @@ def create():
 
 @bp.route('/live_chart/')
 def live_chart():
-    form_for_new_category = CategoryForm()    
+    form_for_new_category = CategoryForm()
     time_list, temperature_list, humidity_list, description_list = [], [], [], []
+
     with open('/Users/minseokkang/projects/myproject/pybo/static/statistic_data/weather_data.txt', 'r') as f:
         weather_data = f.read()
         weather_data = weather_data.split('\n')
