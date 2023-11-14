@@ -1,7 +1,5 @@
 import datetime
 import json
-import os
-
 from flask_cors import CORS
 import pymysql
 import time
@@ -11,13 +9,14 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 import requests
-from config.default import SMTP_SERVER, SMTP_PORT, EMAIL_ADDR, EMAIL_PASSWORD, BASE_DIR
+from config.default import SMTP_SERVER, SMTP_PORT, EMAIL_ADDR, EMAIL_PASSWORD
+
 
 # url = "https://kauth.kakao.com/oauth/token"
 # data = {
 #     "grant_type": "authorization_code",
 #     "client_id": "ee7210a3098c1e359ac46aedab6b495b",
-#     "redirect_uri": "https://minseokblog.com",
+#     "redirect_uri": "http://minseokblog.com",
 #     "code": "tE_Bj2bfOGvD2v6WWuLxaL5FAyXMfm9PHIHoQmmMEsFsMgvfn4uUmr59L98KKw0fAAABi2DrTFxPBWDH3LuH7A"
 # }
 # response = requests.post(url, data=data)
@@ -57,8 +56,8 @@ from config.default import SMTP_SERVER, SMTP_PORT, EMAIL_ADDR, EMAIL_PASSWORD, B
 #         "object_type":"text",
 #         "text":"새로운 소식",
 #         "link":{
-#             "web_url" : "https://minseokblog.com",
-#             "mobile_web_url" : "https://minseokblog.com"
+#             "web_url" : "http://minseokblog.com",
+#             "mobile_web_url" : "http://minseokblog.com"
 #         },
 #         "button_title": "글 보러 가기"
 #     })
@@ -124,9 +123,8 @@ def create_app():
     )
     scheduler.add_job(
         get_weather_data,
-        'cron',
-        hour=8,
-        minutes=00,
+        'interval',
+        minutes=30,
         id='weather_update'
     )
     print('sched before~')
@@ -185,7 +183,7 @@ def job2():
                 background-color: #f5f2eb;">
                     <h4>종료가 얼마 남지 않은 일정이 {len(schedule_list)}개 있습니다.</p>
                 </div>
-                <a href="https://minseokblog.com/calendar/show/">자세히보기</a>
+                <a href="http://minseokblog.com/calendar/show/">자세히보기</a>
             </div>
         </body>
         </html>
@@ -215,7 +213,6 @@ def get_weather_data():
     api_key = "17e8c69b251581aa18fe957963b434a4"
     city_name = "Seoul"
     base_url = "http://api.openweathermap.org/data/2.5/weather?"
-    file_path = os.path.join(BASE_DIR, 'pybo/static/statistic_data/weather_data.txt')
     complete_url = base_url + "q=" + city_name + "&appid=" + api_key
     response = requests.get(complete_url)
     if response.status_code == 200:
@@ -226,8 +223,8 @@ def get_weather_data():
         weather_description = data['weather'][0]['description']
 
         # 데이터를 파일에 쓰는 코드
-        with open(file_path, 'a') as f:
-            f.write(f"{datetime.datetime.now().strftime('%H/%M')}, {round(temperature-273.15, 1)}, {humidity}, {weather_description}\n")
+        with open('/projects/myproject/pybo/static/statistic_data/weather_data.txt', 'a') as f:
+            f.write(f"{datetime.datetime.now().strftime('%H:%M')}, {round(temperature-273.15, 1)}, {humidity}, {weather_description}\n")
 
     else:
         print("날씨 데이터를 가져올 수 없습니다 ㅠㅠ")
