@@ -211,7 +211,7 @@ def job2():
 
 
 def get_weather_data():
-    api_key = "17e8c69b251581aa18fe957963b434a4"
+    api_key = os.environ.get('OPENWEATHERMAP_API_KEY')
     city_name = "Seoul"
     base_url = "http://api.openweathermap.org/data/2.5/weather?"
     complete_url = base_url + "q=" + city_name + "&appid=" + api_key
