@@ -1,5 +1,9 @@
+import os
+
 from flask import Blueprint, render_template, request, url_for
 from werkzeug.utils import redirect
+
+from config.default import BASE_DIR
 from .. import db
 from ..forms import CategoryForm, StatisticForm
 from ..models import Category, Statistic
@@ -81,8 +85,8 @@ def create():
 def live_chart():
     form_for_new_category = CategoryForm()
     time_list, temperature_list, humidity_list, description_list = [], [], [], []
-
-    with open('/Users/minseokkang/projects/myproject/pybo/static/statistic_data/weather_data.txt', 'r') as f:
+    url_path = os.path.join(BASE_DIR, "pybo/static/static_data/weather_data.txt")
+    with open(url_path, 'r') as f:
         weather_data = f.read()
         weather_data = weather_data.split('\n')
     for data in weather_data[-25:-1]:

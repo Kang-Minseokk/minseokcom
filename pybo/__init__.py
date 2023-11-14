@@ -1,5 +1,7 @@
 import datetime
 import json
+import os
+
 from flask_cors import CORS
 import pymysql
 import time
@@ -214,7 +216,7 @@ def get_weather_data():
     base_url = "http://api.openweathermap.org/data/2.5/weather?"
     complete_url = base_url + "q=" + city_name + "&appid=" + api_key
     response = requests.get(complete_url)
-    url_path = BASE_DIR + "pybo/static/static_data/weather_data.txt"
+    url_path = os.path.join(BASE_DIR, "pybo/static/static_data/weather_data.txt")
     if response.status_code == 200:
         data = response.json()
         main = data['main']
