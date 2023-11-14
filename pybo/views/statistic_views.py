@@ -1,5 +1,9 @@
+import os
+
 from flask import Blueprint, render_template, request, url_for
 from werkzeug.utils import redirect
+
+from config.default import BASE_DIR
 from .. import db
 from ..forms import CategoryForm, StatisticForm
 from ..models import Category, Statistic
@@ -80,62 +84,9 @@ def create():
 @bp.route('/live_chart/')
 def live_chart():
     form_for_new_category = CategoryForm()
-    data = list()
-    csv_file = open("/Users/minseokkang/projects/myproject/pybo/static/statistic_data/salaries.csv", 'r', encoding='utf-8-sig')
-    rea = csv.reader(csv_file)
-    for case in rea:
-        data.append(case)
-
-    data_scientist_salary_2023 = []
-    data_engineer_salary_2023 = []
-    data_analyst_salary_2023 = []
-    data_scientist_salary_2022 = []
-    data_engineer_salary_2022 = []
-    data_analyst_salary_2022 = []
-    data_scientist_salary_2021 = []
-    data_engineer_salary_2021 = []
-    data_analyst_salary_2021 = []
-    data_scientist_salary_2020 = []
-    data_engineer_salary_2020 = []
-    data_analyst_salary_2020 = []
-    for row in data:
-        if row[0] == '2023':
-            if row[3] == 'Data Scientist':
-                data_scientist_salary_2023.append(row[6])
-            elif row[3] == 'Data Engineer':
-                data_engineer_salary_2023.append(row[6])
-            elif row[3] == 'Data Analyst':
-                data_analyst_salary_2023.append(row[6])
-        if row[0] == '2022':
-            if row[3] == 'Data Scientist':
-                data_scientist_salary_2022.append(row[6])
-            elif row[3] == 'Data Engineer':
-                data_engineer_salary_2022.append(row[6])
-            elif row[3] == 'Data Analyst':
-                data_analyst_salary_2022.append(row[6])
-        if row[0] == '2021':
-            if row[3] == 'Data Scientist':
-                data_scientist_salary_2021.append(row[6])
-            elif row[3] == 'Data Engineer':
-                data_engineer_salary_2021.append(row[6])
-            elif row[3] == 'Data Analyst':
-                data_analyst_salary_2021.append(row[6])
-        if row[0] == '2020':
-            if row[3] == 'Data Scientist':
-                data_scientist_salary_2020.append(row[6])
-            elif row[3] == 'Data Engineer':
-                data_engineer_salary_2020.append(row[6])
-            elif row[3] == 'Data Analyst':
-                data_analyst_salary_2020.append(row[6])
-
-
-
-
-
-
-
     time_list, temperature_list, humidity_list, description_list = [], [], [], []
-    with open('/Users/minseokkang/projects/myproject/pybo/static/statistic_data/weather_data.txt', 'r') as f:
+    file_path = os.path.join(BASE_DIR, 'pybo/static/statistic_data/weather_data.txt')
+    with open(file_path, 'r') as f:
         weather_data = f.read()
         weather_data = weather_data.split('\n')
     for data in weather_data[-25:-1]:
