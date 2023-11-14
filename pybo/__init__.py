@@ -123,8 +123,9 @@ def create_app():
     )
     scheduler.add_job(
         get_weather_data,
-        'interval',
-        minutes=30,
+        'cron',
+        hour=8,
+        minutes=00,
         id='weather_update'
     )
     print('sched before~')
@@ -224,7 +225,7 @@ def get_weather_data():
 
         # 데이터를 파일에 쓰는 코드
         with open('/projects/myproject/pybo/static/statistic_data/weather_data.txt', 'a') as f:
-            f.write(f"{datetime.datetime.now().strftime('%H:%M')}, {round(temperature-273.15, 1)}, {humidity}, {weather_description}\n")
+            f.write(f"{datetime.datetime.now().strftime('%m/%d')}, {round(temperature-273.15, 1)}, {humidity}, {weather_description}\n")
 
     else:
         print("날씨 데이터를 가져올 수 없습니다 ㅠㅠ")
