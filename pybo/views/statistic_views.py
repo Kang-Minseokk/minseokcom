@@ -85,7 +85,7 @@ def create():
 def live_chart():
     form_for_new_category = CategoryForm()
     time_list, temperature_list, humidity_list, description_list = [], [], [], []
-    url_path = os.path.join(BASE_DIR, "pybo/static/static_data/weather_data.txt")
+    url_path = os.path.join(BASE_DIR, "pybo/static/statistic_data/weather_data.txt")
     with open(url_path, 'r') as f:
         weather_data = f.read()
         weather_data = weather_data.split('\n')
