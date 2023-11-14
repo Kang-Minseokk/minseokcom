@@ -46,10 +46,10 @@
         <div class="user-profile">
             <img src="{{ url_for('static', filename='image/' + question.user.profile_img) }}" alt="프로필 사진"
                  style="width: 30px; height: 30px; border-radius: 50%; margin: 10px;">
-            <span class="user-detail" onclick="window.location.href='http://3.34.12.179:5000/auth/user_info/{{ question.user.id }}/';">{{ question.user.username }}</span>
+            <span class="user-detail" onclick="window.location.href='https://minseokblog.com/auth/user_info/{{ question.user.id }}/';">{{ question.user.username }}</span>
         </div>
         <pre class="question-content" style="margin: 10px; border: 1px solid #ced6d9; padding: 5px;"
-        onclick="window.location.href='http://3.34.12.179:5000/question/detail/{{ question.id }}/';">{{ question.content }}</pre>
+        onclick="window.location.href='https://minseokblog.com/question/detail/{{ question.id }}/';">{{ question.content }}</pre>
         <div class="likes-comments">
             <span style="padding: 10px;">{{ question.create_date|datetime }}</span>
         </div>

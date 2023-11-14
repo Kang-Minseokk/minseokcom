@@ -16,7 +16,7 @@ from config.default import SMTP_SERVER, SMTP_PORT, EMAIL_ADDR, EMAIL_PASSWORD
 # data = {
 #     "grant_type": "authorization_code",
 #     "client_id": "ee7210a3098c1e359ac46aedab6b495b",
-#     "redirect_uri": "http://3.34.12.179:5000",
+#     "redirect_uri": "https://minseokblog.com",
 #     "code": "tE_Bj2bfOGvD2v6WWuLxaL5FAyXMfm9PHIHoQmmMEsFsMgvfn4uUmr59L98KKw0fAAABi2DrTFxPBWDH3LuH7A"
 # }
 # response = requests.post(url, data=data)
@@ -56,8 +56,8 @@ from config.default import SMTP_SERVER, SMTP_PORT, EMAIL_ADDR, EMAIL_PASSWORD
 #         "object_type":"text",
 #         "text":"새로운 소식",
 #         "link":{
-#             "web_url" : "http://3.34.12.179:5000",
-#             "mobile_web_url" : "http://3.34.12.179:5000"
+#             "web_url" : "https://minseokblog.com",
+#             "mobile_web_url" : "https://minseokblog.com"
 #         },
 #         "button_title": "글 보러 가기"
 #     })
@@ -183,7 +183,7 @@ def job2():
                 background-color: #f5f2eb;">
                     <h4>종료가 얼마 남지 않은 일정이 {len(schedule_list)}개 있습니다.</p>
                 </div>
-                <a href="http://3.34.12.179:5000/calendar/show/">자세히보기</a>
+                <a href="https://minseokblog.com/calendar/show/">자세히보기</a>
             </div>
         </body>
         </html>
