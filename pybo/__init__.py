@@ -1,5 +1,7 @@
 import datetime
 import json
+import os
+
 from flask_cors import CORS
 import pymysql
 import time
@@ -9,8 +11,7 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 import requests
-from config.default import SMTP_SERVER, SMTP_PORT, EMAIL_ADDR, EMAIL_PASSWORD
-
+from config.default import SMTP_SERVER, SMTP_PORT, EMAIL_ADDR, EMAIL_PASSWORD, BASE_DIR
 
 # url = "https://kauth.kakao.com/oauth/token"
 # data = {
@@ -214,6 +215,7 @@ def get_weather_data():
     api_key = "17e8c69b251581aa18fe957963b434a4"
     city_name = "Seoul"
     base_url = "http://api.openweathermap.org/data/2.5/weather?"
+    file_path = os.path.join(BASE_DIR, 'pybo/static/statistic_data/weather_data.txt')
     complete_url = base_url + "q=" + city_name + "&appid=" + api_key
     response = requests.get(complete_url)
     if response.status_code == 200:
@@ -224,7 +226,7 @@ def get_weather_data():
         weather_description = data['weather'][0]['description']
 
         # 데이터를 파일에 쓰는 코드
-        with open('/projects/myproject/pybo/static/statistic_data/weather_data.txt', 'a') as f:
+        with open(file_path, 'a') as f:
             f.write(f"{datetime.datetime.now().strftime('%m/%d')}, {round(temperature-273.15, 1)}, {humidity}, {weather_description}\n")
 
     else:
