@@ -79,61 +79,7 @@ def create():
 
 @bp.route('/live_chart/')
 def live_chart():
-    form_for_new_category = CategoryForm()
-    data = list()
-    csv_file = open("/Users/minseokkang/projects/myproject/pybo/static/statistic_data/salaries.csv", 'r', encoding='utf-8-sig')
-    rea = csv.reader(csv_file)
-    for case in rea:
-        data.append(case)
-
-    data_scientist_salary_2023 = []
-    data_engineer_salary_2023 = []
-    data_analyst_salary_2023 = []
-    data_scientist_salary_2022 = []
-    data_engineer_salary_2022 = []
-    data_analyst_salary_2022 = []
-    data_scientist_salary_2021 = []
-    data_engineer_salary_2021 = []
-    data_analyst_salary_2021 = []
-    data_scientist_salary_2020 = []
-    data_engineer_salary_2020 = []
-    data_analyst_salary_2020 = []
-    for row in data:
-        if row[0] == '2023':
-            if row[3] == 'Data Scientist':
-                data_scientist_salary_2023.append(row[6])
-            elif row[3] == 'Data Engineer':
-                data_engineer_salary_2023.append(row[6])
-            elif row[3] == 'Data Analyst':
-                data_analyst_salary_2023.append(row[6])
-        if row[0] == '2022':
-            if row[3] == 'Data Scientist':
-                data_scientist_salary_2022.append(row[6])
-            elif row[3] == 'Data Engineer':
-                data_engineer_salary_2022.append(row[6])
-            elif row[3] == 'Data Analyst':
-                data_analyst_salary_2022.append(row[6])
-        if row[0] == '2021':
-            if row[3] == 'Data Scientist':
-                data_scientist_salary_2021.append(row[6])
-            elif row[3] == 'Data Engineer':
-                data_engineer_salary_2021.append(row[6])
-            elif row[3] == 'Data Analyst':
-                data_analyst_salary_2021.append(row[6])
-        if row[0] == '2020':
-            if row[3] == 'Data Scientist':
-                data_scientist_salary_2020.append(row[6])
-            elif row[3] == 'Data Engineer':
-                data_engineer_salary_2020.append(row[6])
-            elif row[3] == 'Data Analyst':
-                data_analyst_salary_2020.append(row[6])
-
-
-
-
-
-
-
+    form_for_new_category = CategoryForm()    
     time_list, temperature_list, humidity_list, description_list = [], [], [], []
     with open('/Users/minseokkang/projects/myproject/pybo/static/statistic_data/weather_data.txt', 'r') as f:
         weather_data = f.read()
