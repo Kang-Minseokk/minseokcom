@@ -158,8 +158,16 @@
             }
         });
 
+        // 플래그 변수
+        var isWindowLoaded = false;
+
+        // window.onload 이벤트 핸들러
         window.onload = function () {
-            location.reload();
+            // 플래그 변수가 false인 경우에만 실행
+            if (!isWindowLoaded) {                                        
+                // 플래그 변수를 true로 변경하여 이후에는 실행되지 않도록 함
+                isWindowLoaded = true;
+            }
         };
     </script>
 </body>
