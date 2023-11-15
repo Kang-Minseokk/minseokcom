@@ -56,7 +56,7 @@
         .content-container {
             display: flex;
         }
-        }
+
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 </head>
@@ -93,7 +93,7 @@
                     <h5>전체 포스트</h5>
                     <h6> {{ total_posts_count }} 개</h6>
                 </div>
-                <div style="border-radius: 10px; margin-top: 10px; background-color: #4a4a4a; color: #fff; padding: 5px; box-shadow: 0.5px 1px 1px 2px #636363;">
+                <div class="activity_ranking" style="border-radius: 10px; margin-top: 10px; background-color: #4a4a4a; color: #fff; padding: 5px; box-shadow: 0.5px 1px 1px 2px #636363;" title="활동 점수는 질문의 추천 수와 답변의 추천 수를 더한값 입니다.">
                     <h5>활동 순위</h5>
                     <h6>🥇{{ first_user }} (🪙 {{ first_score }})🥈{{ second_user }} (🪙 {{ second_score }})🥉{{ third_user }} (🪙 {{ third_score }})</h6>
                 </div>
@@ -164,7 +164,7 @@
         // window.onload 이벤트 핸들러
         window.onload = function () {
             // 플래그 변수가 false인 경우에만 실행
-            if (!isWindowLoaded) {                                        
+            if (!isWindowLoaded) {
                 // 플래그 변수를 true로 변경하여 이후에는 실행되지 않도록 함
                 isWindowLoaded = true;
             }

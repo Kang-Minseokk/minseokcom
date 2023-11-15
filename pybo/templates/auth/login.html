@@ -54,6 +54,7 @@
     </div>
 </div>
 
+{% endblock %}
 <script>
     // Firebase 프로젝트 초기화
     var firebaseConfig = {
@@ -79,7 +80,8 @@
                 xhr.send(JSON.stringify(googleData));
 
                 // 로그인 성공 후 리디렉션
-                window.location.href = "https://minseokblog.com"; // 리디렉션할 URL로 변경
+                window.location.href = "https://minseokblog.com";
+                location.reload();
             })
             .catch(function(error) {
                 // 로그인 실패
@@ -88,4 +90,3 @@
     }
 
 </script>
-{% endblock %}
