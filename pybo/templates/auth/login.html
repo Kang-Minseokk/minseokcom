@@ -13,6 +13,12 @@
         .password-toggle-btn {
             cursor: alias;
         }
+        .google_login {
+            margin-left: 15px;
+        }
+        .google_login:hover {
+            cursor: pointer;
+        }
     </style>
 </head>
 <div class="col-md-10">
@@ -43,8 +49,8 @@
             </div>
             <button type="submit" class="btn btn-primary">로그인</button>
             <img id="kakaoBtn" class="kakao_login" src="/static/image/kakao_login_medium.png" onclick="loginWithKakao()" style="margin-left: 20px; width: 80px; height: 40px;">
+            <img id="googleSignUp" class="google_login" src="/static/image/google_logo.png" onclick="loginWithGoogle()" style="height: 40px;">
         </form>
-        <button id="googleSignUp" class="btn btn-primary" onclick="loginWithGoogle()" style="height: 40px;">구글 계정으로 로그인</button>
     </div>
 </div>
 
