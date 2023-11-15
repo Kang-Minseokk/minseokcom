@@ -5,6 +5,9 @@
         .google_login:hover {
             cursor: pointer;
         }
+        .google_login {
+            margin-left: 10px;
+        }
     </style>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
@@ -73,5 +76,15 @@
                 console.error("Login error:", error);
             });
     }
+     // 구글 로그인 firebase 통해서 해보기
+    firebaseConfig = {
+        apiKey: "AIzaSyB_RRZe8-YgsjsywkTygFOPs7kGAbswDFw",
+        authDomain: "big-buttress-400106.firebaseapp.com",
+        projectId: "big-buttress-400106",
+        appId: "1:515175817600:web:860f8ccaea6c826a866165"
+    }
+    firebase.initializeApp(firebaseConfig);
+
+    var provider = new firebase.auth().GoogleAuthProvider();
 </script>
 {% endblock %}

@@ -119,7 +119,7 @@ def google_login():
             session['user_id'] = already_google_user.id
         else:
             print("데이터베이스에 저장을 해야합니다.")
-            user = User(username=user_name, password="Google", email=user_email, profile_img=user_profile_img)
+            user = User(username=user_name, password="Google", email=user_email, profile_img=user_profile_img, kakao=0)
             db.session.add(user)
             db.session.commit()
         return redirect(url_for('main.index'))
