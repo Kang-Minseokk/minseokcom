@@ -102,6 +102,31 @@ def kakao_login():
     return render_template('auth/login_progress.html', form_for_new_category=form_for_new_category)
 
 
+@bp.route('/google_login', methods=['GET', 'POST'])
+def google_login():
+    form_for_new_category = CategoryForm()
+
+    if request.method == 'POST':
+        data = request.get_json()
+        data = data['User']
+        user_profile_img = data['photoURL']
+        user_name = data['displayName']
+        user_uid = data['uid']
+        user_email = data['email']
+        already_google_user = User.query.filter_by(email=user_email).first()
+        if already_google_user:
+            session.clear()
+            session['user_id'] = already_google_user.id
+        else:
+            print("데이터베이스에 저장을 해야합니다.")
+            user = User(username=user_name, password="Google", email=user_email, profile_img=user_profile_img)
+            db.session.add(user)
+            db.session.commit()
+        return redirect(url_for('main.index'))
+        # 응답 반환
+    return render_template('auth/login_progress.html', form_for_new_category=form_for_new_category)
+
+
 @bp.route('/forgot/', methods=('GET', 'POST'))
 def forgot():
     form = EmailForm()

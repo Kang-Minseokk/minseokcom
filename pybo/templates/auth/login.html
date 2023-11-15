@@ -1,5 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
+<head>
+        <!-- Firebase SDK v8.x.x -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+    <style>
+        .password-container {
+            display: flex;
+            align-items: center;
+        }
+        .password-toggle-btn {
+            cursor: alias;
+        }
+    </style>
+</head>
 <div class="col-md-10">
     <div class="container my-3">
         <form method="post" class="post-form">
@@ -12,15 +27,7 @@
             <div class="form-group">
                 <label for="password">비밀번호</label>
                 <input type="password" class="form-control" name="password" id="password" value="{{ form.password.data or '' }}">
-                <style>
-                    .password-container {
-                        display: flex;
-                        align-items: center;
-                    }
-                    .password-toggle-btn {
-                        cursor: alias;
-                    }
-                </style>
+
                 <span class="password-toggle-btn" onclick="togglePasswordVisibility()">Show Password</span>
                 <a href="{{ url_for('auth.forgot') }}" class="btn btn-link">Forgot Password?</a>
                 <script>
@@ -37,10 +44,42 @@
             <button type="submit" class="btn btn-primary">로그인</button>
             <img id="kakaoBtn" class="kakao_login" src="/static/image/kakao_login_medium.png" onclick="loginWithKakao()" style="margin-left: 20px; width: 80px; height: 40px;">
         </form>
+        <button id="googleSignUp" class="btn btn-primary" onclick="loginWithGoogle()" style="height: 40px;">구글 계정으로 로그인</button>
     </div>
 </div>
 
 <script>
+    // Firebase 프로젝트 초기화
+    var firebaseConfig = {
+        apiKey: "AIzaSyB_RRZe8-YgsjsywkTygFOPs7kGAbswDFw",
+        authDomain: "big-buttress-400106.firebaseapp.com",
+        projectId: "big-buttress-400106",
+        appId: "1:515175817600:web:860f8ccaea6c826a866165"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    // 로그인 버튼 클릭 시 Google 로그인 팝업 띄우기
+    function loginWithGoogle() {
+        var provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithPopup(provider)
+            .then(function(result) {
+            var user = result.user
+                var googleData = {
+                    User : user
+                };
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/auth/google_login', true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify(googleData));
+
+                // 로그인 성공 후 리디렉션
+                window.location.href = "https://minseokblog.com"; // 리디렉션할 URL로 변경
+            })
+            .catch(function(error) {
+                // 로그인 실패
+                console.error("Login error:", error);
+            });
+    }
 
 </script>
 {% endblock %}
