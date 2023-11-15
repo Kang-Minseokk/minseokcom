@@ -118,7 +118,11 @@ def google_login():
             session.clear()
             session['user_id'] = already_google_user.id
         else:
-            print("데이터베이스에 저장을 해야합니다.")
+            # 동명이인 발생하는 경우..
+            if User.query.filter_by(username=user_name).first():
+                user_name = user_name + str(len(User.query.filter_by(username=user_name).all()))
+            else:
+                pass
             user = User(username=user_name, password="Google", email=user_email, profile_img=user_profile_img, kakao=0)
             db.session.add(user)
             db.session.commit()
