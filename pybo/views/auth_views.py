@@ -128,7 +128,7 @@ def google_login():
             db.session.commit()
             login_user = User.query.filter_by(username=user_name).first()
             login_user_id = login_user.id
-            session['user_id'] = login_user_id
+            g.user = User.query.get(login_user_id)
         return redirect(url_for('main.index'))
         # 응답 반환
     return render_template('auth/login_progress.html', form_for_new_category=form_for_new_category)
@@ -160,15 +160,6 @@ def forgot():
                 db.session.commit()
 
     return render_template('auth/forgot.html', form=form, form_for_new_category=form_for_new_category)
-
-
-@bp.before_app_request
-def load_logged_in_user():
-    user_id = session.get('user_id')
-    if user_id is None:
-        g.user = None
-    else:
-        g.user = User.query.get(user_id)
 
 
 @bp.route('/logout/')

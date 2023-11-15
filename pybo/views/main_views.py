@@ -33,6 +33,7 @@ def index():
     today_date = datetime.datetime.now().strftime('%Y-%m-%d')
     today_visit_user = DailyVisit.query.filter_by(date=today_date).first()
     form_for_new_category = CategoryForm()
+
     if request.method == 'POST' and form_for_new_category.validate_on_submit():
         category = Category(
             category=form_for_new_category.category.data
