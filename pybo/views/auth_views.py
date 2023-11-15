@@ -126,9 +126,6 @@ def google_login():
             user = User(username=user_name, password="Google", email=user_email, profile_img=user_profile_img, kakao=0)
             db.session.add(user)
             db.session.commit()
-            login_user = User.query.filter_by(username=user_name).first()
-            login_user_id = login_user.id
-            g.user = User.query.get(login_user_id)
         return redirect(url_for('main.index'))
         # 응답 반환
     return render_template('auth/login_progress.html', form_for_new_category=form_for_new_category)
