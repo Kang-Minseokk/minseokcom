@@ -9,7 +9,7 @@ dictConfig({
     'version': 1,
     'formatters': {
         'default': {
-            'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+            'format': '[%(asctime)s] %(levelname)s in %(module)s: %(client_ip)s - %(message)s',
         }
     },
     'handlers': {
