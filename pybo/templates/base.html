@@ -276,7 +276,6 @@
         const REST_API_KEY="ee7210a3098c1e359ac46aedab6b495b";
         const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&prompt=login`;
         window.location.href = KAKAO_AUTH_URL;
-
     }
     const href =  window.location.href;
     let params = new URL(window.location.href).searchParams;
@@ -345,11 +344,6 @@
             console.error('Error:', error);
             return null;
         }
-    }
-    const checkHref = window.location.href
-    if (checkHref.includes("code=")) {
-        window.location.href = "https://minseokblog.com";
-        window.location.reload();
     }
 
 </script>
