@@ -1,3 +1,4 @@
+import datetime
 import os
 
 import requests
@@ -8,7 +9,7 @@ import functools
 
 from pybo import db
 from pybo.forms import UserCreateForm, UserLoginForm, EmailForm, CategoryForm
-from pybo.models import User, Question, question_voter, Subscriber
+from pybo.models import User, Question, question_voter, Subscriber, LoginStatus
 import random, string
 
 
@@ -75,6 +76,9 @@ def login():
         if error is None:
             session.clear()
             session['user_id'] = user.id
+            login_user = LoginStatus(user_id=user.id, login_time=datetime.datetime.now(), platform="main")
+            db.session.add(login_user)
+            db.session.commit()
             return redirect(url_for('main.index'))
         flash(error)
 
@@ -92,13 +96,14 @@ def kakao_login():
         if already_kakao_user:
             session.clear()
             session['user_id'] = already_kakao_user.id
-            g.user = User.query.get(already_kakao_user.id)
+            login_user = LoginStatus(user_id=already_kakao_user.id, login_time=datetime.datetime.now(), platform="kakao")
+            db.session.add(login_user)
+            db.session.commit()
         else:
             user = User(username=data["kakaoName"], password="None", email=data["kakaoEmail"],
                         profile_img=data["kakaoImg"], kakao=1)
             db.session.add(user)
             db.session.commit()
-            g.user = User.query.get(already_kakao_user.id)
 
         # 응답 반환
     return render_template('auth/login_progress.html', form_for_new_category=form_for_new_category)
@@ -119,6 +124,10 @@ def google_login():
         if already_google_user:
             session.clear()
             session['user_id'] = already_google_user.id
+            login_user = LoginStatus(user_id=already_google_user.id, login_time=datetime.datetime.now(),
+                                     platform="google")
+            db.session.add(login_user)
+            db.session.commit()
         else:
             # 동명이인 발생하는 경우..
             if User.query.filter_by(username=user_name).first():
@@ -128,7 +137,6 @@ def google_login():
             user = User(username=user_name, password="Google", email=user_email, profile_img=user_profile_img, kakao=0)
             db.session.add(user)
             db.session.commit()
-
 
         # 응답 반환
     return render_template('auth/login_progress.html', form_for_new_category=form_for_new_category)
@@ -164,6 +172,9 @@ def forgot():
 
 @bp.route('/logout/')
 def logout():
+    logout_user = LoginStatus.query.filter_by(user_id=g.user.id).last()
+    logout_user.logout_time = datetime.datetime.now()
+    db.session.commit()
     session.clear()
     return redirect(url_for('main.index'))
 

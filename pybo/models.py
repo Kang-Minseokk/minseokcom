@@ -117,3 +117,11 @@ class Kakao(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), nullable=False)
     profile_img = db.Column(db.String(200), nullable=False)
+
+
+class LoginStatus(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, nullable=False)
+    login_time = db.Column(db.DateTime(), nullable=False)
+    logout_time = db.Column(db.DateTime())
+    platform = db.Column(db.String(50), nullable=False)
