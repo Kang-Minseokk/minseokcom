@@ -96,6 +96,10 @@ def create_app():
         migrate.init_app(app, db)
     from . import models
 
+    with open('/home/ubuntu/var/log/nginx/access.log', 'r') as log_file:
+        for row in log_file:
+            print(row)
+
     # 블루프린트
     from .views import (main_views, question_views, answer_views, auth_views, comment_views, vote_views, home_views,
                         goal_views, calendar_views, statistic_views)
