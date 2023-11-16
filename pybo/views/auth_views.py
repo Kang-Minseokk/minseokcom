@@ -6,6 +6,7 @@ from flask import Blueprint, url_for, render_template, flash, request, session, 
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import redirect
 import functools
+from sqlalchemy import desc
 
 from pybo import db
 from pybo.forms import UserCreateForm, UserLoginForm, EmailForm, CategoryForm
@@ -172,7 +173,7 @@ def forgot():
 
 @bp.route('/logout/')
 def logout():
-    logout_user = LoginStatus.query.filter_by(user_id=g.user.id).last()
+    logout_user = LoginStatus.query.filter_by(user_id=g.user.id).order_by(desc(LoginStatus.timestamp)).first()
     logout_user.logout_time = datetime.datetime.now()
     db.session.commit()
     session.clear()
