@@ -6,7 +6,7 @@ from flask_cors import CORS
 import pymysql
 import time
 import apscheduler.schedulers.background
-from flask import Flask, render_template
+from flask import Flask, render_template, g
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
@@ -134,6 +134,7 @@ def create_app():
     print('sched after~')
 
     return app
+
 
 
 def job2():
