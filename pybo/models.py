@@ -125,3 +125,4 @@ class LoginStatus(db.Model):
     login_time = db.Column(db.DateTime(), nullable=False)
     logout_time = db.Column(db.DateTime())
     platform = db.Column(db.String(50), nullable=False)
+    ip_address = db.Column(db.String(30), nullable=False)

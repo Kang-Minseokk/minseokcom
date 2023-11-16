@@ -95,10 +95,7 @@ def create_app():
     else:
         migrate.init_app(app, db)
     from . import models
-
-    with open('/var/log/nginx/access.log', 'r') as log_file:
-        for row in log_file:
-            print(row)
+        
 
     # 블루프린트
     from .views import (main_views, question_views, answer_views, auth_views, comment_views, vote_views, home_views,

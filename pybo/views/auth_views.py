@@ -1,5 +1,6 @@
 import datetime
 import os
+import re
 
 import requests
 from flask import Blueprint, url_for, render_template, flash, request, session, g
@@ -77,7 +78,14 @@ def login():
         if error is None:
             session.clear()
             session['user_id'] = user.id
-            login_user = LoginStatus(user_id=user.id, login_time=datetime.datetime.now(), platform="main")
+            with open('/var/log/nginx/access.log', 'r') as log_file:
+                for row in log_file:
+                    ip_pattern = re.compile(r'^(\d+\.\d+\.\d+\.\d+)')
+                    # Use the pattern to search for the IP address in the log entry
+                    match = ip_pattern.search(row)
+                    ip_address = match.group(1)
+            login_user = LoginStatus(user_id=user.id, login_time=datetime.datetime.now(), platform="main",
+                                     ip_address=ip_address)
             db.session.add(login_user)
             db.session.commit()
             return redirect(url_for('main.index'))
