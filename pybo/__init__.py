@@ -95,7 +95,7 @@ def create_app():
     else:
         migrate.init_app(app, db)
     from . import models
-        
+
 
     # 블루프린트
     from .views import (main_views, question_views, answer_views, auth_views, comment_views, vote_views, home_views,
