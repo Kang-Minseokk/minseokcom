@@ -114,6 +114,7 @@ def kakao_login():
                                      ip_address=ip_address)
             db.session.add(login_user)
             db.session.commit()
+            g.user = User.query.get(already_kakao_user.id)
         else:
             user = User(username=data["kakaoName"], password="None", email=data["kakaoEmail"],
                         profile_img=data["kakaoImg"], kakao=1)
