@@ -92,12 +92,14 @@ def kakao_login():
         if already_kakao_user:
             session.clear()
             session['user_id'] = already_kakao_user.id
+            g.user = User.query.get(already_kakao_user.id)
         else:
             user = User(username=data["kakaoName"], password="None", email=data["kakaoEmail"],
                         profile_img=data["kakaoImg"], kakao=1)
             db.session.add(user)
             db.session.commit()
-        return redirect(url_for('main.index'))
+            g.user = User.query.get(already_kakao_user.id)
+
         # 응답 반환
     return render_template('auth/login_progress.html', form_for_new_category=form_for_new_category)
 
@@ -126,6 +128,7 @@ def google_login():
             user = User(username=user_name, password="Google", email=user_email, profile_img=user_profile_img, kakao=0)
             db.session.add(user)
             db.session.commit()
+
 
         # 응답 반환
     return render_template('auth/login_progress.html', form_for_new_category=form_for_new_category)
