@@ -1,7 +1,7 @@
 import datetime
 import json
 import os
-from bs4 import BeautifulSoup
+
 from flask_cors import CORS
 import pymysql
 import time
@@ -134,9 +134,6 @@ def create_app():
     print('sched after~')
 
     return app
-
-
-
 
 
 def job2():
