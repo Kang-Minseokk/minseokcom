@@ -4,11 +4,14 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewpoint" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="keywords" content="웹 디자인, 프로그래밍, 개발, 코딩, 공부, HTML, CSS, JS, python, 파이썬, 자바스크립트, 아마존 웹 서비스, AWS, 라우터 힘수">
+    <meta name="robots" content="noindex, nofollow">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+
     <!-- pybo CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <title>블로그!</title>
+    <title>Minseok-Blog</title>
     <style>
         .sidebar {
             width: 200px;
@@ -149,7 +152,7 @@
         </div>
 
     </div>
-    <div class="col-md-2">
+    <div class="col-md-2" style="display: flex; flex-direction: column;">
         <div class="sidebar">
             <div class="category">
                 <ul>
@@ -169,7 +172,13 @@
                 </ul>
             </div>
         </div>
+
+        <div class="question-section" style="width: 200px; height: 80px; background-color: white; margin-top: 450px; border-radius: 10px; margin-left: 5px;">
+
+        </div>
+
         <button class="up-button" id="up-button">^</button>
+
     </div>
     {% block content %}
     {% endblock %}
@@ -287,7 +296,6 @@
     data.append('client_id', '462f43a92e08ad9b2279efee154c9229');
     data.append('redirect_uri', 'https://minseokblog.com');
     data.append('code', code);
-
 
     fetch(url, {
         method: 'POST',

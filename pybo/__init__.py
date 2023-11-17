@@ -1,7 +1,7 @@
 import datetime
 import json
 import os
-
+from bs4 import BeautifulSoup
 from flask_cors import CORS
 import pymysql
 import time
@@ -129,12 +129,30 @@ def create_app():
         minutes=30,
         id='weather_update'
     )
+    scheduler.add_job(
+        crawl,
+        'interval',
+        hours=5,
+        id='data_crawl'
+    )
     print('sched before~')
     scheduler.start()
     print('sched after~')
 
     return app
 
+
+def crawl():
+    url = "https://www.bbc.com/korean/topics/cg726kv2879t"
+    response = requests.get(url)
+    print(response.status_code)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    target_tags = soup.find_all(class_="focusIndicatorDisplayBlock")
+    topic_list = []
+
+    for tag in target_tags:
+        topic_list.append(tag.text)
+    print(topic_list)
 
 
 def job2():
