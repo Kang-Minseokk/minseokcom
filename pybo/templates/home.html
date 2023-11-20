@@ -180,13 +180,11 @@
 
         newsListText[0] = newsListText[0].slice(1);
         newsListText[newsListText.length - 1] = newsListText[newsListText.length - 1].slice(0, -1);
-        console.log(newsListText)
         var num = 0;
 
         setInterval(function() {
             if (newsListText[num]) {
                 let newsText = document.getElementById("newsText");
-                console.log(newsList[num]);
                 newsText.textContent = newsListText[num];
                 num += 1;
             } else {

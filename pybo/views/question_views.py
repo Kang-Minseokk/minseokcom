@@ -240,6 +240,9 @@ def c_list():
     # 입력 파라미터
     kw = request.args.get('kw', type=str, default='')
     form_for_new_category = CategoryForm()
+    from dotenv import load_dotenv
+    load_dotenv()
+    redirect_url = os.environ.get('REDIRECT_URL')
 
     question_list = Question.query.filter(Question.category == 'Communication').order_by(
         Question.create_date.desc())
@@ -270,7 +273,7 @@ def c_list():
     return render_template('question/communication_list.html', question_list=question_list, kw=kw,
                            view_name='question.c_list', tag_list=tag_list, category='Communication',
                            list_count=list_count, form=form, category_list=category_list,
-                           form_for_new_category=form_for_new_category)
+                           form_for_new_category=form_for_new_category, redirect_url=redirect_url)
 
 
 @bp.route('/detail/<int:question_id>/')

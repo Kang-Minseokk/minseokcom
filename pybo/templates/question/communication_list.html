@@ -52,7 +52,7 @@
     {% endfor %}
     <div class="row" style="border-top: 1px solid #fff; margin: 10px;">
         {% for question in question_list %}
-            <div class="col-md-3 question-detail" data-uri="https://minseokblog.com/question/detail/{{ question.id }}/">
+            <div class="col-md-3 question-detail" data-uri="{{redirect_url}}/question/detail/{{ question.id }}">
                 <h4 style="height: 30px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{ question.subject }}</h4>
                 <h5 style="text-align: right; border-bottom: 1px solid #000;"><a href="{{ url_for('auth.user_info',
                 user_id=question.user.id) }}" style="color: black;">✎{{ question.user.username }}</a></h5>
@@ -62,7 +62,7 @@
                 <a href="{{ url_for('question.detail', question_id=question.id) }}" class="btn btn-secondary">💬 {{ question.answer_set|length }}</a>
                 <a href="#" class="btn btn-secondary">👀 {{ question.views }}</a>
             </div>
-            <div class="col-md-6 answer-detail" data-uri="https://minseokblog.com/question/detail/{{ question.id }}/#myAnchor"
+            <div class="col-md-6 answer-detail" data-uri="{{redirect_url}}/question/detail/{{ question.id }}/#myAnchor"
                  style="overflow: auto;">
                 <h4 style="border-bottom: 1px solid #000;">💬 Comments</h4>
                 {% if question.answer_set %}
