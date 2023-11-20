@@ -1,8 +1,10 @@
 import datetime
 import json
+import os.path
 
 from flask import Blueprint, render_template, g, request, redirect, url_for, jsonify, session
 
+from config.default import BASE_DIR
 from ..forms import CategoryForm, KakaoForm
 from ..models import Question, DailyVisit, Category, question_voter, User, answer_voter, Answer, Kakao
 from pybo import db
@@ -153,10 +155,15 @@ def index():
     third_user = top3_user[2]
     third_score = top3_score[2]
 
+    with open(os.path.join(BASE_DIR, 'pybo/static/statistic_data/news_letter.txt'), 'r') as f:
+        lines = f.readlines()
+        news_list = lines[-1]
+
     return render_template('home.html', question_list=question_list, total_posts_count=total_posts_count,
                            today_visit_user_count=today_visit_user_count, total_visit_count=total_visit_count,
                            daily_visit_list=daily_visit_list, category_list=category_list, form_for_new_category=form_for_new_category,
                            post_list=post_list, first_user=first_user, second_user=second_user, third_user=third_user,
-                           first_score=first_score, second_score=second_score, third_score=third_score)
+                           first_score=first_score, second_score=second_score, third_score=third_score,
+                           news_list=news_list)
 
 

@@ -1,17 +1,19 @@
 import datetime
-import json
 import os
-
+from config.default import SMTP_SERVER, SMTP_PORT, EMAIL_ADDR, EMAIL_PASSWORD, BASE_DIR
 from flask_cors import CORS
 import pymysql
 import time
 import apscheduler.schedulers.background
-from flask import Flask, render_template, g
+from flask import Flask, render_template
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 import requests
-from config.default import SMTP_SERVER, SMTP_PORT, EMAIL_ADDR, EMAIL_PASSWORD, BASE_DIR
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from bs4 import BeautifulSoup
+
 
 # url = "https://kauth.kakao.com/oauth/token"
 # data = {
@@ -88,7 +90,6 @@ def create_app():
     app.config.from_envvar('APP_CONFIG_FILE')
     CORS(app)
 
-
     # ORM
     db.init_app(app)
     if app.config['SQLALCHEMY_DATABASE_URI'].startswith("mysql"):
@@ -96,7 +97,6 @@ def create_app():
     else:
         migrate.init_app(app, db)
     from . import models
-
 
     # 블루프린트
     from .views import (main_views, question_views, answer_views, auth_views, comment_views, vote_views, home_views,
@@ -130,11 +130,45 @@ def create_app():
         minutes=30,
         id='weather_update'
     )
+    scheduler.add_job(
+        news_crawl,
+        'cron',
+        hour=9,
+        minute=00,
+        id='am_news_crawl'
+    )
+    scheduler.add_job(
+        news_crawl,
+        'cron',
+        hour=19,
+        minute=00,
+        id='pm_news_crawl'
+    )
     print('sched before~')
     scheduler.start()
     print('sched after~')
 
     return app
+
+
+def news_crawl():
+    url = "https://tilnote.io/news"
+    chrome_options = Options()
+    chrome_options.add_argument('--headless')
+    driver = webdriver.Chrome(options=chrome_options)
+    driver.get(url)
+    time.sleep(1)
+    html_content = driver.page_source
+
+    soup = BeautifulSoup(html_content, features="html.parser")
+    news_content = soup.find_all(class_='news-link')
+    news_list = []
+    url_path = os.path.join(BASE_DIR, "pybo/static/statistic_data/news_letter.txt")
+    for news in news_content:
+        news_list.append(news.text)
+    news_list = str(news_list).strip('[]')
+    with open(url_path, 'a') as f:
+        f.write(news_list)
 
 
 def job2():
