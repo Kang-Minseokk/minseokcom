@@ -53,6 +53,23 @@
             box-shadow: 1px 1px 1px 2px #4d4d4d;
         }
 
+        #kakao-button {
+            position: fixed;
+            height: 30px;
+            width: 60px;
+            left: 50px;
+            font-size: 20px;
+            bottom: 5px;
+            border: none;
+            color: white;
+            border-radius: 15px;
+            box-shadow: 1px 1px 1px 2px #4d4d4d;
+        }
+
+        #kakao-button:hover {
+            cursor: pointer;
+        }
+
         .fullCategory {
             display: none;
             position: fixed;
@@ -172,13 +189,12 @@
                 </ul>
             </div>
         </div>
-
-        <div class="question-section" style="width: 200px; height: 80px; background-color: white; margin-top: 450px; border-radius: 10px; margin-left: 5px;">
-
+        <div class="button-area" style="display: flex; flex-direction: row; background-color: white;">
+            <button class="up-button" id="up-button">^</button>
+            {% if g.user %}
+            <img id="kakao-button" src="{{ url_for('static', filename='/image/kakao_channel.png') }}" onclick="kakaoOpenChat()">
+            {% endif %}
         </div>
-
-        <button class="up-button" id="up-button">^</button>
-
     </div>
     {% block content %}
     {% endblock %}
@@ -279,6 +295,10 @@
             }
         }
     });
+
+    function kakaoOpenChat() {
+        window.location.href = 'https://pf.kakao.com/_xgVXCG';
+    }
 
     function loginWithKakao() {
         const REDIRECT_URI="https://minseokblog.com";

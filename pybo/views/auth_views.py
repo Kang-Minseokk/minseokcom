@@ -141,6 +141,7 @@ def google_login():
         if already_google_user:
             session.clear()
             session['user_id'] = already_google_user.id
+
             with open('/var/log/nginx/access.log', 'r') as log_file:
                 for row in log_file:
                     ip_pattern = re.compile(r'^(\d+\.\d+\.\d+\.\d+)')

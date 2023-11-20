@@ -1,9 +1,11 @@
+import os
+from pybo import create_app
 import smtplib
 from datetime import datetime
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-from flask import Blueprint, render_template, request, url_for, g, flash, make_response, current_app
+from flask import Blueprint, render_template, request, url_for, g, flash, make_response, current_app, app
 from sqlalchemy import func
 from werkzeug.utils import redirect
 
@@ -93,9 +95,10 @@ def d_list():
     category_list = []
     for selected_category in Category.query.all():
         category_list.append(selected_category.category)
+
     return render_template('question/development_list.html', question_list=question_list, page=page,
-                           kw=kw, so=so, view_name='question.d_list', tag_list=tag_list, category='Development', form=form,
-                           category_list=category_list, form_for_new_category=form_for_new_category)
+                           kw=kw, so=so, view_name='question.d_list', tag_list=tag_list, category='Development',
+                           form=form, category_list=category_list, form_for_new_category=form_for_new_category)
 
 
 @bp.route('/computer_science_list/')
