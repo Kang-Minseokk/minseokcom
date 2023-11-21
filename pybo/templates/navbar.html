@@ -53,7 +53,7 @@
 <input type="hidden" id="redirect_url" value="{{ redirect_url }}">
 
 <script>
-  val redirectUrl = document.getElementById('redirect_url');
+  val redirectUrl = document.getElementById('redirect_url').value;
   function kakaoLogout(kakaoKey) {
     sessionStorage.clear();
     const YOUR_REST_API_KEY = "ee7210a3098c1e359ac46aedab6b495b"; // 자신의 REST API 키로 대체
@@ -68,7 +68,7 @@
     xhr.onload = function () {
       if (xhr.status >= 200 && xhr.status < 300) {
         console.log('로그아웃 요청이 성공적으로 완료되었습니다.');
-        window.location.href = "${redirectUrl}/auth/logout";
+        window.location.href = redirectUrl;
       } else {
         console.error('로그아웃 요청이 실패했습니다.');
       }
