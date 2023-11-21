@@ -135,7 +135,7 @@ def create_app():
         news_crawl,
         'cron',
         hour=8,
-        minute=50,
+        minute=55,
         id='am_news_crawl'
     )
     scheduler.add_job(
@@ -160,6 +160,7 @@ def news_crawl():
     chrome_options.add_argument('--single-process')
     chrome_options.add_argument('--disable-dev-shm-usage')
     chrome_options.add_argument('lang=ko')
+    chrome_options.add_argument("--remote-debugging-port=9222")
     driver = webdriver.Chrome(options=chrome_options)
     driver.get(url)
     time.sleep(1)
