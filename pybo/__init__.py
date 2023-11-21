@@ -116,6 +116,8 @@ def create_app():
     from .filter import format_datetime
     app.jinja_env.filters['datetime'] = format_datetime
 
+    from .functions import get_redirect_url
+
     scheduler = apscheduler.schedulers.background.BackgroundScheduler()
     scheduler.add_job(
         job2,
@@ -183,6 +185,7 @@ def job2():
     con = pymysql.connect(host='localhost', user='root', password='minseok0920#', db='pybo_db', charset='utf8')
     cur = con.cursor()
     sql = "SELECT end_date, title, content FROM calendar"
+
     cur.execute(sql)
     rows = cur.fetchall()
     today_date = datetime.today().date()
@@ -220,7 +223,7 @@ def job2():
                 background-color: #f5f2eb;">
                     <h4>종료가 얼마 남지 않은 일정이 {len(schedule_list)}개 있습니다.</p>
                 </div>
-                <a href="http://minseokblog.com/calendar/show/">자세히보기</a>
+                <a href="{get_weather_data()}/calendar/show/">자세히보기</a>
             </div>
         </body>
         </html>

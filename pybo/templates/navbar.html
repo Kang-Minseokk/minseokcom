@@ -50,12 +50,14 @@
     {% endif %}
   </div>
 </nav>
+<input type="hidden" id="redirect_url" value="{{ redirect_url }}">
 
 <script>
+  val redirectUrl = document.getElementById('redirect_url');
   function kakaoLogout(kakaoKey) {
     sessionStorage.clear();
     const YOUR_REST_API_KEY = "ee7210a3098c1e359ac46aedab6b495b"; // 자신의 REST API 키로 대체
-    const YOUR_LOGOUT_REDIRECT_URI = "https://minseokblog.com"; // 자신의 로그아웃 리다이렉트 URI로 대체
+    const YOUR_LOGOUT_REDIRECT_URI = redirectUrl; // 자신의 로그아웃 리다이렉트 URI로 대체
 
     const url = `https://kauth.kakao.com/oauth/logout?client_id=${YOUR_REST_API_KEY}&logout_redirect_uri=${YOUR_LOGOUT_REDIRECT_URI}`;
 
@@ -66,7 +68,7 @@
     xhr.onload = function () {
       if (xhr.status >= 200 && xhr.status < 300) {
         console.log('로그아웃 요청이 성공적으로 완료되었습니다.');
-        window.location.href = "http://minseokblog.com/auth/logout"
+        window.location.href = "${redirectUrl}/auth/logout";
       } else {
         console.error('로그아웃 요청이 실패했습니다.');
       }

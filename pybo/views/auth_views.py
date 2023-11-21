@@ -11,6 +11,7 @@ from sqlalchemy import desc
 
 from pybo import db
 from pybo.forms import UserCreateForm, UserLoginForm, EmailForm, CategoryForm
+from pybo.functions import get_redirect_url
 from pybo.models import User, Question, question_voter, Subscriber, LoginStatus
 import random, string
 
@@ -42,12 +43,13 @@ def power_login_required(view):
 def signup():
     form = UserCreateForm()
     form_for_new_category = CategoryForm()
+    redirect_url = get_redirect_url()
     if request.method == 'POST' and form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if not user:
             if not form.profile_img.data:
                 user = User(username=form.username.data, password=generate_password_hash(form.password1.data),
-                            email=form.email.data, profile_img='minsoek.png')
+                            email=form.email.data, profile_img='minsoek.png', kakao=0)
                 db.session.add(user)
                 db.session.commit()
             else:
@@ -55,19 +57,21 @@ def signup():
                 filename = profile_img.filename
                 profile_img.save(os.path.join('/Users/minseokkang/projects/myproject/pybo/static/image', filename))
                 user = User(username=form.username.data, password=generate_password_hash(form.password1.data),
-                            email=form.email.data, profile_img=filename)
+                            email=form.email.data, profile_img=filename, kakao=0)
                 db.session.add(user)
                 db.session.commit()
             return redirect(url_for('main.index'))
         else:
             flash('이미 존재하는 사용자입니다.')
-    return render_template('auth/signup.html', form=form, form_for_new_category=form_for_new_category)
+    return render_template('auth/signup.html', form=form, form_for_new_category=form_for_new_category,
+                           redirect_url=redirect_url)
 
 
 @bp.route('/login/', methods=('GET', 'POST'))
 def login():
     form = UserLoginForm()
     form_for_new_category = CategoryForm()
+    redirect_url = get_redirect_url()
     if request.method == 'POST' and form.validate_on_submit():
         error = None
         user = User.query.filter_by(username=form.username.data).first()
@@ -95,7 +99,8 @@ def login():
             return redirect(url_for('main.index'))
         flash(error)
 
-    return render_template('auth/login.html', form=form, form_for_new_category=form_for_new_category)
+    return render_template('auth/login.html', form=form, form_for_new_category=form_for_new_category,
+                           redirect_url=redirect_url)
 
 
 @bp.route('/kakao_login', methods=['GET', 'POST'])

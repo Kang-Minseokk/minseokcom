@@ -1,18 +1,17 @@
-import os
-from pybo import create_app
+from pybo.functions import get_redirect_url
 import smtplib
 from datetime import datetime
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-from flask import Blueprint, render_template, request, url_for, g, flash, make_response, current_app, app
+from flask import Blueprint, render_template, request, url_for, g, flash, make_response, current_app
 from sqlalchemy import func
 from werkzeug.utils import redirect
 
 from config.default import SMTP_SERVER, SMTP_PORT, EMAIL_ADDR, EMAIL_PASSWORD
 from .. import db
 from ..forms import QuestionForm, AnswerForm, CategoryForm
-from ..models import Question, Answer, User, question_voter, Subscriber, Category, Statistic
+from ..models import Question, Answer, User, question_voter, Subscriber, Category
 from ..views.auth_views import login_required
 
 bp = Blueprint('question', __name__, url_prefix='/question')
@@ -25,7 +24,7 @@ def ds_list(category):
     kw = request.args.get('kw', type=str, default='')
     so = request.args.get('so', type=str, default='recent')
     form_for_new_category = CategoryForm()
-    current_app.logger.info("INFO 레벨로 출력")
+
     # 정렬
     if so == 'recommend':
         sub_query = db.session.query(question_voter.c.question_id, func.count('*').label('num_voter')) \
@@ -82,6 +81,7 @@ def d_list():
     tag_list = Question.query.with_entities(Question.tag).all()
     tag_list = list(set(tag_list))
     tag_list = [tag[0] for tag in tag_list]
+    redirect_url = get_redirect_url()
 
     page = request.args.get('page', type=int, default=1)
     kw = request.args.get('kw', type=str, default='')
@@ -98,7 +98,8 @@ def d_list():
 
     return render_template('question/development_list.html', question_list=question_list, page=page,
                            kw=kw, so=so, view_name='question.d_list', tag_list=tag_list, category='Development',
-                           form=form, category_list=category_list, form_for_new_category=form_for_new_category)
+                           form=form, category_list=category_list, form_for_new_category=form_for_new_category,
+                           redirect_url=redirect_url)
 
 
 @bp.route('/computer_science_list/')
@@ -106,6 +107,7 @@ def cs_list():
     # 입력 파라미터
     kw = request.args.get('kw', type=str, default='')
     form_for_new_category = CategoryForm()
+    redirect_url = get_redirect_url()
 
     question_list = Question.query.order_by(Question.create_date.desc()).filter(
         Question.category == 'Computer Science')
@@ -136,7 +138,8 @@ def cs_list():
         category_list.append(selected_category.category)
     return render_template('question/computer_science_list.html', question_list=question_list,
                            kw=kw, view_name='question.cs_list', tag_list=tag_list, category='Computer Science', form=form,
-                           category_list=category_list, form_for_new_category=form_for_new_category)
+                           category_list=category_list, form_for_new_category=form_for_new_category,
+                           redirect_url=redirect_url)
 
 
 @bp.route('/artificial_intelligence_list/<int:num>')
@@ -240,9 +243,7 @@ def c_list():
     # 입력 파라미터
     kw = request.args.get('kw', type=str, default='')
     form_for_new_category = CategoryForm()
-    from dotenv import load_dotenv
-    load_dotenv()
-    redirect_url = os.environ.get('REDIRECT_URL')
+    redirect_url = get_redirect_url()
 
     question_list = Question.query.filter(Question.category == 'Communication').order_by(
         Question.create_date.desc())
@@ -284,7 +285,7 @@ def detail(question_id):
     form_for_new_category = CategoryForm()
     question_content = question.content
     response = make_response(render_template('question/question_detail.html', question=question, form=form,
-                                             question_content=(question_content), form_for_new_category=form_for_new_category))
+                                             question_content=question_content, form_for_new_category=form_for_new_category))
 
     cookie_name = str(g.user.id)
     if request.cookies.get(cookie_name) is not None:
@@ -302,7 +303,7 @@ def detail(question_id):
         return response
 
     return render_template('question/question_detail.html', question=question, form=form,
-                           question_content=(question_content), form_for_new_category=form_for_new_category)
+                           question_content=question_content, form_for_new_category=form_for_new_category)
 
 
 @bp.route('/create/', methods=('GET', 'POST'))
@@ -315,6 +316,7 @@ def create():
     tag_list = [tag[0] for tag in tag_list]
     subscriber_rows = Subscriber.query.filter_by(to_user_id=g.user.id).all()
     user_emails = [User.query.get_or_404(row.from_user_id).email for row in subscriber_rows]
+    redirect_url = get_redirect_url()
     # 카테고리 리스트 전달해주기
     category_list = []
     for selected_category in Category.query.all():
@@ -362,7 +364,7 @@ def create():
                     <p>Title: {question.subject}</p>
                     <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">Content: {(question.content)}</p>
                 </div>
-                <a href="https://minseokblog/question/detail/{question.id}/" class="link-style">글 읽으러 가기</a>
+                <a href="{ redirect_url }/question/detail/{question.id}/" class="link-style">글 읽으러 가기</a>
             </div>
         </body>
         </html>

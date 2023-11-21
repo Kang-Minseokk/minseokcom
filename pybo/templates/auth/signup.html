@@ -44,8 +44,10 @@
         </form>
     </div>
 </div>
+<input type="hidden" id="redirect_url" value="{{ redirect_url }}">
 <script>
     // Firebase 프로젝트 초기화
+    var redirectUrl = document.getElementById('redirect_url').value;
     var firebaseConfig = {
         apiKey: "AIzaSyB_RRZe8-YgsjsywkTygFOPs7kGAbswDFw",
         authDomain: "big-buttress-400106.firebaseapp.com",
@@ -69,7 +71,7 @@
                 xhr.send(JSON.stringify(googleData));
 
                 // 로그인 성공 후 리디렉션
-                window.location.href = "https://minseokblog.com"; // 리디렉션할 URL로 변경
+                window.location.href = redirectUrl; // 리디렉션할 URL로 변경
             })
             .catch(function(error) {
                 // 로그인 실패

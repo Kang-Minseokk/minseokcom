@@ -6,6 +6,7 @@ from flask import Blueprint, render_template, g, request, redirect, url_for, jso
 
 from config.default import BASE_DIR
 from ..forms import CategoryForm, KakaoForm
+from ..functions import get_redirect_url
 from ..models import Question, DailyVisit, Category, question_voter, User, answer_voter, Answer, Kakao
 from pybo import db
 from collections import Counter
@@ -36,6 +37,7 @@ def index():
     today_date = datetime.datetime.now().strftime('%Y-%m-%d')
     today_visit_user = DailyVisit.query.filter_by(date=today_date).first()
     form_for_new_category = CategoryForm()
+    redirect_url = get_redirect_url()
 
     if request.method == 'POST' and form_for_new_category.validate_on_submit():
         category = Category(
@@ -165,6 +167,6 @@ def index():
                            daily_visit_list=daily_visit_list, category_list=category_list, form_for_new_category=form_for_new_category,
                            post_list=post_list, first_user=first_user, second_user=second_user, third_user=third_user,
                            first_score=first_score, second_score=second_score, third_score=third_score,
-                           news_list=news_list)
+                           news_list=news_list, redirect_url=redirect_url)
 
 
