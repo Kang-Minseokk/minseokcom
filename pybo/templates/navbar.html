@@ -50,10 +50,10 @@
     {% endif %}
   </div>
 </nav>
-<input type="hidden" id="redirect_url" value="{{ redirect_url }}">
+
 
 <script>
-  val redirectUrl = document.getElementById('redirect_url').value;
+
   function kakaoLogout(kakaoKey) {
     sessionStorage.clear();
     const YOUR_REST_API_KEY = "ee7210a3098c1e359ac46aedab6b495b"; // 자신의 REST API 키로 대체
