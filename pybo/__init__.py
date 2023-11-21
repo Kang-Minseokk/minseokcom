@@ -134,7 +134,7 @@ def create_app():
         news_crawl,
         'cron',
         hour=10,
-        minute=1,
+        minute=10,
         id='am_news_crawl'
     )
     scheduler.add_job(
