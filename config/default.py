@@ -7,7 +7,7 @@ SMTP_SERVER = 'smtp.gmail.com'
 SMTP_PORT = 465
 EMAIL_ADDR = 'm23235180@gmail.com'
 EMAIL_PASSWORD = 'bpzwmnstpwrxmevk'
-PERMANENT_SESSION_LIFETIME = timedelta(minutes=1)
+PERMANENT_SESSION_LIFETIME = timedelta(minutes=60)
 
 API_KEY = "17e8c69b251581aa18fe957963b434a4"
 CITY_NAME = "Seoul"

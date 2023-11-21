@@ -14,9 +14,10 @@ from collections import Counter
 bp = Blueprint('main', __name__, url_prefix='/')
 
 
-@bp.route('/hello')
+@bp.route('/robots.txt')
 def hello_pybo():
-    return 'Hello, Pybo!'
+    robots = 'User-agent: * Allow: /'
+    return robots
 
 
 @bp.before_app_request

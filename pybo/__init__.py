@@ -80,7 +80,6 @@ pymysql.install_as_MySQLdb()
 db = SQLAlchemy(metadata=MetaData(naming_convention=naming_convention))
 migrate = Migrate()
 
-
 def page_not_found(e):
     return render_template('404.html'), 404
 
@@ -89,6 +88,7 @@ def create_app():
     app = Flask(__name__)
     app.config.from_envvar('APP_CONFIG_FILE')
     CORS(app)
+
 
     # ORM
     db.init_app(app)
