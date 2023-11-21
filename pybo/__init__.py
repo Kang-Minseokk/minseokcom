@@ -90,7 +90,6 @@ def create_app():
     app.config.from_envvar('APP_CONFIG_FILE')
     CORS(app)
 
-
     # ORM
     db.init_app(app)
     if app.config['SQLALCHEMY_DATABASE_URI'].startswith("mysql"):
@@ -169,7 +168,7 @@ def news_crawl():
         news_list.append(news.text.replace("'", "\""))
     news_list = str(news_list).strip('[]')
     with open(url_path, 'a') as f:
-        f.write(news_list + '\n')
+        f.write(f'[{datetime.datetime.now()}]' + news_list + '\n')
 
 
 def job2():

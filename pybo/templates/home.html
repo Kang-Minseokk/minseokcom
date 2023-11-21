@@ -178,7 +178,7 @@
         //타이머를 사용해서 뉴스 토픽 새로고침 자동화하기
         var newsListText = document.getElementById('newsList').value.split("', '");
 
-        newsListText[0] = newsListText[0].slice(1);
+        newsListText[0] = newsListText[0].slice(29);
         newsListText[newsListText.length - 1] = newsListText[newsListText.length - 1].slice(0, -1);
         console.log(newsListText)
         var num = 0;
