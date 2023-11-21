@@ -116,7 +116,7 @@ def create_app():
     from .filter import format_datetime
     app.jinja_env.filters['datetime'] = format_datetime
 
-    from .functions import get_redirect_url
+    from .functions import get_redirect_url, login_time_management
 
     scheduler = apscheduler.schedulers.background.BackgroundScheduler()
     scheduler.add_job(

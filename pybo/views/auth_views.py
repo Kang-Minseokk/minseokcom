@@ -11,7 +11,7 @@ from sqlalchemy import desc
 
 from pybo import db
 from pybo.forms import UserCreateForm, UserLoginForm, EmailForm, CategoryForm
-from pybo.functions import get_redirect_url
+from pybo.functions import get_redirect_url, login_time_management
 from pybo.models import User, Question, question_voter, Subscriber, LoginStatus
 import random, string
 
@@ -52,6 +52,8 @@ def signup():
                             email=form.email.data, profile_img='minsoek.png', kakao=0)
                 db.session.add(user)
                 db.session.commit()
+                session.clear()
+                session['user_id'] = user.id
             else:
                 profile_img = form.profile_img.data
                 filename = profile_img.filename
@@ -60,6 +62,12 @@ def signup():
                             email=form.email.data, profile_img=filename, kakao=0)
                 db.session.add(user)
                 db.session.commit()
+                session.clear()
+                session['user_id'] = user.id
+                if os.path.exists('/var/log/nginx/access.log'):
+                    login_time_management(user.id, "main")
+                else:
+                    pass
             return redirect(url_for('main.index'))
         else:
             flash('이미 존재하는 사용자입니다.')
@@ -83,17 +91,7 @@ def login():
             session.clear()
             session['user_id'] = user.id
             if os.path.exists('/var/log/nginx/access.log'):
-                with open('/var/log/nginx/access.log', 'r') as log_file:
-                    for row in log_file:
-                        ip_pattern = re.compile(r'^(\d+\.\d+\.\d+\.\d+)')
-                        # Use the pattern to search for the IP address in the log entry
-                        match = ip_pattern.search(row)
-                        ip_address = match.group(1)
-                login_user = LoginStatus(user_id=user.id, login_time=datetime.datetime.now(), platform="main",
-                                         ip_address=ip_address)
-                db.session.add(login_user)
-                db.session.commit()
-
+                login_time_management(user.id, "main")
             else:
                 pass
             return redirect(url_for('main.index'))
@@ -124,7 +122,6 @@ def kakao_login():
                                          ip_address=ip_address)
                 db.session.add(login_user)
                 db.session.commit()
-                g.user = User.query.get(already_kakao_user.id)
             else:
                 pass
         else:
