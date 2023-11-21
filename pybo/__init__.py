@@ -89,23 +89,7 @@ def create_app():
     app = Flask(__name__)
     app.config.from_envvar('APP_CONFIG_FILE')
     CORS(app)
-    url = "https://tilnote.io/news"
-    chrome_options = Options()
-    chrome_options.add_argument('--headless')
-    driver = webdriver.Chrome(options=chrome_options)
-    driver.get(url)
-    time.sleep(1)
-    html_content = driver.page_source
 
-    soup = BeautifulSoup(html_content, features="html.parser")
-    news_content = soup.find_all(class_='news-link')
-    news_list = []
-    url_path = os.path.join(BASE_DIR, "pybo/static/statistic_data/news_letter.txt")
-    for news in news_content:
-        news_list.append(news.text.replace("'", "\""))
-    news_list = str(news_list).strip('[]')
-    with open(url_path, 'a') as f:
-        f.write(news_list + '\n')
 
     # ORM
     db.init_app(app)
@@ -182,7 +166,7 @@ def news_crawl():
     news_list = []
     url_path = os.path.join(BASE_DIR, "pybo/static/statistic_data/news_letter.txt")
     for news in news_content:
-        news_list.append(news.text + "[list_division]")
+        news_list.append(news.text.replace("'", "\""))
     news_list = str(news_list).strip('[]')
     with open(url_path, 'a') as f:
         f.write(news_list + '\n')
