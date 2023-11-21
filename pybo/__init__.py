@@ -89,7 +89,6 @@ def create_app():
     app.config.from_envvar('APP_CONFIG_FILE')
     CORS(app)
 
-
     # ORM
     db.init_app(app)
     if app.config['SQLALCHEMY_DATABASE_URI'].startswith("mysql"):
@@ -135,8 +134,8 @@ def create_app():
     scheduler.add_job(
         news_crawl,
         'cron',
-        hour=10,
-        minute=10,
+        hour=8,
+        minute=50,
         id='am_news_crawl'
     )
     scheduler.add_job(
@@ -157,6 +156,10 @@ def news_crawl():
     url = "https://tilnote.io/news"
     chrome_options = Options()
     chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--single-process')
+    chrome_options.add_argument('--disable-dev-shm-usage')
+    chrome_options.add_argument('lang=ko')
     driver = webdriver.Chrome(options=chrome_options)
     driver.get(url)
     time.sleep(1)
