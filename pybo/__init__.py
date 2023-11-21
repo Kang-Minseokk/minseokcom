@@ -170,7 +170,7 @@ def news_crawl():
         news_list.append(news.text.replace("'", "\""))
     news_list = str(news_list).strip('[]')
     with open(url_path, 'a') as f:
-        f.write(f'{write_time}' + news_list + '\n')
+        f.write(f'[{write_time}] ' + news_list + '\n')
 
 
 def job2():
