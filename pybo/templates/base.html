@@ -305,7 +305,7 @@
     }
 
     function loginWithKakao() {
-        const REDIRECT_URI="https://minseokblog.com";
+        const REDIRECT_URI="https://minseokblog.com/after_login";
         const REST_API_KEY="ee7210a3098c1e359ac46aedab6b495b";
         const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&prompt=login`;
         window.location.href = KAKAO_AUTH_URL;
@@ -318,7 +318,7 @@
     const data = new URLSearchParams();
     data.append('grant_type', 'authorization_code');
     data.append('client_id', '462f43a92e08ad9b2279efee154c9229');
-    data.append('redirect_uri', 'https://minseokblog.com');
+    data.append('redirect_uri', 'https://minseokblog.com/after_login');
     data.append('code', code);
 
     fetch(url, {

@@ -30,6 +30,11 @@ def load_logged_in_user():
         g.user = User.query.get(user_id)
 
 
+@bp.route('/after_login')
+def after_login():
+    return redirect('main.index')
+
+
 @bp.route('/', methods=['POST', 'GET'])
 def index():
     question_list = Question.query.order_by(Question.create_date.desc()).limit(5).all()
