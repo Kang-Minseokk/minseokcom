@@ -32,6 +32,7 @@ def load_logged_in_user():
 
 @bp.route('/after_login')
 def after_login():
+    print(g.user)
     return redirect(url_for('main.index'))
 
 
