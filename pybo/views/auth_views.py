@@ -111,7 +111,7 @@ def kakao_login():
 @bp.route('/after_login', methods=['GET'])
 def kakao_after_login():
     # URL을 파싱하여 쿼리 매개변수를 추출
-    print("asdfasfasdfasdfasfasdfasfsadfas")
+    logging.debug("asdfasfasdfasdfasfasdfasfsadfas")
     parsed_url = urlparse(request.url)
     query_params = parse_qs(parsed_url.query)
 
