@@ -119,14 +119,10 @@ def kakao_after_login():
     # 카카오 인증을 성공한 경우
     if code:
         access_token = get_access_token(code)
-        user_info = get_user_info(access_token)
-        if user_info:
-            print("asdfasfadfasdasdasdfasdfasdf")
-        else:
-            print("nononononno")
-        name = user_info['properties']['nickname']
-        email = user_info['kakao_account']['email']
-        profile_img = user_info['properties']['profile_image']
+        kakao_user_info = get_user_info(access_token)
+        name = kakao_user_info['properties']['nickname']
+        email = kakao_user_info['kakao_account']['email']
+        profile_img = kakao_user_info['properties']['profile_image']
 
         # 카카오 계정이 이미 있는 경우
         already_kakao_user = User.query.filter_by(username=name).first()
