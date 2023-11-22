@@ -32,7 +32,7 @@ def load_logged_in_user():
 
 @bp.route('/after_login')
 def after_login():
-    return redirect('main.index')
+    return redirect(url_for('main.index'))
 
 
 @bp.route('/', methods=['POST', 'GET'])
