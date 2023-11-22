@@ -31,15 +31,6 @@ def load_logged_in_user():
         g.user = User.query.get(user_id)
 
 
-@bp.route('/after_login')
-def after_login():
-    form_for_new_category = CategoryForm()
-    time.sleep(2)
-    print(g.user)
-
-    return redirect(url_for('main.index', form_for_new_categoty=form_for_new_category))
-
-
 @bp.route('/', methods=['POST', 'GET'])
 def index():
     question_list = Question.query.order_by(Question.create_date.desc()).limit(5).all()

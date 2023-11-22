@@ -30,7 +30,7 @@
       {% else %}
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <button id="kakaoLogout" class="nav-link" onclick="kakaoLogout('7f7c600441b7904920b551f122ba7559')" style="background-color: #000; color: #fff; font-size: 18px;">Logout</button>
+            <a href="{{ url_for('auth.logout') }}"><button id="kakaoLogout" class="nav-link" style="background-color: #000; color: #fff; font-size: 18px;">Logout</button></a>
           </li>
         </ul>
         <img class="profile-image" src="{{ g.user.profile_img }}" style="margin-left: 20px; height: 20px; width: 20px; border-radius: 50%;">
@@ -51,31 +51,4 @@
   </div>
 </nav>
 
-
-<script>
-
-  function kakaoLogout(kakaoKey) {
-    sessionStorage.clear();
-    const YOUR_REST_API_KEY = "ee7210a3098c1e359ac46aedab6b495b"; // 자신의 REST API 키로 대체
-    const YOUR_LOGOUT_REDIRECT_URI = "https://minseokblog.com"; // 자신의 로그아웃 리다이렉트 URI로 대체
-
-    const url = `https://kauth.kakao.com/oauth/logout?client_id=${YOUR_REST_API_KEY}&logout_redirect_uri=${YOUR_LOGOUT_REDIRECT_URI}`;
-
-    // AJAX를 사용하여 GET 요청을 보냅니다.
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', url, true);
-
-    xhr.onload = function () {
-      if (xhr.status >= 200 && xhr.status < 300) {
-        console.log('로그아웃 요청이 성공적으로 완료되었습니다.');
-        window.location.href = 'https://minseokblog.com/auth/logout';
-      } else {
-        console.error('로그아웃 요청이 실패했습니다.');
-      }
-    };
-    xhr.send();
-
-  };
-
-</script>
 

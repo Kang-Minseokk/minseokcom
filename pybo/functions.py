@@ -1,4 +1,6 @@
-import datetime, re
+import datetime, re, os, requests
+from dotenv import load_dotenv
+from flask import redirect
 
 from pybo import db
 from pybo.models import LoginStatus
@@ -6,12 +8,16 @@ from pybo.models import LoginStatus
 
 # 리다이렉트 url을 반환하는 함수
 def get_redirect_url():
-    from dotenv import load_dotenv
-    import os
     load_dotenv()
     redirect_url = os.environ.get('REDIRECT_URL')
-
     return redirect_url
+
+
+# 카카오 REST API키 가져오는 함수
+def get_rest_api_kakao():
+    load_dotenv()
+    rest_api_key = os.environ.get('KAKAO_REST_API_KEY')
+    return rest_api_key
 
 
 # 로그인 시간 추적 함수
@@ -26,3 +32,38 @@ def login_time_management(user_id, platform):
                              ip_address=ip_address)
     db.session.add(login_user)
     db.session.commit()
+
+
+# 카카오 접근 토큰 반환 함수
+def get_access_token(code):
+    TOKEN_URL = "https://kauth.kakao.com/oauth/token"
+    token_data = {
+        'grant_type': 'authorization_code',
+        'client_id': get_rest_api_kakao(),
+        'redirect_uri': f'{get_redirect_url()}/auth/after_login',
+        'code': code
+    }
+    token_response = requests.post(TOKEN_URL, data=token_data)
+    tokens = token_response.json()
+    return tokens.get('access_token')
+
+
+# 카카오 사용자 정보 반환 함수
+def get_user_info(access_token):
+    USER_INFO_URL = "https://kapi.kakao.com/v2/user/me"
+    headers = {'Authorization': f'Bearer {access_token}'}
+
+    user_info_response = requests.get(USER_INFO_URL, headers=headers)
+    return user_info_response.json()
+
+
+# 카카오 로그아웃 함수
+def kakao_logout():
+    url = f"https://kauth.kakao.com/oauth/logout?client_id={get_rest_api_kakao()}&logout_redirect_uri={get_redirect_url()}"
+    # GET 요청을 보냅니다.
+    response = requests.get(url)
+    if response.status_code == 200:
+        print('로그아웃 요청이 성공적으로 완료되었습니다.')
+
+    else:
+        print('로그아웃 요청이 실패했습니다.')

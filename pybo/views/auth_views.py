@@ -1,6 +1,6 @@
 import datetime
 import os
-import re
+from urllib.parse import urlparse, parse_qs
 
 import requests
 from flask import Blueprint, url_for, render_template, flash, request, session, g
@@ -11,7 +11,8 @@ from sqlalchemy import desc
 
 from pybo import db
 from pybo.forms import UserCreateForm, UserLoginForm, EmailForm, CategoryForm
-from pybo.functions import get_redirect_url, login_time_management
+from pybo.functions import get_redirect_url, login_time_management, get_rest_api_kakao, get_access_token, get_user_info, \
+    kakao_logout
 from pybo.models import User, Question, question_voter, Subscriber, LoginStatus
 import random, string
 
@@ -101,14 +102,31 @@ def login():
                            redirect_url=redirect_url)
 
 
-@bp.route('/kakao_login', methods=['GET', 'POST'])
+@bp.route('/kakao_login', methods=['GET'])
 def kakao_login():
-    form_for_new_category = CategoryForm()
+    REDIRECT_URI = f"{get_redirect_url()}/auth/after_login"
+    KAKAO_AUTH_URL = f"https://kauth.kakao.com/oauth/authorize?response_type=code&client_id={get_rest_api_kakao()}&redirect_uri={REDIRECT_URI}&prompt=login"
+    return redirect(KAKAO_AUTH_URL)
 
-    if request.method == 'POST':
-        data = request.get_json()
-        already_kakao_user = User.query.filter((User.kakao == 1) & (User.email == data["kakaoEmail"])).first()
-        # 이미 가입되어있는 사용자
+
+@bp.route('/after_login', methods=['GET'])
+def kakao_after_login():
+    # URL을 파싱하여 쿼리 매개변수를 추출
+    parsed_url = urlparse(request.url)
+    query_params = parse_qs(parsed_url.query)
+
+    # 'code' 매개변수의 값 가져오기
+    code = query_params.get('code')[0] if 'code' in query_params else None
+    # 카카오 인증을 성공한 경우
+    if code:
+        access_token = get_access_token(code)
+        user_info = get_user_info(access_token)
+        name = user_info['properties']['nickname']
+        email = user_info['kakao_account']['email']
+        profile_img = user_info['properties']['profile_image']
+
+        # 카카오 계정이 이미 있는 경우
+        already_kakao_user = User.query.filter_by(username=name).first()
         if already_kakao_user:
             session.clear()
             session['user_id'] = already_kakao_user.id
@@ -117,13 +135,16 @@ def kakao_login():
             else:
                 pass
         else:
-            user = User(username=data["kakaoName"], password="None", email=data["kakaoEmail"],
-                        profile_img=data["kakaoImg"], kakao=1)
+            # 동명이인 발생하는 경우
+            if User.query.filter_by(username=name).first():
+                name = name + str(len(User.query.filter_by(username=name).all()))
+            else:
+                pass
+            user = User(username=name, password="Kakao_oauth", email=email, profile_img=profile_img, kakao=1)
             db.session.add(user)
             db.session.commit()
 
-        # 응답 반환
-    return render_template('auth/login_progress.html', form_for_new_category=form_for_new_category)
+    return redirect(url_for('main.index'))
 
 
 @bp.route('/google_login', methods=['GET', 'POST'])
@@ -135,7 +156,6 @@ def google_login():
         data = data['User']
         user_profile_img = data['photoURL']
         user_name = data['displayName']
-        user_uid = data['uid']
         user_email = data['email']
         already_google_user = User.query.filter_by(email=user_email).first()
         if already_google_user:
@@ -189,6 +209,8 @@ def forgot():
 
 @bp.route('/logout/')
 def logout():
+    if g.user.kakao == '1':
+        kakao_logout()
     logout_user = LoginStatus.query.filter_by(user_id=g.user.id).order_by(desc(LoginStatus.login_time)).first()
     logout_user.logout_time = datetime.datetime.now()
     db.session.commit()
