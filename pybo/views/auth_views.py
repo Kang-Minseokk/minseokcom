@@ -143,7 +143,8 @@ def kakao_after_login():
             user = User(username=name, password="Kakao_oauth", email=email, profile_img=profile_img, kakao=1)
             db.session.add(user)
             db.session.commit()
-
+    if code is None:
+        return "Error: 'code' parameter is missing", 400
     return redirect(url_for('main.index'))
 
 
