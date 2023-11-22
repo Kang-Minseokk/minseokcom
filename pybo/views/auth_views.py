@@ -116,6 +116,7 @@ def kakao_after_login():
 
     # 'code' 매개변수의 값 가져오기
     code = query_params.get('code')[0] if 'code' in query_params else None
+
     # 카카오 인증을 성공한 경우
     if code:
         access_token = get_access_token(code)

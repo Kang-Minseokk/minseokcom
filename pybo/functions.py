@@ -39,7 +39,7 @@ def get_access_token(code):
     TOKEN_URL = "https://kauth.kakao.com/oauth/token"
     token_data = {
         'grant_type': 'authorization_code',
-        'client_id': get_rest_api_kakao(),
+        'client_id': '462f43a92e08ad9b2279efee154c9229',
         'redirect_uri': f'{get_redirect_url()}/auth/after_login',
         'code': code
     }
