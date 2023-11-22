@@ -1,6 +1,7 @@
 import datetime
 import json
 import os.path
+import time
 
 from flask import Blueprint, render_template, g, request, redirect, url_for, jsonify, session
 
@@ -33,8 +34,9 @@ def load_logged_in_user():
 @bp.route('/after_login')
 def after_login():
     form_for_new_category = CategoryForm()
+    time.sleep(2)
 
-    return render_template('home.html', form_for_new_category=form_for_new_category)
+    return redirect(url_for('main.index', form_for_new_category=form_for_new_category))
 
 
 @bp.route('/', methods=['POST', 'GET'])

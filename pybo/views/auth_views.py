@@ -121,7 +121,6 @@ def kakao_login():
                         profile_img=data["kakaoImg"], kakao=1)
             db.session.add(user)
             db.session.commit()
-        return render_template('home.html')
 
         # 응답 반환
     return render_template('auth/login_progress.html', form_for_new_category=form_for_new_category)
