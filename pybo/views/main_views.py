@@ -32,8 +32,9 @@ def load_logged_in_user():
 
 @bp.route('/after_login')
 def after_login():
+    form_for_new_category = CategoryForm()
 
-    return render_template('home.html')
+    return render_template('home.html', form_for_new_category=form_for_new_category)
 
 
 @bp.route('/', methods=['POST', 'GET'])
