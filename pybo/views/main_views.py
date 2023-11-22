@@ -36,7 +36,7 @@ def after_login():
     form_for_new_category = CategoryForm()
     time.sleep(2)
 
-    return render_template(url_for('home.html', form_for_new_category=form_for_new_category))
+    return render_template('home.html', form_for_new_category=form_for_new_category)
 
 
 @bp.route('/', methods=['POST', 'GET'])
