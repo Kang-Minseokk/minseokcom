@@ -121,6 +121,8 @@ def kakao_after_login():
     if code:
         access_token = get_access_token(code)
         kakao_user_info = get_user_info(access_token)
+        print("kakao user info")
+        print(kakao_user_info)
         name = kakao_user_info['properties']['nickname']
         email = kakao_user_info['kakao_account']['email']
         profile_img = kakao_user_info['properties']['profile_image']
@@ -143,8 +145,7 @@ def kakao_after_login():
             user = User(username=name, password="Kakao_oauth", email=email, profile_img=profile_img, kakao=1)
             db.session.add(user)
             db.session.commit()
-    if code is None:
-        return "Error: 'code' parameter is missing", 400
+
     return redirect(url_for('main.index'))
 
 
