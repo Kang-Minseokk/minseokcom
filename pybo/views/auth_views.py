@@ -1,4 +1,5 @@
 import datetime
+import logging
 import os
 from urllib.parse import urlparse, parse_qs
 import requests
@@ -103,15 +104,14 @@ def login():
 
 @bp.route('/kakao_login', methods=['GET'])
 def kakao_login():
-    REDIRECT_URI = f"{get_redirect_url()}/auth/after_login"
-    KAKAO_AUTH_URL = f"https://kauth.kakao.com/oauth/authorize?response_type=code&client_id={get_rest_api_kakao()}&redirect_uri={REDIRECT_URI}&prompt=login"
-    return redirect(KAKAO_AUTH_URL)
+    redirect_uri = f"{get_redirect_url()}/auth/after_login"
+    kakao_auth_url = f"https://kauth.kakao.com/oauth/authorize?response_type=code&client_id={get_rest_api_kakao()}&redirect_uri={redirect_uri}&prompt=login"
+    return redirect(kakao_auth_url)
 
 
 @bp.route('/after_login', methods=['GET'])
 def kakao_after_login():
     # URL을 파싱하여 쿼리 매개변수를 추출
-    logging.debug("asdfasfasdfasdfasfasdfasfsadfas")
     parsed_url = urlparse(request.url)
     query_params = parse_qs(parsed_url.query)
 
@@ -122,8 +122,6 @@ def kakao_after_login():
     if code:
         access_token = get_access_token(code)
         kakao_user_info = get_user_info(access_token)
-        print("kakao user info")
-        print(kakao_user_info)
         name = kakao_user_info['properties']['nickname']
         email = kakao_user_info['kakao_account']['email']
         profile_img = kakao_user_info['properties']['profile_image']
