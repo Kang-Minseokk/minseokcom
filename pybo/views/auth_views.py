@@ -112,7 +112,7 @@ def kakao_login():
 @bp.route('/after_login', methods=['GET'])
 def kakao_after_login():
     code = request.args.get('code')
-
+    print(code)
     # 카카오 인증을 성공한 경우
     if code:
         access_token = get_access_token(code)
