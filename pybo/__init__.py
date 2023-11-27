@@ -80,6 +80,7 @@ pymysql.install_as_MySQLdb()
 db = SQLAlchemy(metadata=MetaData(naming_convention=naming_convention))
 migrate = Migrate()
 
+
 def page_not_found(e):
     return render_template('404.html'), 404
 

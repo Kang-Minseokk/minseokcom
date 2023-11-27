@@ -112,13 +112,13 @@ def kakao_login():
 @bp.route('/after_login', methods=['GET'])
 def kakao_after_login():
     code = request.args.get('code')
-    print(code)
     # 카카오 인증을 성공한 경우
     if code:
+        logging.basicConfig(filename='/var/log/my_app.log', level=logging.DEBUG)
         access_token = get_access_token(code)
         kakao_user_info = get_user_info(access_token)
-        print(kakao_user_info)
-        print(type(kakao_user_info))
+        logging.debug('kakao_user_info: %s', kakao_user_info)
+        logging.debug('Type of kakao_user_info: %s', type(kakao_user_info))
         name = kakao_user_info["properties"]["nickname"]
         email = kakao_user_info['kakao_account']['email']
         profile_img = kakao_user_info['properties']['profile_image']
