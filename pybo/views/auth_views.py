@@ -116,8 +116,6 @@ def kakao_after_login():
     if code:
         access_token = get_access_token(code)
         kakao_user_info = get_user_info(access_token)
-        logging.debug('kakao_user_info: %s', kakao_user_info)
-        logging.debug('Type of kakao_user_info: %s', type(kakao_user_info))
         name = kakao_user_info["properties"]["nickname"]
         email = kakao_user_info['kakao_account']['email']
         profile_img = kakao_user_info['properties']['profile_image']
