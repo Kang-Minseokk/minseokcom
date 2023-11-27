@@ -146,6 +146,7 @@ def create_app():
         minute=00,
         id='pm_news_crawl'
     )
+    scheduler.init_app(app)
     print('sched before~')
     scheduler.start()
     print('sched after~')
@@ -273,6 +274,7 @@ def get_weather_data():
             f.write(f"{datetime.datetime.now().strftime('%H:%M')}, {round(temperature-273.15, 1)}, {humidity}, {weather_description}\n")
 
     else:
+        #try 문 적용하기
         print("날씨 데이터를 가져올 수 없습니다 ㅠㅠ")
 
 
