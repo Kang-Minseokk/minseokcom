@@ -39,7 +39,7 @@
                 <input type="text" class="form-control" name="email" id="email" value="{{ form.email.data or '' }}">
             </div>
             <button type="submit" class="btn btn-primary">생성하기</button>
-            <a href="{{ url_for('auth.kakao_login') }}"><img id="kakaoBtn" class="kakao_login" src="/static/image/kakao_login_medium_narrow.png" onclick="loginWithKakao()" style="margin-left: 20px; width: 120px; height: 40px;"></a>
+            <a href="{{ url_for('auth.kakao_login') }}"><img id="kakaoBtn" class="kakao_login" src="/static/image/kakao_login_medium_narrow.png" style="margin-left: 20px; width: 120px; height: 40px;"></a>
             <img id="googleSignUp" class="google_login" src="/static/image/google_SU.png" onclick="loginWithGoogle()" style="height: 40px;">
         </form>
     </div>

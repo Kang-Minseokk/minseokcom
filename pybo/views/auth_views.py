@@ -1,14 +1,13 @@
 import datetime
-import logging
 import os
-from urllib.parse import urlparse, parse_qs
+import firebase_admin
+from firebase_admin import credentials, auth
 import requests
 from flask import Blueprint, url_for, render_template, flash, request, session, g
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import redirect
 import functools
 from sqlalchemy import desc
-
 from pybo import db
 from pybo.forms import UserCreateForm, UserLoginForm, EmailForm, CategoryForm
 from pybo.functions import get_redirect_url, login_time_management, get_rest_api_kakao, get_access_token, get_user_info, \
