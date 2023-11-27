@@ -146,7 +146,6 @@ def create_app():
         minute=00,
         id='pm_news_crawl'
     )
-    scheduler.init_app(app)
     print('sched before~')
     scheduler.start()
     print('sched after~')
