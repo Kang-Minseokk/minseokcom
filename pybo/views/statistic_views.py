@@ -149,6 +149,38 @@ def live_chart():
         daejeon_humidity_list.append(humidity)
         daejeon_description_list.append(weather_description)
 
+    ulsan_time_list, ulsan_temperature_list, ulsan_humidity_list, ulsan_description_list = [], [], [], []
+    url_path = os.path.join(BASE_DIR, "pybo/static/statistic_data/weather_data_Ulsan.txt")
+    with open(url_path, 'r') as f:
+        weather_data = f.read()
+        weather_data = weather_data.split('\n')
+    for data in weather_data[-11:-1]:
+        data = data.split(',')
+        current_time = data[0]
+        temperature = data[1]
+        humidity = data[2]
+        weather_description = data[3]
+        ulsan_time_list.append(current_time)
+        ulsan_temperature_list.append(temperature)
+        ulsan_humidity_list.append(humidity)
+        ulsan_description_list.append(weather_description)
+
+    incheon_time_list, incheon_temperature_list, incheon_humidity_list, incheon_description_list = [], [], [], []
+    url_path = os.path.join(BASE_DIR, "pybo/static/statistic_data/weather_data_Incheon.txt")
+    with open(url_path, 'r') as f:
+        weather_data = f.read()
+        weather_data = weather_data.split('\n')
+    for data in weather_data[-11:-1]:
+        data = data.split(',')
+        current_time = data[0]
+        temperature = data[1]
+        humidity = data[2]
+        weather_description = data[3]
+        incheon_time_list.append(current_time)
+        incheon_temperature_list.append(temperature)
+        incheon_humidity_list.append(humidity)
+        incheon_description_list.append(weather_description)
+
     return render_template('statistic/live_chart_list.html', form_for_new_category=form_for_new_category,
                            seoul_temperature_list=str(seoul_temperature_list).strip('[]'),
                            seoul_humidity_list=str(seoul_humidity_list).strip('[]'),
@@ -165,5 +197,13 @@ def live_chart():
                            daejeon_temperature_list=str(daejeon_temperature_list).strip('[]'),
                            daejeon_humidity_list=str(daejeon_humidity_list).strip('[]'),
                            daejeon_description_list=str(daejeon_description_list).strip('[]'),
-                           daejeon_time_list=str(daejeon_time_list).strip('[]')
+                           daejeon_time_list=str(daejeon_time_list).strip('[]'),
+                           ulsan_temperature_list=str(ulsan_temperature_list).strip('[]'),
+                           ulsan_humidity_list=str(ulsan_humidity_list).strip('[]'),
+                           ulsan_description_list=str(ulsan_description_list).strip('[]'),
+                           ulsan_time_list=str(ulsan_time_list).strip('[]'),
+                           incheon_temperature_list=str(incheon_temperature_list).strip('[]'),
+                           incheon_humidity_list=str(incheon_humidity_list).strip('[]'),
+                           incheon_description_list=str(incheon_description_list).strip('[]'),
+                           incheon_time_list=str(incheon_time_list).strip('[]')
                            )

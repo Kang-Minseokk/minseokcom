@@ -61,6 +61,16 @@
         <h4 id="daejeonTemperatureList" style="display: none">{{ daejeon_temperature_list.replace("'",'') }}</h4>
         <h4 id="daejeonHumidityList" style="display: none">{{ daejeon_humidity_list.replace("'",'') }}</h4>
         <h4 id="daejeonDescriptionList" style="display: none">{{ daejeon_description_list }}</h4>
+
+        <h4 id="ulsanTimeList" style="display: none">{{ ulsan_time_list.replace("'",'') }}</h4>
+        <h4 id="ulsanTemperatureList" style="display: none">{{ ulsan_temperature_list.replace("'",'') }}</h4>
+        <h4 id="ulsanHumidityList" style="display: none">{{ ulsan_humidity_list.replace("'",'') }}</h4>
+        <h4 id="ulsanDescriptionList" style="display: none">{{ ulsan_description_list }}</h4>
+
+        <h4 id="incheonTimeList" style="display: none">{{ incheon_time_list.replace("'",'') }}</h4>
+        <h4 id="incheonTemperatureList" style="display: none">{{ incheon_temperature_list.replace("'",'') }}</h4>
+        <h4 id="incheonHumidityList" style="display: none">{{ incheon_humidity_list.replace("'",'') }}</h4>
+        <h4 id="incheonDescriptionList" style="display: none">{{ incheon_description_list }}</h4>
     </div>
 
 
@@ -80,6 +90,14 @@
     var daejeonTimeList = document.getElementById('daejeonTimeList').textContent.split(',')
     var daejeonTemperatureList = document.getElementById('daejeonTemperatureList').textContent.split(',').map(Number)
     var daejeonHumidityList = document.getElementById('daejeonHumidityList').textContent.split(',').map(Number)
+
+    var ulsanTimeList = document.getElementById('ulsanTimeList').textContent.split(',')
+    var ulsanTemperatureList = document.getElementById('ulsanTemperatureList').textContent.split(',').map(Number)
+    var ulsanHumidityList = document.getElementById('ulsanHumidityList').textContent.split(',').map(Number)
+
+    var incheonTimeList = document.getElementById('incheonTimeList').textContent.split(',')
+    var incheonTemperatureList = document.getElementById('incheonTemperatureList').textContent.split(',').map(Number)
+    var incheonHumidityList = document.getElementById('incheonHumidityList').textContent.split(',').map(Number)
     new Chart(document.getElementById("weather-chart"), {
         type: "line",
         data: {
@@ -90,7 +108,7 @@
                 borderColor: "#008080",
                 fill: false,
                 backgroundColor: "#008080",
-                borderWidth: 2,
+                borderWidth: 3,
             },
             {
                 data: busanTemperatureList,
@@ -98,7 +116,7 @@
                 borderColor: "#800020",
                 fill: false,
                 backgroundColor: "#800020",
-                borderWidth: 1,
+                borderWidth: 3,
             },
             {
                 data: daejeonTemperatureList,
@@ -106,7 +124,7 @@
                 borderColor: "#008000",
                 fill: false,
                 backgroundColor: "#008000",
-                borderWidth: 1,
+                borderWidth: 3,
             },
             {
                 data: daeguTemperatureList,
@@ -114,7 +132,23 @@
                 borderColor: "#FF00FF",
                 fill: false,
                 backgroundColor: "#FF00FF",
-                borderWidth: 1,
+                borderWidth: 3,
+            },
+            {
+                data: ulsanTemperatureList,
+                label: "Ulsan",
+                borderColor: "#FFFF00",
+                fill: false,
+                backgroundColor: "#FFFF00",
+                borderWidth: 3,
+            },
+            {
+                data: incheonTemperatureList,
+                label: "Incheon",
+                borderColor: "#800080",
+                fill: false,
+                backgroundColor: "#800080",
+                borderWidth: 3,
             },
             ]
         },
