@@ -2,6 +2,7 @@ import datetime, re, os, requests
 from dotenv import load_dotenv
 from flask import redirect
 
+from config.default import BASE_DIR
 from pybo import db
 from pybo.models import LoginStatus
 
@@ -67,3 +68,5 @@ def kakao_logout():
 
     else:
         print('로그아웃 요청이 실패했습니다.')
+
+

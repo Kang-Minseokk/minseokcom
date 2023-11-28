@@ -6,3 +6,4 @@ logs
 .env
 driver
 news_letter.txt
+weather_data.txt

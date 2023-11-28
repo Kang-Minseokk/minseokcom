@@ -9,11 +9,10 @@ from flask import Flask, render_template
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
-import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
-
+import requests
 
 # url = "https://kauth.kakao.com/oauth/token"
 # data = {
@@ -254,13 +253,14 @@ def job2():
     con.close()
 
 
-def get_weather_data():
+def write_weather_data(city):
     api_key = os.environ.get('OPENWEATHERMAP_API_KEY')
-    city_name = "Seoul"
+    city_name = city
     base_url = "http://api.openweathermap.org/data/2.5/weather?"
     complete_url = base_url + "q=" + city_name + "&appid=" + api_key
     response = requests.get(complete_url)
-    url_path = os.path.join(BASE_DIR, "pybo/static/statistic_data/weather_data.txt")
+    url_path = os.path.join(BASE_DIR, f"pybo/static/statistic_data/weather_data_{city}.txt")
+
     if response.status_code == 200:
         data = response.json()
         main = data['main']
@@ -271,10 +271,17 @@ def get_weather_data():
         # 데이터를 파일에 쓰는 코드
         with open(url_path, 'a') as f:
             f.write(f"{datetime.datetime.now().strftime('%H:%M')}, {round(temperature-273.15, 1)}, {humidity}, {weather_description}\n")
-
     else:
         #try 문 적용하기
         print("날씨 데이터를 가져올 수 없습니다 ㅠㅠ")
 
 
+def get_weather_data():
+    write_weather_data("Seoul")
+    write_weather_data("Busan")
+    write_weather_data("Daegu")
+    write_weather_data("Daejeon")
+    write_weather_data("Incheon")
+    write_weather_data("Ulsan")
+    write_weather_data("Gwangju")
 
