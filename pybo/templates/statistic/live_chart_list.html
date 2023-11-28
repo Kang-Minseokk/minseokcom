@@ -23,7 +23,6 @@
 </head>
 
 <body>
-
     <div class="col-md-3 search_section input-group">
         <input type="text" class="form-control kw" value="{{ kw or '' }}" style="margin-top: 10px;">
         <div class="input-group-append" style="margin-top: 10px;">
@@ -32,14 +31,8 @@
     </div>
 
     <div class="col-md-6 chart_section">
-        <div class="container" style="height: 30px;">
-            <button>온도</button>
-            <button>습도</button>
-            <button>날씨</button>
-        </div>
         <canvas id="weather-chart" width="300" height="230"></canvas>
     </div>
-
 
     <div class="chart_data">
         <h4 id="seoulTimeList" style="display: none">{{ seoul_time_list.replace("'",'') }}</h4>

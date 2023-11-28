@@ -81,10 +81,9 @@ def create():
                            form_for_new_category=form_for_new_category, form=form, view_name='statistic.create')
 
 
-@bp.route('/live_chart/')
+@bp.route('/live_chart')
 def live_chart():
     form_for_new_category = CategoryForm()
-
     seoul_time_list, seoul_temperature_list, seoul_humidity_list, seoul_description_list = [], [], [], []
     url_path = os.path.join(BASE_DIR, "pybo/static/statistic_data/weather_data_Seoul.txt")
     with open(url_path, 'r') as f:

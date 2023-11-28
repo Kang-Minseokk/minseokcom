@@ -205,3 +205,8 @@
 13:13, 9.7, 43, few clouds
 13:13, 9.7, 43, few clouds
 13:13, 9.7, 43, few clouds
+16:31, 9.0, 29, clear sky
+16:52, 9.0, 29, clear sky
+17:01, 9.0, 29, clear sky
+17:24, 8.6, 43, clear sky
+17:31, 8.0, 31, clear sky

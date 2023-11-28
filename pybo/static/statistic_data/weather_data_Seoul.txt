@@ -211,3 +211,8 @@
 13:13, 4.7, 40, few clouds
 13:13, 4.7, 40, few clouds
 13:13, 4.7, 40, few clouds
+16:31, 2.2, 55, light rain
+16:52, 2.2, 55, broken clouds
+17:01, 2.2, 55, light rain
+17:24, 2.0, 55, scattered clouds
+17:31, 2.0, 55, scattered clouds

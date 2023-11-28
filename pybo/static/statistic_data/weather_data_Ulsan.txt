@@ -14,3 +14,8 @@
 11:50, 8.3, 39, clear sky
 11:50, 8.3, 39, clear sky
 11:51, 8.3, 39, clear sky
+16:31, 7.8, 38, clear sky
+16:52, 6.4, 43, clear sky
+17:01, 6.4, 43, clear sky
+17:24, 6.4, 43, clear sky
+17:31, 6.4, 43, clear sky

@@ -1,0 +1,5 @@
+16:31, 6.9, 50, broken clouds
+16:52, 5.7, 58, scattered clouds
+17:01, 5.7, 58, scattered clouds
+17:24, 5.7, 58, scattered clouds
+17:31, 5.7, 58, scattered clouds

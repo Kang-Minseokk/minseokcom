@@ -20,3 +20,8 @@
 11:50, 6.5, 24, few clouds
 11:50, 6.5, 24, few clouds
 11:51, 6.5, 24, few clouds
+16:31, 7.5, 31, scattered clouds
+16:52, 7.5, 31, scattered clouds
+17:01, 7.5, 31, scattered clouds
+17:24, 5.5, 39, clear sky
+17:31, 5.5, 39, clear sky
