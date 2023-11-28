@@ -84,22 +84,86 @@ def create():
 @bp.route('/live_chart/')
 def live_chart():
     form_for_new_category = CategoryForm()
-    time_list, temperature_list, humidity_list, description_list = [], [], [], []
+
+    seoul_time_list, seoul_temperature_list, seoul_humidity_list, seoul_description_list = [], [], [], []
     url_path = os.path.join(BASE_DIR, "pybo/static/statistic_data/weather_data_Seoul.txt")
     with open(url_path, 'r') as f:
         weather_data = f.read()
         weather_data = weather_data.split('\n')
-    for data in weather_data[-25:-1]:
+    for data in weather_data[-11:-1]:
         data = data.split(',')
         current_time = data[0]
         temperature = data[1]
         humidity = data[2]
         weather_description = data[3]
-        time_list.append(current_time)
-        temperature_list.append(temperature)
-        humidity_list.append(humidity)
-        description_list.append(weather_description)
+        seoul_time_list.append(current_time)
+        seoul_temperature_list.append(temperature)
+        seoul_humidity_list.append(humidity)
+        seoul_description_list.append(weather_description)
+
+    busan_time_list, busan_temperature_list, busan_humidity_list, busan_description_list = [], [], [], []
+    url_path = os.path.join(BASE_DIR, "pybo/static/statistic_data/weather_data_Busan.txt")
+    with open(url_path, 'r') as f:
+        weather_data = f.read()
+        weather_data = weather_data.split('\n')
+    for data in weather_data[-11:-1]:
+        data = data.split(',')
+        current_time = data[0]
+        temperature = data[1]
+        humidity = data[2]
+        weather_description = data[3]
+        busan_time_list.append(current_time)
+        busan_temperature_list.append(temperature)
+        busan_humidity_list.append(humidity)
+        busan_description_list.append(weather_description)
+
+    daegu_time_list, daegu_temperature_list, daegu_humidity_list, daegu_description_list = [], [], [], []
+    url_path = os.path.join(BASE_DIR, "pybo/static/statistic_data/weather_data_Daegu.txt")
+    with open(url_path, 'r') as f:
+        weather_data = f.read()
+        weather_data = weather_data.split('\n')
+    for data in weather_data[-11:-1]:
+        data = data.split(',')
+        current_time = data[0]
+        temperature = data[1]
+        humidity = data[2]
+        weather_description = data[3]
+        daegu_time_list.append(current_time)
+        daegu_temperature_list.append(temperature)
+        daegu_humidity_list.append(humidity)
+        daegu_description_list.append(weather_description)
+
+    daejeon_time_list, daejeon_temperature_list, daejeon_humidity_list, daejeon_description_list = [], [], [], []
+    url_path = os.path.join(BASE_DIR, "pybo/static/statistic_data/weather_data_Daejeon.txt")
+    with open(url_path, 'r') as f:
+        weather_data = f.read()
+        weather_data = weather_data.split('\n')
+    for data in weather_data[-11:-1]:
+        data = data.split(',')
+        current_time = data[0]
+        temperature = data[1]
+        humidity = data[2]
+        weather_description = data[3]
+        daejeon_time_list.append(current_time)
+        daejeon_temperature_list.append(temperature)
+        daejeon_humidity_list.append(humidity)
+        daejeon_description_list.append(weather_description)
 
     return render_template('statistic/live_chart_list.html', form_for_new_category=form_for_new_category,
-                           temperature_list=str(temperature_list).strip('[]'), humidity_list=str(humidity_list).strip('[]'),
-                           description_list=str(description_list).strip('[]'), time_list=str(time_list).strip('[]'))
+                           seoul_temperature_list=str(seoul_temperature_list).strip('[]'),
+                           seoul_humidity_list=str(seoul_humidity_list).strip('[]'),
+                           seoul_description_list=str(seoul_description_list).strip('[]'),
+                           seoul_time_list=str(seoul_time_list).strip('[]'),
+                           busan_temperature_list=str(busan_temperature_list).strip('[]'),
+                           busan_humidity_list=str(busan_humidity_list).strip('[]'),
+                           busan_description_list=str(busan_description_list).strip('[]'),
+                           busan_time_list=str(busan_time_list).strip('[]'),
+                           daegu_temperature_list=str(daegu_temperature_list).strip('[]'),
+                           daegu_humidity_list=str(daegu_humidity_list).strip('[]'),
+                           daegu_description_list=str(daegu_description_list).strip('[]'),
+                           daegu_time_list=str(daegu_time_list).strip('[]'),
+                           daejeon_temperature_list=str(daejeon_temperature_list).strip('[]'),
+                           daejeon_humidity_list=str(daejeon_humidity_list).strip('[]'),
+                           daejeon_description_list=str(daejeon_description_list).strip('[]'),
+                           daejeon_time_list=str(daejeon_time_list).strip('[]')
+                           )

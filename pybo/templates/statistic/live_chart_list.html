@@ -33,50 +33,90 @@
 
     <div class="col-md-6 chart_section">
         <div class="container" style="height: 30px;">
-            <button>Seoul</button>
-            <button>Busan</button>
-            <button>Ulsan</button>
-            <button>Daegu</button>
-            <button>Daejeon</button>
-            <button>Incheon</button>
-            <button>Gwangju</button>
+            <button>온도</button>
+            <button>습도</button>
+            <button>날씨</button>
         </div>
         <canvas id="weather-chart" width="300" height="230"></canvas>
     </div>
 
 
     <div class="chart_data">
-        <h4 id="timeList" style="display: none">{{ time_list.replace("'",'') }}</h4>
-        <h4 id="temperatureList" style="display: none">{{ temperature_list.replace("'",'') }}</h4>
-        <h4 id="humidityList" style="display: none">{{ humidity_list.replace("'",'') }}</h4>
-        <h4 id="descriptionList" style="display: none">{{ description_list }}</h4>
+        <h4 id="seoulTimeList" style="display: none">{{ seoul_time_list.replace("'",'') }}</h4>
+        <h4 id="seoulTemperatureList" style="display: none">{{ seoul_temperature_list.replace("'",'') }}</h4>
+        <h4 id="seoulHumidityList" style="display: none">{{ seoul_humidity_list.replace("'",'') }}</h4>
+        <h4 id="seoulDescriptionList" style="display: none">{{ seoul_description_list }}</h4>
+
+        <h4 id="busanTimeList" style="display: none">{{ busan_time_list.replace("'",'') }}</h4>
+        <h4 id="busanTemperatureList" style="display: none">{{ busan_temperature_list.replace("'",'') }}</h4>
+        <h4 id="busanHumidityList" style="display: none">{{ busan_humidity_list.replace("'",'') }}</h4>
+        <h4 id="busanDescriptionList" style="display: none">{{ busan_description_list }}</h4>
+
+        <h4 id="daeguTimeList" style="display: none">{{ daegu_time_list.replace("'",'') }}</h4>
+        <h4 id="daeguTemperatureList" style="display: none">{{ daegu_temperature_list.replace("'",'') }}</h4>
+        <h4 id="daeguHumidityList" style="display: none">{{ daegu_humidity_list.replace("'",'') }}</h4>
+        <h4 id="daeguDescriptionList" style="display: none">{{ daegu_description_list }}</h4>
+
+        <h4 id="daejeonTimeList" style="display: none">{{ daejeon_time_list.replace("'",'') }}</h4>
+        <h4 id="daejeonTemperatureList" style="display: none">{{ daejeon_temperature_list.replace("'",'') }}</h4>
+        <h4 id="daejeonHumidityList" style="display: none">{{ daejeon_humidity_list.replace("'",'') }}</h4>
+        <h4 id="daejeonDescriptionList" style="display: none">{{ daejeon_description_list }}</h4>
     </div>
 
 
 <script>
-    var timeList = document.getElementById('timeList').textContent.split(',')
-    var temperatureList = document.getElementById('temperatureList').textContent.split(',').map(Number)
-    var humidityList = document.getElementById('humidityList').textContent.split(',').map(Number)
+    var seoulTimeList = document.getElementById('seoulTimeList').textContent.split(',')
+    var seoulTemperatureList = document.getElementById('seoulTemperatureList').textContent.split(',').map(Number)
+    var seoulHumidityList = document.getElementById('seoulHumidityList').textContent.split(',').map(Number)
+
+    var busanTimeList = document.getElementById('busanTimeList').textContent.split(',')
+    var busanTemperatureList = document.getElementById('busanTemperatureList').textContent.split(',').map(Number)
+    var busanHumidityList = document.getElementById('busanHumidityList').textContent.split(',').map(Number)
+
+    var daeguTimeList = document.getElementById('daeguTimeList').textContent.split(',')
+    var daeguTemperatureList = document.getElementById('daeguTemperatureList').textContent.split(',').map(Number)
+    var daeguHumidityList = document.getElementById('daeguHumidityList').textContent.split(',').map(Number)
+
+    var daejeonTimeList = document.getElementById('daejeonTimeList').textContent.split(',')
+    var daejeonTemperatureList = document.getElementById('daejeonTemperatureList').textContent.split(',').map(Number)
+    var daejeonHumidityList = document.getElementById('daejeonHumidityList').textContent.split(',').map(Number)
     new Chart(document.getElementById("weather-chart"), {
         type: "line",
         data: {
-            labels: timeList,
+            labels: seoulTimeList,
             datasets: [{
-                data: temperatureList,
-                label: "Temperature",
-                borderColor: "#e07169",
+                data: seoulTemperatureList,
+                label: "Seoul",
+                borderColor: "#008080",
                 fill: false,
-                backgroundColor: "#e8d9d5",
+                backgroundColor: "#008080",
+                borderWidth: 2,
+            },
+            {
+                data: busanTemperatureList,
+                label: "Busan",
+                borderColor: "#800020",
+                fill: false,
+                backgroundColor: "#800020",
                 borderWidth: 1,
             },
             {
-                data: humidityList,
-                label: "Humidity",
-                borderColor: "#7eb8de",
+                data: daejeonTemperatureList,
+                label: "Daejeon",
+                borderColor: "#008000",
                 fill: false,
-                backgroundColor: "#d5e1e8",
+                backgroundColor: "#008000",
                 borderWidth: 1,
-            }]
+            },
+            {
+                data: daeguTemperatureList,
+                label: "Daegu",
+                borderColor: "#FF00FF",
+                fill: false,
+                backgroundColor: "#FF00FF",
+                borderWidth: 1,
+            },
+            ]
         },
         options: {
             title: {
