@@ -1,8 +1,5 @@
 import datetime
 import os
-import firebase_admin
-from firebase_admin import credentials, auth
-import requests
 from flask import Blueprint, url_for, render_template, flash, request, session, g
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import redirect
