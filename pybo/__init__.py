@@ -258,10 +258,9 @@ def write_weather_data(city):
     city_name = city
     base_url = "http://api.openweathermap.org/data/2.5/weather?"
     complete_url = base_url + "q=" + city_name + "&appid=" + api_key
-    response = requests.get(complete_url)
-    url_path = os.path.join(BASE_DIR, f"pybo/static/statistic_data/weather_data_{city}.txt")
-
-    if response.status_code == 200:
+    try:
+        response = requests.get(complete_url)
+        url_path = os.path.join(BASE_DIR, f"pybo/static/statistic_data/weather_data_{city}.txt")
         data = response.json()
         main = data['main']
         temperature = main['temp']
@@ -271,9 +270,19 @@ def write_weather_data(city):
         # 데이터를 파일에 쓰는 코드
         with open(url_path, 'a') as f:
             f.write(f"{datetime.datetime.now().strftime('%H:%M')}, {round(temperature-273.15, 1)}, {humidity}, {weather_description}\n")
+
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP 오류 발생: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"연결 오류 발생: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"요청 시간 초과: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"기타 오류 발생: {err}")
+    except Exception as e:
+        print(f"예상치 못한 오류 발생: {e}")
     else:
-        #try 문 적용하기
-        print("날씨 데이터를 가져올 수 없습니다 ㅠㅠ")
+        print("날씨 데이터를 성공적으로 가져왔습니다.")
 
 
 def get_weather_data():
