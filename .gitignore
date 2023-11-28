@@ -5,3 +5,4 @@ __pycache__
 logs
 .env
 driver
+news_letter.txt
