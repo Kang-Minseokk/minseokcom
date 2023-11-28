@@ -127,8 +127,8 @@ def create_app():
     )
     scheduler.add_job(
         get_weather_data,
-        'interval',
-        minutes=30,
+        'cron',
+        minute=[0, 20, 40],
         id='weather_update'
     )
     scheduler.add_job(
