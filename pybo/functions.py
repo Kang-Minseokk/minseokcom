@@ -21,6 +21,18 @@ def get_rest_api_kakao():
     return rest_api_key
 
 
+def get_client_id_google():
+    load_dotenv()
+    google_client_id = os.environ.get('GOOGLE_CLIENT_ID')
+    return google_client_id
+
+
+def get_client_secret_google():
+    load_dotenv()
+    google_client_secret = os.environ.get('GOOGLE_CLIENT_SECRET')
+    return google_client_secret
+
+
 # 로그인 시간 추적 함수
 def login_time_management(user_id, platform):
     with open('/var/log/nginx/access.log', 'r') as log_file:

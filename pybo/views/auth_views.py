@@ -9,7 +9,7 @@ from sqlalchemy import desc
 from pybo import db
 from pybo.forms import UserCreateForm, UserLoginForm, EmailForm, CategoryForm
 from pybo.functions import get_redirect_url, login_time_management, get_rest_api_kakao, get_access_token, get_user_info, \
-    kakao_logout
+    kakao_logout, get_client_id_google, get_client_secret_google
 from pybo.models import User, Question, question_voter, Subscriber, LoginStatus
 import random, string
 
@@ -148,9 +148,9 @@ def google_login():
 def google_after_login():
     code = request.args.get('code')
     if code:
-        CLIENT_ID = '515175817600-mhrgqiiri81dco8jdch7oheleu8l9qd8.apps.googleusercontent.com'
-        CLIENT_SECRET = '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'
-        REDIRECT_URI = 'http://127.0.0.1:5000/auth/after_google_login'
+        CLIENT_ID = get_client_id_google()
+        CLIENT_SECRET = get_client_secret_google()
+        REDIRECT_URI = f'{get_redirect_url()}/auth/after_google_login'
         GOOGLE_TOKEN_ENDPOINT = 'https://oauth2.googleapis.com/token'
         GOOGLE_USERINFO_ENDPOINT = 'https://www.googleapis.com/oauth2/v2/userinfo'
 
