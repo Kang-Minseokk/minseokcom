@@ -21,3 +21,13 @@
 17:01, 1.9, 64, scattered clouds
 17:24, 1.9, 64, scattered clouds
 17:31, 0.9, 69, scattered clouds
+09:00, -1.1, 51, clear sky
+09:00, -1.1, 51, clear sky
+10:00, 0.9, 55, clear sky
+10:00, 0.9, 55, clear sky
+11:00, 1.9, 55, broken clouds
+11:00, 1.9, 55, broken clouds
+12:00, 1.9, 60, broken clouds
+12:00, 1.9, 60, broken clouds
+14:00, 2.9, 70, light rain
+14:00, 2.9, 70, light rain

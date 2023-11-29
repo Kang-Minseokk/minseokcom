@@ -216,3 +216,13 @@
 17:01, 2.2, 55, light rain
 17:24, 2.0, 55, scattered clouds
 17:31, 2.0, 55, scattered clouds
+09:00, -3.5, 63, clear sky
+09:00, -3.5, 63, clear sky
+10:00, -0.3, 55, clear sky
+10:00, -0.3, 55, clear sky
+11:00, 0.7, 47, clear sky
+11:00, 0.7, 47, clear sky
+12:00, 1.7, 48, light snow
+12:00, 1.7, 48, light snow
+14:00, 2.7, 52, light shower snow
+14:00, 2.7, 52, light shower snow

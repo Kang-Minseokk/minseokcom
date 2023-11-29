@@ -1,10 +1,15 @@
 import datetime
 import os
-from flask import Blueprint, url_for, render_template, flash, request, session, g
+import firebase_admin
+from firebase_admin import credentials
+import requests
+from flask import Blueprint, url_for, render_template, flash, request, session, g, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import redirect
 import functools
 from sqlalchemy import desc
+
+from config.default import BASE_DIR
 from pybo import db
 from pybo.forms import UserCreateForm, UserLoginForm, EmailForm, CategoryForm
 from pybo.functions import get_redirect_url, login_time_management, get_rest_api_kakao, get_access_token, get_user_info, \
@@ -138,36 +143,66 @@ def kakao_after_login():
     return redirect(url_for('main.index'))
 
 
-@bp.route('/google_login', methods=['GET', 'POST'])
+@bp.route('/google_login', methods=['GET'])
 def google_login():
-    form_for_new_category = CategoryForm()
+    return redirect('https://accounts.google.com/o/oauth2/v2/auth?client_id=515175817600-mhrgqiiri81dco8jdch7oheleu8l9qd8.apps.googleusercontent.com&redirect_uri=http://127.0.0.1:5000/auth/after_google_login&scope=https://www.googleapis.com/auth/userinfo.email%20https://www.googleapis.com/auth/userinfo.profile&response_type=code')
 
-    if request.method == 'POST':
-        data = request.get_json()
-        data = data['User']
-        user_profile_img = data['photoURL']
-        user_name = data['displayName']
-        user_email = data['email']
-        already_google_user = User.query.filter_by(email=user_email).first()
+
+@bp.route('/after_google_login', methods=['GET'])
+def google_after_login():
+    code = request.args.get('code')
+    if code:
+        CLIENT_ID = '515175817600-mhrgqiiri81dco8jdch7oheleu8l9qd8.apps.googleusercontent.com'
+        CLIENT_SECRET = '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'
+        REDIRECT_URI = 'http://127.0.0.1:5000/auth/after_google_login'
+        GOOGLE_TOKEN_ENDPOINT = 'https://oauth2.googleapis.com/token'
+        GOOGLE_USERINFO_ENDPOINT = 'https://www.googleapis.com/oauth2/v2/userinfo'
+
+        # 액세스 토큰 요청
+        token_response = requests.post(
+            GOOGLE_TOKEN_ENDPOINT,
+            data={
+                'code': code,
+                'client_id': CLIENT_ID,
+                'client_secret': CLIENT_SECRET,
+                'redirect_uri': REDIRECT_URI,
+                'grant_type': 'authorization_code',
+            }
+        ).json()
+        # 액세스 토큰에서 사용자 정보 가져오기
+        access_token = token_response.get('access_token')
+        user_info_response = requests.get(
+            GOOGLE_USERINFO_ENDPOINT,
+            headers={'Authorization': f'Bearer {access_token}'}
+        ).json()
+
+        name = user_info_response['name']
+        email = user_info_response['email']
+        profile_img = user_info_response['picture']
+
+        already_google_user = User.query.filter_by(email=email).first()
         if already_google_user:
             session.clear()
             session['user_id'] = already_google_user.id
             if os.path.exists('/var/log/nginx/access.log'):
-                login_time_management(already_google_user.id, "google")
+                login_time_management(already_google_user, 'Google')
             else:
                 pass
         else:
-            # 동명이인 발생하는 경우..
-            if User.query.filter_by(username=user_name).first():
-                user_name = user_name + str(len(User.query.filter_by(username=user_name).all()))
+            if User.query.filter_by(username=name).first():
+                name = name + str(len(User.query.filter_by(username=name).all()))
             else:
                 pass
-            user = User(username=user_name, password="Google", email=user_email, profile_img=user_profile_img, kakao=0)
+            user = User(
+                username=name,
+                password="Google",
+                email=email,
+                profile_img=profile_img,
+                kakao=0
+            )
             db.session.add(user)
             db.session.commit()
-
-        # 응답 반환
-    return render_template('auth/login_progress.html', form_for_new_category=form_for_new_category)
+    return redirect(url_for('main.index'))
 
 
 @bp.route('/forgot/', methods=('GET', 'POST'))

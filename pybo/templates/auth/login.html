@@ -49,7 +49,7 @@
             </div>
             <button type="submit" class="btn btn-primary">로그인</button>
             <a href="{{ url_for('auth.kakao_login') }}"><img id="kakaoBtn" class="kakao_login" src="/static/image/kakao_login_medium.png" style="margin-left: 20px; width: 80px; height: 40px;"></a>
-            <img id="googleSignUp" class="google_login" src="/static/image/google_SI.png" onclick="loginWithGoogle()" style="height: 40px;">
+            <a href="{{ url_for('auth.google_login') }}"><img id="googleSignUp" class="google_login" src="/static/image/google_SI.png" style="height: 40px;"></a>
         </form>
     </div>
 </div>
@@ -73,13 +73,14 @@
                 var googleData = {
                     User : user
                 };
+
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', '/auth/google_login', true);
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.send(JSON.stringify(googleData));
 
                 // 로그인 성공 후 리디렉션
-                window.location.href = "https://minseokblog.com/"; // 리디렉션할 URL로 변경
+                window.location.href = "http://127.0.0.1:5000"; // 리디렉션할 URL로 변경
             })
 
             .catch(function(error) {
