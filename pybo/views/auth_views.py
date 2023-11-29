@@ -182,7 +182,7 @@ def google_after_login():
             session.clear()
             session['user_id'] = already_google_user.id
             if os.path.exists('/var/log/nginx/access.log'):
-                login_time_management(already_google_user, 'Google')
+                login_time_management(already_google_user.id, "Google")
             else:
                 pass
         else:
