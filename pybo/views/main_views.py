@@ -169,5 +169,3 @@ def index():
                            post_list=post_list, first_user=first_user, second_user=second_user, third_user=third_user,
                            first_score=first_score, second_score=second_score, third_score=third_score,
                            news_list=news_list, redirect_url=redirect_url)
-
-
