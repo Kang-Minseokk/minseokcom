@@ -52,6 +52,10 @@ def signup():
                 db.session.commit()
                 session.clear()
                 session['user_id'] = user.id
+                if os.path.exists('/var/log/nginx/access.log'):
+                    login_time_management(user.id, "main")
+                else:
+                    pass
             else:
                 profile_img = form.profile_img.data
                 filename = profile_img.filename
