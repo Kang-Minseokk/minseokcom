@@ -7,10 +7,10 @@ logs
 driver
 news_letter.txt
 weather_data.txt
-weather_data_Busan.txt
-weather_data_Ulsan.txt
-weather_data_Incheon.txt
-weather_data_Daejeon.txt
-weather_data_Daegu.txt
-weather_data_Gwangju.txt
-weather_data_Seoul.txt
+pybo/static/statistic_data/weather_data_Busan.txt
+pybo/static/statistic_data/weather_data_Ulsan.txt
+pybo/static/statistic_data/weather_data_Incheon.txt
+pybo/static/statistic_data/weather_data_Daejeon.txt
+pybo/static/statistic_data/weather_data_Daegu.txt
+pybo/static/statistic_data/weather_data_Gwangju.txt
+pybo/static/statistic_data/weather_data_Seoul.txt
