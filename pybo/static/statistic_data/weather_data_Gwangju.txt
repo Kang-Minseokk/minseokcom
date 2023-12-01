@@ -15,3 +15,5 @@
 14:00, 8.2, 53, overcast clouds
 09:00, -0.1, 80, light snow
 09:00, -0.1, 80, light snow
+14:00, 4.4, 57, broken clouds
+14:00, 4.4, 57, broken clouds

@@ -35,3 +35,5 @@
 14:00, 6.0, 66, overcast clouds
 09:00, -7.0, 62, few clouds
 09:00, -7.0, 62, few clouds
+14:00, 2.0, 59, broken clouds
+14:00, 2.0, 59, broken clouds
