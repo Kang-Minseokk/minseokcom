@@ -226,3 +226,5 @@
 12:00, 1.7, 48, light snow
 14:00, 2.7, 52, light shower snow
 14:00, 2.7, 52, light shower snow
+09:00, -7.2, 74, clear sky
+09:00, -7.2, 74, clear sky

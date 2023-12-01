@@ -29,3 +29,5 @@
 12:00, 8.0, 44, overcast clouds
 14:00, 9.0, 38, overcast clouds
 14:00, 9.0, 38, overcast clouds
+09:00, 1.4, 49, clear sky
+09:00, 1.4, 49, clear sky

@@ -31,3 +31,5 @@
 12:00, 1.9, 60, broken clouds
 14:00, 2.9, 70, light rain
 14:00, 2.9, 70, light rain
+09:00, -3.1, 54, clear sky
+09:00, -3.1, 54, clear sky

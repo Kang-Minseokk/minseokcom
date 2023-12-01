@@ -35,3 +35,5 @@
 12:00, 3.5, 60, broken clouds
 14:00, 6.5, 49, broken clouds
 14:00, 6.5, 49, broken clouds
+09:00, -3.5, 63, few clouds
+09:00, -3.5, 63, few clouds

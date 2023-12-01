@@ -161,6 +161,7 @@ def index():
 
     with open(os.path.join(BASE_DIR, 'pybo/static/statistic_data/news_letter.txt'), 'r') as f:
         lines = f.readlines()
+        news_list_link = lines[-2]
         news_list = lines[-1]
 
     return render_template('home.html', question_list=question_list, total_posts_count=total_posts_count,
@@ -168,4 +169,5 @@ def index():
                            daily_visit_list=daily_visit_list, category_list=category_list, form_for_new_category=form_for_new_category,
                            post_list=post_list, first_user=first_user, second_user=second_user, third_user=third_user,
                            first_score=first_score, second_score=second_score, third_score=third_score,
-                           news_list=news_list, redirect_url=redirect_url)
+                           news_list=news_list, redirect_url=redirect_url, news_list_link=news_list_link)
+

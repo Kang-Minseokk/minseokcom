@@ -99,7 +99,7 @@
                 </div>
                 <div style="border-radius: 10px; margin-top: 10px; background-color: #4a4a4a; color: #fff; padding: 5px; box-shadow: 0.5px 1px 1px 2px #636363;">
                     <h5>새로운 소식</h5>
-                    <h6 id="newsText">준비중입니다...</h6>
+                    <a id="newsLink" href="#" style="color: white;"><h6 id="newsText">준비중입니다...</h6></a>
                 </div>
             </div>
         </div>
@@ -114,13 +114,14 @@
     <div id="post_list" style="display: none;">{{ post_list }}</div>
     <input type="hidden" name="kakaoId" id="kakaoId" value="{{ kakaoId or '' }}"/>
     <input type="hidden" name="newsList" id="newsList" value="{{ news_list or '' }}"/>
+    <input type="hidden" name="newsListLink" id="newsListLink" value="{{ news_list_link or '' }}"/>
 
     <script>
         var dateList = [];
         var today = new Date();
         var visitCountList = document.getElementById('data').textContent.split(',').map(Number);
         var postList = document.getElementById('post_list').textContent.split(',').map(Number);
-        console.log(visitCountList)
+
 
         for (var i = 7; i > -1; i--) {
             var date = new Date(today);
@@ -177,16 +178,18 @@
 
         //타이머를 사용해서 뉴스 토픽 새로고침 자동화하기
         var newsListText = document.getElementById('newsList').value.split("', '");
-
+        var newsListLink = document.getElementById('newsListLink').value.split("', '");
+        newsListLink[0] = newsListLink[0].slice(29);
         newsListText[0] = newsListText[0].slice(29);
         newsListText[newsListText.length - 1] = newsListText[newsListText.length - 1].slice(0, -1);
-        console.log(newsListText)
         var num = 0;
 
         setInterval(function() {
             if (newsListText[num]) {
                 let newsText = document.getElementById("newsText");
                 newsText.textContent = newsListText[num];
+                let newsLink = document.getElementById("newsLink");
+                newsLink.href = newsListLink[num];
                 num += 1;
             } else {
                 num = 0;

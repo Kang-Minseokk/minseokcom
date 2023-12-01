@@ -108,11 +108,15 @@ def news_crawl():
     soup = BeautifulSoup(html_content, features="html.parser")
     news_content = soup.find_all(class_='news-link')
     news_list = []
+    news_link_list = []
     url_path = os.path.join(BASE_DIR, "pybo/static/statistic_data/news_letter.txt")
     for news in news_content:
+        news_link_list.append(news['href'])
         news_list.append(news.text.replace("'", "\""))
     news_list = str(news_list).strip('[]')
+    news_link_list = str(news_link_list).strip('[]')
     with open(url_path, 'a') as f:
+        f.write(f'[{datetime.datetime.now()}]' + news_link_list + '\n')
         f.write(f'[{datetime.datetime.now()}]' + news_list + '\n')
 
 
