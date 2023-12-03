@@ -145,7 +145,7 @@ def kakao_after_login():
 
 @bp.route('/google_login', methods=['GET'])
 def google_login():
-    url = f"https://accounts.google.com/o/oauth2/v2/auth?client_id={get_client_id_google()}&redirect_uri={get_redirect_url()}/auth/after_google_login&scope=https://www.googleapis.com/auth/userinfo.email%20https://www.googleapis.com/auth/userinfo.profile&response_type=code"
+    url = f"https://accounts.google.com/o/oauth2/v2/auth?client_id={get_client_id_google()}&redirect_uri={get_redirect_url()}auth/after_google_login&scope=https://www.googleapis.com/auth/userinfo.email%20https://www.googleapis.com/auth/userinfo.profile&response_type=code"
     return redirect(url)
 
 

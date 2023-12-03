@@ -39,3 +39,5 @@
 09:00, -3.5, 63, few clouds
 14:00, 4.5, 36, few clouds
 14:00, 4.5, 36, few clouds
+16:00, 4.5, 33, few clouds
+16:00, 4.5, 33, few clouds
