@@ -72,9 +72,7 @@ def index():
                 only_visit_user_list = json.loads(today_visit_user.only_visit_user_list)
 
                 if ip_address not in only_visit_user_list:
-                    logging.info(ip_address)
                     only_visit_user_list.append(ip_address)
-                    logging.info(only_visit_user_list)
                     today_visit_user.only_visit_user_list = json.dumps(only_visit_user_list)
                     today_visit_user.only_visit_count = json.dumps(len(only_visit_user_list))
                 else:
@@ -94,18 +92,11 @@ def index():
                 db.session.commit()
 
 
-            # 오늘 하루 방문자 리스트
-    if today_visit_user:
-        today_visit_user_list = json.loads(today_visit_user.visit_list)
-        today_visit_user_count = len(today_visit_user_list)
-    else:
-        today_visit_user_count = 0
-
     # 총 방문자 리스트
     total_visit_user = DailyVisit.query.all()
     total_visit_count = 0
     for day_visit in total_visit_user:
-        day_visit_list = json.loads(day_visit.visit_list)
+        day_visit_list = json.loads(day_visit.only_visit_user_list)
         day_visit_count = len(day_visit_list)
         total_visit_count += day_visit_count
 
@@ -189,7 +180,7 @@ def index():
         news_list = lines[-1]
 
     return render_template('home.html', question_list=question_list, total_posts_count=total_posts_count,
-                           today_visit_user_count=today_visit_user_count, total_visit_count=total_visit_count,
+                           today_visit_user_count=today_visit_user.only_visit_count, total_visit_count=total_visit_count,
                            daily_visit_list=daily_visit_list, category_list=category_list, form_for_new_category=form_for_new_category,
                            post_list=post_list, first_user=first_user, second_user=second_user, third_user=third_user,
                            first_score=first_score, second_score=second_score, third_score=third_score,
