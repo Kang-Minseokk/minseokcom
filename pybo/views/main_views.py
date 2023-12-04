@@ -70,7 +70,7 @@ def index():
                     match = ip_pattern.search(row)
                     ip_address = match.group(1)
                 only_visit_user_list = json.loads(today_visit_user.only_visit_user_list)
-                only_visit_user_list.append(ip_address)
+                only_visit_user_list.append(ip_address.strip('\"'))
                 today_visit_user.only_visit_user_list = json.dumps(only_visit_user_list)
                 today_visit_user.only_visit_count = json.dumps(len(only_visit_user_list))
         except FileNotFoundError:
