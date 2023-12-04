@@ -4,8 +4,12 @@ from flask import redirect
 
 from config.default import BASE_DIR
 from pybo import db
-from pybo.models import LoginStatus
+from pybo.models import LoginStatus, Question
 
+#최신 글 반환 함수
+def get_latest_post(posts):
+    question_list = Question.query.order_by(Question.create_date.desc()).limit(posts).all()
+    return question_list
 
 # 리다이렉트 url을 반환하는 함수
 def get_redirect_url():

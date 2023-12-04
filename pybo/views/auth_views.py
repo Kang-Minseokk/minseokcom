@@ -33,7 +33,6 @@ def power_login_required(view):
             flash("Special Access Required!!", "warning")
             return redirect(url_for('auth.login'))
         return view(**kwargs)
-
     return wrapped_view
 
 

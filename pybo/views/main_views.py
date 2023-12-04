@@ -8,7 +8,7 @@ from flask import Blueprint, render_template, g, request, redirect, url_for, jso
 
 from config.default import BASE_DIR
 from ..forms import CategoryForm, KakaoForm
-from ..functions import get_redirect_url
+from ..functions import get_redirect_url, get_latest_post
 from ..models import Question, DailyVisit, Category, question_voter, User, answer_voter, Answer, Kakao
 from pybo import db
 from collections import Counter
@@ -34,9 +34,9 @@ def load_logged_in_user():
 
 @bp.route('/', methods=['POST', 'GET'])
 def index():
+    # 오늘 최초 접속한 클라이언트의 ip주소
     only_visit_user_ip = request.remote_addr
-    question_list = Question.query.order_by(Question.create_date.desc()).limit(5).all()
-    # 오늘 날짜
+    question_list = get_latest_post(5)
     today_date = datetime.datetime.now().strftime('%Y-%m-%d')
     today_visit_user = DailyVisit.query.filter_by(date=today_date).first()
     form_for_new_category = CategoryForm()
@@ -54,21 +54,11 @@ def index():
     if g.user:
         if today_visit_user:
             today_visit_user_list = json.loads(today_visit_user.visit_list)
-
             if g.user.id not in today_visit_user_list:
                 today_visit_user_list.append(g.user.id)
                 today_visit_user.visit_list = json.dumps(today_visit_user_list)
                 today_visit_user.count = json.dumps(len(today_visit_user_list))
                 db.session.commit()
-        else:
-            today_visit = DailyVisit(
-                date=today_date,
-                visit_list=f"[{g.user.id}]",
-                only_visit_user_list="[]",
-                count=1,
-                only_visit_count=0
-            )
-            db.session.commit()
 
     else:
         only_visit_user_ip = request.remote_addr
@@ -116,7 +106,9 @@ def index():
             today_visit = DailyVisit(
                 date=today_date,
                 visit_list="[]",
-                count=0
+                count=0,
+                only_visit_user_list="[]",
+                only_visit_count=0
             )
             db.session.add(today_visit)
             db.session.commit()
