@@ -63,14 +63,33 @@ def index():
             today_visit = DailyVisit(
                 date=today_date,
                 visit_list=f"[{g.user.id}]",
-                count=1
+                only_visit_user_list="[]",
+                count=1,
+                only_visit_count=0
             )
             db.session.commit()
-    else:
-        visited_user = request.remote_addr
-        logging.info(f"connect IP: {visited_user}")
 
-    # 오늘 하루 방문자 리스트
+    else:
+        only_visit_user_ip = request.remote_addr
+        if today_visit_user:
+            only_visit_user_list = json.loads(today_visit_user.only_visit_user_list)
+            if only_visit_user_ip not in only_visit_user_list:
+                only_visit_user_list.append(only_visit_user_ip)
+                today_visit_user.only_visit_list = json.dumps(only_visit_user_list)
+                today_visit_user.only_visit_count = json.dumps(len(only_visit_user_list))
+                db.session.commit()
+        else:
+            today_visit = DailyVisit(
+                date=today_date,
+                visit_list="[]",
+                only_visit_user_list=f"[{only_visit_user_ip}]",
+                count=0,
+                only_visit_count=1
+            )
+            db.session.add(today_visit)
+            db.session.commit()
+
+            # 오늘 하루 방문자 리스트
     if today_visit_user:
         today_visit_user_list = json.loads(today_visit_user.visit_list)
         today_visit_user_count = len(today_visit_user_list)

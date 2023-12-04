@@ -78,6 +78,8 @@ class DailyVisit(db.Model):
     date = db.Column(db.String(20), nullable=False)
     visit_list = db.Column(db.Text(), nullable=True)
     count = db.Column(db.Integer, nullable=False, default=0)
+    only_visit_user_list = db.Column(db.Text(), nullable=True)
+    only_visit_count = db.Column(db.Integer, nullable=False, default=0)
 
 
 class Goal(db.Model):
