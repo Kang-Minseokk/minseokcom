@@ -155,7 +155,7 @@ def google_after_login():
     if code:
         CLIENT_ID = get_client_id_google()
         CLIENT_SECRET = get_client_secret_google()
-        REDIRECT_URI = f'{get_redirect_url()}/auth/after_google_login'
+        REDIRECT_URI = f'{get_redirect_url()}auth/after_google_login'
         GOOGLE_TOKEN_ENDPOINT = 'https://oauth2.googleapis.com/token'
         GOOGLE_USERINFO_ENDPOINT = 'https://www.googleapis.com/oauth2/v2/userinfo'
 
