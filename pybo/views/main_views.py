@@ -70,7 +70,9 @@ def index():
                     match = ip_pattern.search(row)
                     ip_address = match.group(1)
                 only_visit_user_list = json.loads(today_visit_user.only_visit_user_list)
+                logging.info(type(only_visit_user_list))
                 logging.info(only_visit_user_list)
+                logging.info(ip_address)
                 if f'\"{ip_address}\"' not in only_visit_user_list:
                     only_visit_user_list.append(ip_address)
                     today_visit_user.only_visit_user_list = json.dumps(only_visit_user_list)
