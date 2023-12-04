@@ -73,7 +73,7 @@ def index():
                 logging.info(type(only_visit_user_list))
                 logging.info(only_visit_user_list)
                 logging.info(ip_address)
-                if f'\"{ip_address}\"' not in only_visit_user_list:
+                if f"\'{ip_address}\'" not in only_visit_user_list:
                     only_visit_user_list.append(ip_address)
                     today_visit_user.only_visit_user_list = json.dumps(only_visit_user_list)
                     today_visit_user.only_visit_count = json.dumps(len(only_visit_user_list))
