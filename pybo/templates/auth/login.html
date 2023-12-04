@@ -16,6 +16,7 @@
             cursor: pointer;
         }
     </style>
+    <script src="{{ url_for('static', filename='myScript.js') }}"></script>
 </head>
 <div class="col-md-10">
     <div class="container my-3">
@@ -35,12 +36,13 @@
             </div>
             <button type="submit" class="btn btn-primary">로그인</button>
             <a onclick="kakaoLoginWindow()"><img id="kakaoBtn" class="kakao_login" src="/static/image/kakao_login_medium.png" style="margin-left: 20px; width: 80px; height: 40px;"></a>
-            <a href="{{ url_for('auth.google_login') }}"><img id="googleSignUp" class="google_login" src="/static/image/google_SI.png" style="height: 40px;"></a>
+            <a onclick="googleLoginWindow()"><img id="googleSignUp" class="google_login" src="/static/image/google_SI.png" style="height: 40px;"></a>
         </form>
     </div>
 </div>
 <!-- 자바스크립트로 값을 전달하기 위한 부분입니다. -->
-<a id="loginUrl" href="{{ url_for('auth.kakao_login') }}" type="hidden"></a>
+<a id="kakaoLoginUrl" href="{{ url_for('auth.kakao_login') }}" type="hidden"></a>
+<a id="googleLoginUrl" href="{{ url_for('auth.google_login') }}" type="hidden"></a>
 <input id="redirectUrl" type="hidden" value="{{ redirect_url or '' }}">
 
 <script>
@@ -53,12 +55,15 @@
         }
     }
 
-    // 카카오 로그인 실행 시 새로운 창에서 로그인을 실행할 수 있도록 함수를 만들어 봅니다.
-    var URL = document.getElementById('loginUrl').href;
+    // 카카오, 구글 로그인을 하기 위해서 필요한 redirect_url과 URL값 가져오기
+    var kakaoUrl = document.getElementById('kakaoLoginUrl').href;
+    var googleUrl = document.getElementById('googleLoginUrl').href;
     var redirectUrl = document.getElementById('redirectUrl').value;
+
+    // 카카오 로그인 실행 시 새로운 창에서 로그인을 실행할 수 있도록 함수를 만들어 봅니다.
     function kakaoLoginWindow() {
         let mainWindow = window;
-        let loginWindow = window.open(URL, '_blank', 'width=500, height=600');
+        let loginWindow = window.open(kakaoUrl, '_blank', 'width=500, height=600');
         // 로그인이 완료되면 해당 시점에 로그인 창을 닫고 기존의 창으로 돌아가야 합니다.
         // 주기적으로 확인하는 함수
         let checkLoginStatus = setInterval(function() {
@@ -67,6 +72,24 @@
                 loginWindow.close();
                 clearInterval(checkLoginStatus); // 로그인 확인이 되면 clearInterval로 중지
                 mainWindow.location.href = redirectUrl;
+            }
+        }, 100); // 1초마다 확인 (원하는 주기로 조절)
+    }
+
+    // 구글 로그인 실행 시 새로운 창에서 로그인을 실행할 수 있도록 함수를 만들어 봅니다.
+    function googleLoginWindow() {
+        let mainWindow = window;
+        let loginWindow = window.open(googleUrl, '_blank', 'width=500, height=600');
+        // 로그인이 완료되면 해당 시점에 로그인 창을 닫고 기존의 창으로 돌아가야 합니다.
+        // 주기적으로 확인하는 함수
+        let checkLoginStatus = setInterval(function() {
+            // 로그인이 완료되면 해당 시점에 로그인 창을 닫고 기존의 창으로 돌아가기
+            if (loginWindow.location.href === redirectUrl) {
+                loginWindow.close();
+                clearInterval(checkLoginStatus); // 로그인 확인이 되면 clearInterval로 중지
+                mainWindow.location.href = redirectUrl;
+            } else {
+                console.log('Login Waiting...')
             }
         }, 100); // 1초마다 확인 (원하는 주기로 조절)
     }

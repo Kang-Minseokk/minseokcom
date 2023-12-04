@@ -232,3 +232,5 @@
 14:00, 0.2, 34, clear sky
 16:00, 1.0, 34, clear sky
 16:00, 1.0, 34, clear sky
+10:00, -0.7, 80, clear sky
+10:00, -0.7, 80, clear sky

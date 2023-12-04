@@ -226,3 +226,5 @@
 14:00, 5.0, 36, few clouds
 16:00, 6.0, 33, few clouds
 16:00, 6.0, 33, few clouds
+10:00, 1.0, 69, clear sky
+10:00, 1.0, 69, clear sky
