@@ -75,6 +75,7 @@ def index():
                     only_visit_user_list.append(ip_address)
                     today_visit_user.only_visit_user_list = json.dumps(only_visit_user_list)
                     today_visit_user.only_visit_count = json.dumps(len(only_visit_user_list))
+                    db.session.commit()
                 else:
                     pass
         except FileNotFoundError:
