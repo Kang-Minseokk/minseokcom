@@ -1,5 +1,6 @@
 import datetime
 import json
+import logging
 import os.path
 import time
 
@@ -48,8 +49,7 @@ def index():
         db.session.commit()
         return redirect(url_for('main.index'))
 
-
-    # 테이블에 방문자 추적하기
+    # 테이블에 로그인을 완료한 사용자 추적하기
     if g.user:
         if today_visit_user:
             today_visit_user_list = json.loads(today_visit_user.visit_list)
@@ -66,8 +66,9 @@ def index():
                 count=1
             )
             db.session.commit()
-
-
+    else:
+        visited_user = request.remote_addr
+        logging.info(f"connect IP: {visited_user}")
 
     # 오늘 하루 방문자 리스트
     if today_visit_user:
@@ -75,7 +76,6 @@ def index():
         today_visit_user_count = len(today_visit_user_list)
     else:
         today_visit_user_count = 0
-
 
     # 총 방문자 리스트
     total_visit_user = DailyVisit.query.all()
