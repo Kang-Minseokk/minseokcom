@@ -98,25 +98,23 @@ def index():
         total_visit_count += day_visit_count
 
     # 일별 방문자 리스트
+    if DailyVisit.query.filter_by(date=today_date).first():
+        pass
+    else:
+        today_visit = DailyVisit(
+            date=today_date,
+            visit_list="[]",
+            count=0,
+            only_visit_user_list="[]",
+            only_visit_count=0
+        )
+        db.session.add(today_visit)
+        db.session.commit()
+    daily_count_list = reversed(DailyVisit.query.order_by(DailyVisit.id.desc()).limit(8).all())
     daily_visit_list = []
-    for i in range(8):
-        if DailyVisit.query.filter_by(date=today_date).first():
-            num = DailyVisit.query.filter_by(date=today_date).first().id - 7 + i
-        else:
-            today_visit = DailyVisit(
-                date=today_date,
-                visit_list="[]",
-                count=0,
-                only_visit_user_list="[]",
-                only_visit_count=0
-            )
-            db.session.add(today_visit)
-            db.session.commit()
-            num = DailyVisit.query.filter_by(date=today_date).first().id - 7 + i
-        daily_visit_count = DailyVisit.query.filter_by(id=num).first().count
-        daily_visit_list.append(daily_visit_count)
-    daily_visit_list = str(daily_visit_list)
-    daily_visit_list = daily_visit_list.strip('[]')
+    for daily_count in daily_count_list:
+        daily_visit_list.append(daily_count.count)
+    daily_visit_list = str(daily_visit_list).strip('[]')
 
     # 총 포스트 개수
     total_posts_count = Question.query.count()

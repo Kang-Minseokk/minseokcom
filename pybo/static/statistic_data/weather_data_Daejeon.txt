@@ -41,3 +41,5 @@
 16:00, 2.0, 57, overcast clouds
 10:00, -4.0, 56, clear sky
 10:00, -4.0, 56, clear sky
+15:00, 8.0, 41, clear sky
+15:00, 8.0, 41, clear sky

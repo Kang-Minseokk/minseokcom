@@ -234,3 +234,5 @@
 16:00, 1.0, 34, clear sky
 10:00, -0.7, 80, clear sky
 10:00, -0.7, 80, clear sky
+15:00, 8.2, 33, broken clouds
+15:00, 8.2, 33, broken clouds
