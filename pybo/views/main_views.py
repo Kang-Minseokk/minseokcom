@@ -34,6 +34,7 @@ def load_logged_in_user():
 
 @bp.route('/', methods=['POST', 'GET'])
 def index():
+    only_visit_user_ip = request.remote_addr
     question_list = Question.query.order_by(Question.create_date.desc()).limit(5).all()
     # 오늘 날짜
     today_date = datetime.datetime.now().strftime('%Y-%m-%d')
@@ -95,6 +96,8 @@ def index():
         today_visit_user_count = len(today_visit_user_list)
     else:
         today_visit_user_count = 0
+
+
 
     # 총 방문자 리스트
     total_visit_user = DailyVisit.query.all()
@@ -188,5 +191,6 @@ def index():
                            daily_visit_list=daily_visit_list, category_list=category_list, form_for_new_category=form_for_new_category,
                            post_list=post_list, first_user=first_user, second_user=second_user, third_user=third_user,
                            first_score=first_score, second_score=second_score, third_score=third_score,
-                           news_list=news_list, redirect_url=redirect_url, news_list_link=news_list_link)
+                           news_list=news_list, redirect_url=redirect_url, news_list_link=news_list_link,
+                           only_visit_user_ip=only_visit_user_ip)
 
