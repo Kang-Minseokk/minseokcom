@@ -2,6 +2,7 @@ import datetime
 import json
 import logging
 import os.path
+import re
 import time
 
 from flask import Blueprint, render_template, g, request, redirect, url_for, jsonify, session
@@ -61,24 +62,31 @@ def index():
                 db.session.commit()
 
     else:
+        try:
+            with open('/var/log/nginx/access.log', 'r') as log_file:
+                for row in log_file:
+                    ip_pattern = re.compile(r'^(\d+\.\d+\.\d+\.\d+)')
+                    # Use the pattern to search for the IP address in the log entry
+                    match = ip_pattern.search(row)
+                    ip_address = match.group(1)
+                only_visit_user_list = json.loads(today_visit_user.only_visit_user_list)
+                only_visit_user_list.append(ip_address)
+                today_visit_user.only_visit_user_list = json.dumps(only_visit_user_list)
+                today_visit_user.only_visit_count = json.dumps(len(only_visit_user_list))
+        except FileNotFoundError:
+            print("File not found. Please check file path.")
+        except Exception as e:
+            print(f"An error occurred: {e}")
         only_visit_user_ip = request.remote_addr
         if today_visit_user:
             only_visit_user_list = json.loads(today_visit_user.only_visit_user_list)
+
             if only_visit_user_ip not in only_visit_user_list:
                 only_visit_user_list.append(only_visit_user_ip)
                 today_visit_user.only_visit_list = json.dumps(only_visit_user_list)
                 today_visit_user.only_visit_count = json.dumps(len(only_visit_user_list))
                 db.session.commit()
-        else:
-            today_visit = DailyVisit(
-                date=today_date,
-                visit_list="[]",
-                only_visit_user_list=f"[{only_visit_user_ip}]",
-                count=0,
-                only_visit_count=1
-            )
-            db.session.add(today_visit)
-            db.session.commit()
+
 
             # 오늘 하루 방문자 리스트
     if today_visit_user:
@@ -86,8 +94,6 @@ def index():
         today_visit_user_count = len(today_visit_user_list)
     else:
         today_visit_user_count = 0
-
-
 
     # 총 방문자 리스트
     total_visit_user = DailyVisit.query.all()
