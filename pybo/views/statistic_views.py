@@ -4,6 +4,7 @@ from flask import Blueprint, render_template, request, url_for
 from werkzeug.utils import redirect
 
 from config.default import BASE_DIR
+from .auth_views import login_required
 from .. import db
 from ..forms import CategoryForm, StatisticForm
 from ..models import Category, Statistic
@@ -14,6 +15,7 @@ bp = Blueprint('statistic', __name__, url_prefix='/statistic')
 
 
 @bp.route('/s_list/')
+@login_required
 def s_list():
     grp = request.args.get('grp', type=str, default=1)
     form_for_new_category = CategoryForm()
@@ -55,6 +57,7 @@ def s_list():
 
 
 @bp.route('/create/', methods=['GET', 'POST'])
+@login_required
 def create():
     form = StatisticForm()
     form_for_new_category = CategoryForm()
@@ -82,6 +85,7 @@ def create():
 
 
 @bp.route('/live_chart')
+@login_required
 def live_chart():
     form_for_new_category = CategoryForm()
     seoul_time_list, seoul_temperature_list, seoul_humidity_list, seoul_description_list = [], [], [], []

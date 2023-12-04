@@ -18,6 +18,7 @@ bp = Blueprint('question', __name__, url_prefix='/question')
 
 
 @bp.route('/data_science_list/<string:category>')
+@login_required
 def ds_list(category):
     # 입력 파라미터
     page = request.args.get('page', type=int, default=1)
@@ -76,6 +77,7 @@ def ds_list(category):
 
 
 @bp.route('/development_list/')
+@login_required
 def d_list():
     # 입력 파라미터
     tag_list = Question.query.with_entities(Question.tag).all()
@@ -103,6 +105,7 @@ def d_list():
 
 
 @bp.route('/computer_science_list/')
+@login_required
 def cs_list():
     # 입력 파라미터
     kw = request.args.get('kw', type=str, default='')
@@ -143,6 +146,7 @@ def cs_list():
 
 
 @bp.route('/artificial_intelligence_list/<int:num>')
+@login_required
 def ai_list(num):
     # 입력 파라미터
     page = request.args.get('page', type=int, default=1)
@@ -185,6 +189,7 @@ def ai_list(num):
 
 
 @bp.route('/relaxation_list/<int:num>')
+@login_required
 def r_list(num):
     # 입력 파라미터
     page = request.args.get('page', type=int, default=1)
@@ -239,6 +244,7 @@ def r_list(num):
 
 
 @bp.route('/communication_list/')
+@login_required
 def c_list():
     # 입력 파라미터
     kw = request.args.get('kw', type=str, default='')
