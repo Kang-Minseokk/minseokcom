@@ -89,7 +89,6 @@ def index():
 
         if today_visit_user:
             only_visit_user_list = json.loads(today_visit_user.only_visit_user_list)
-
             if only_visit_user_ip not in only_visit_user_list:
                 only_visit_user_list.append(only_visit_user_ip)
                 today_visit_user.only_visit_list = json.dumps(only_visit_user_list)

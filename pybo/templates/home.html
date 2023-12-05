@@ -3,6 +3,10 @@
 
 <head>
     <style>
+        @font-face {
+            font-family: 'yeongdeok_font';
+            src: url('../static/fonts/Yeongdeok Snow Crab.ttf') format('truetype');
+        }
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -56,6 +60,13 @@
         .content-container {
             display: flex;
         }
+
+        @keyframes cursor {
+            to {
+                border-color: transparent;
+            }
+        }
+
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 </head>
@@ -91,6 +102,12 @@
             </div>
         </div>
     </div>
+    <div class="col-10 offset-2 owner-info" style="position: relative; width: 200px; height: 400px; border-top: 1px solid #fff; margin-top: 10px; padding: 20px;">
+        <div class="owner-profile" style="position: absolute; width: 800px; height: 30%; left: 200px; background-color: #e3ded5; display: flex; align-items: center; justify-content: center;">
+            <span class="txt" style="font-family: yeongdeok_font; font-size: 20px; display: table-cell; vertical-align: middle; border-right: 0.05em solid #F81857; animation: cursor 0.5s ease infinite;"></span>
+        </div>
+    </div>
+
 
     <div id="data" style="display: none;">{{ daily_visit_list }}</div>
     <div id="post_list" style="display: none;">{{ post_list }}</div>
@@ -179,6 +196,20 @@
                 num = 0;
             }
         }, 5000);
+
+        const content = '안녕하세요! 강민석입니다. 만나서 반가워요!';
+        const txt = document.querySelector('.txt');
+        let n=0;
+
+        const typing = function() {
+            txt.innerHTML += content[n++];
+            if (n > content.length) {
+                txt.innerHTML = '';
+                n = 0;
+            }
+        };
+
+        setInterval(typing, 200);
     </script>
 </body>
 {% endblock %}
