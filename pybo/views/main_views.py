@@ -51,6 +51,10 @@ def index():
         db.session.commit()
         return redirect(url_for('main.index'))
 
+    #어제 방문한 클라이언트의 수
+    yesterday_visit_result = DailyVisit.query.all()[-2]
+    yesterday_visit_count = yesterday_visit_result.only_visit_count
+
     # 테이블에 로그인을 완료한 사용자 추적하기
     if g.user:
         if today_visit_user:
@@ -82,7 +86,7 @@ def index():
             print("File not found. Please check file path.")
         except Exception as e:
             print(f"An error occurred: {e}")
-        only_visit_user_ip = request.remote_addr
+
         if today_visit_user:
             only_visit_user_list = json.loads(today_visit_user.only_visit_user_list)
 
@@ -186,5 +190,5 @@ def index():
                            post_list=post_list, first_user=first_user, second_user=second_user, third_user=third_user,
                            first_score=first_score, second_score=second_score, third_score=third_score,
                            news_list=news_list, redirect_url=redirect_url, news_list_link=news_list_link,
-                           only_visit_user_ip=only_visit_user_ip)
+                           only_visit_user_ip=only_visit_user_ip, yesterday_visit_count=yesterday_visit_count)
 
