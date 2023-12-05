@@ -105,13 +105,18 @@ def news_crawl():
     time.sleep(1)
     html_content = driver.page_source
 
-    soup = BeautifulSoup(html_content, features="html.parser")
-    news_content = soup.find_all(class_='news-link')
     news_list = []
     news_link_list = []
+    soup = BeautifulSoup(html_content, features="html.parser")
+    news_content = soup.find_all(class_='news-link')
+
+    for news_link in soup.find_all(class_='News_curated-news__meta__WvGmE'):
+        span_tag = news_link.find_all('span')[1]
+        a_tag = span_tag.find('a')
+        news_link_list.append(a_tag.get('href'))
+
     url_path = os.path.join(BASE_DIR, "pybo/static/statistic_data/news_letter.txt")
     for news in news_content:
-        news_link_list.append(news['href'])
         news_list.append(news.text.replace("'", "\""))
     news_list = str(news_list).strip('[]')
     news_link_list = str(news_link_list).strip('[]')
