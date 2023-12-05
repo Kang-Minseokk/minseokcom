@@ -15,13 +15,13 @@
         .sidebar {
             width: 200px;
             height: 400px;
-            background-color: #fff;
+            background-color: white;
             overflow: auto;
             margin-top: 10px;
             box-shadow: 1px 2px 2px 4px #ababab;
             border-radius: 20px;
             margin-left: 5px;
-            opacity: 0.7;
+            opacity: 0.9;
             position: fixed;
         }
 
@@ -30,7 +30,7 @@
         }
 
         body {
-            background: linear-gradient(to top, #cccaca, #2e2e24);
+            background: #b9c4c0;
             background-attachment: fixed;
         }
 
@@ -123,6 +123,20 @@
         .category-text:hover {
             text-decoration: none;
         }
+
+        .blog-info {
+            height: 200px;
+            width: 200px;
+            background-color: white;
+            position: fixed;
+            top: 500px;
+            margin-left: 5px;
+            border-radius: 5px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            font-family: monospace;
+        }
     </style>
 </head>
 
@@ -187,6 +201,12 @@
                     <li class="category-layout"><button id="add-category" class="category-text">Add Category</button></li>
                 </ul>
             </div>
+        </div>
+        <div class="blog-info">
+            <span>⌛ yesterday: {{ today_visit_user_count }}</span>
+            <span>⏳ today: {{ today_visit_user_count }}</span>
+            <span>🚀 total: {{ total_visit_count }}</span>
+            <span>🧑🏻‍💻 posts: {{ total_posts_count }}</span>
         </div>
         <div class="button-area" style="display: flex; flex-direction: row; background-color: white;">
             <button class="up-button" id="up-button">^</button>

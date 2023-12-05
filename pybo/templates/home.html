@@ -56,7 +56,6 @@
         .content-container {
             display: flex;
         }
-
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 </head>
@@ -79,29 +78,12 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="container" style="display: flex; flex-direction: column; height: 300px;" >
-                <div style="border-radius: 10px; margin-top: 10px; background-color: #4a4a4a; color: #fff; padding: 5px; box-shadow: 0.5px 1px 1px 2px #636363;">
-                    <h5>오늘 방문자</h5>
-                    <h6> {{ today_visit_user_count }} 명</h6>
-                </div>
-                <div style="border-radius: 10px; margin-top: 10px; background-color: #4a4a4a; color: #fff; padding: 5px; box-shadow: 0.5px 1px 1px 2px #636363;">
-                    <h5>총 방문자</h5>
-                    <h6> {{ total_visit_count }} 명</h6>
-                </div>
-                <div style="border-radius: 10px; margin-top: 10px; background-color: #4a4a4a; color: #fff; padding: 5px; box-shadow: 0.5px 1px 1px 2px #636363;">
-                    <h5>전체 포스트</h5>
-                    <h6> {{ total_posts_count }} 개</h6>
-                </div>
-                <div class="activity_ranking" style="border-radius: 10px; margin-top: 10px; background-color: #4a4a4a; color: #fff; padding: 5px; box-shadow: 0.5px 1px 1px 2px #636363;" title="활동 점수는 질문의 추천 수와 답변의 추천 수를 더한값 입니다.">
-                    <h5>활동 순위</h5>
-                    <h6>🥇{{ first_user }} (🪙 {{ first_score }})🥈{{ second_user }} (🪙 {{ second_score }})🥉{{ third_user }} (🪙 {{ third_score }})</h6>
-                </div>
-                <div style="border-radius: 10px; margin-top: 10px; background-color: #4a4a4a; color: #fff; padding: 5px; box-shadow: 0.5px 1px 1px 2px #636363;">
-                    <h5>새로운 소식</h5>
-                    <a id="newsLink" href="#" style="color: white;"><h6 id="newsText">준비중입니다...</h6></a>
-                </div>
-            </div>
+        <div class="col-md-6" style="position: relative;">
+            <img class="news_bg_image" src="{{ url_for('static', filename='image/paper.jpg') }}" style="border-radius: 10px; margin-top: 10px; padding: 5px; box-shadow: 0.5px 1px 1px 2px #636363; height: 380px; position: relative;">
+            <h5 style="position: absolute; top: 30px; left: 40px;">새로운 소식</h5>
+            <span style="position: absolute; top: 60px; left: 40px; font-family: monospace; max-width: 480px;">👉 매일 8시 30분, 19시 00분에 새로운 인공지능 관련 기사가 업데이트됩니다.</span>
+            <span style="position: absolute; top: 110px; left: 40px; font-family: monospace; max-width: 480px;">👉 아래의 기사제목을 누르면 링크를 통해 기사를 볼 수 있습니다.</span>
+            <a id="newsLink" href="#" style="color: gray; position: absolute; top: 160px; left: 40px; max-width: 480px; font-family: monospace;"><h6 id="newsText" style="font-size: 20px;">준비중입니다...</h6></a>
         </div>
         <div class="col-md-6">
             <div class="container" style="display: flex; flex-direction: column; height: 300px;" >
@@ -115,7 +97,6 @@
     <input type="hidden" name="kakaoId" id="kakaoId" value="{{ kakaoId or '' }}"/>
     <input type="hidden" name="newsList" id="newsList" value="{{ news_list or '' }}"/>
     <input type="hidden" name="newsListLink" id="newsListLink" value="{{ news_list_link or '' }}"/>
-    <h3>{{only_visit_user_ip}}</h3>
 
     <script>
         var dateList = [];

@@ -23,3 +23,5 @@
 10:00, 5.7, 54, clear sky
 15:00, 9.3, 40, broken clouds
 15:00, 9.2, 40, broken clouds
+10:00, 7.3, 53, overcast clouds
+11:00, 9.3, 48, broken clouds

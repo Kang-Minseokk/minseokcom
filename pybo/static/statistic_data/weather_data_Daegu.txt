@@ -45,3 +45,5 @@
 10:00, -1.5, 64, clear sky
 15:00, 9.5, 29, clear sky
 15:00, 9.5, 29, clear sky
+10:00, 1.5, 64, clear sky
+11:00, 3.5, 56, clear sky

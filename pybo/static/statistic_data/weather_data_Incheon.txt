@@ -41,3 +41,5 @@
 10:00, 1.9, 69, clear sky
 15:00, 7.9, 53, few clouds
 15:00, 7.9, 53, few clouds
+10:00, 6.9, 53, clear sky
+11:00, 7.9, 49, broken clouds
