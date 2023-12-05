@@ -9,10 +9,10 @@
     cursor: pointer;
   }
 </style>
-<nav class="navbar navbar-expand-lg navbar-light" style="border-bottom: 4px dashed #cfd0d1; margin-top: 10px; background-color: #b9c4c0;">
-  <a href="#" id="category-menu" style="font-size: 30px; color: white; margin-right: 20px; ">☰</a>
+<nav class="navbar navbar-expand-lg navbar-light" style="border-bottom: 4px dashed #ededed; margin-top: 10px; background-color: #b9c4c0;">
+  <a href="#" id="category-menu" style="font-size: 30px; color: white; margin-right: 10px;">☰</a>
   <a href="#" id="big-category-menu" onclick="showContent()" style="font-size: 30px; color: #ed9542; margin-right: 20px; ">☰</a>
-  <a class="navbar-brand" href="{{ url_for('main.index') }}" style="color: white; margin-top: 5px;">Min</a>
+  <a class="navbar-brand" href="{{ url_for('main.index') }}" style="color: white; margin-top: 5px; font-family: yeongdeok_font;">Min</a>
   <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -41,10 +41,10 @@
     {% else %}
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('auth.signup') }}" style="color: #dbdbd9; font-size: 18px; margin-left: 10px;">계정생성</a>
+        <a class="nav-link" href="{{ url_for('auth.signup') }}" style="color: #dbdbd9; font-size: 20px; margin-left: 10px; font-family: yeongdeok_font;">계정생성</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('auth.login') }}" style="color: #dbdbd9; font-size: 18px; margin-left: 10px;">로그인</a>
+        <a class="nav-link" href="{{ url_for('auth.login') }}" style="color: #dbdbd9; font-size: 18px; margin-left: 10px; font-family: yeongdeok_font;">로그인</a>
       </li>
     </ul>
     {% endif %}

@@ -31,6 +31,7 @@
             animation: none;
             background-color: white;
         }
+
     </style>
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 </head>
@@ -59,15 +60,14 @@
                     <div class="card-body" style="overflow-y: auto;">
                         <div class="card-text"><pre style="white-space: pre-wrap;">{{ question.content }}</pre></div>
                         {% if g.user.kakao == 1 %}
-                            <h6>카카오톡 공유하기</h6>
+                            <h6>카카오톡 공유</h6>
                             <a id="kakao-link-btn" href="javascript:kakaoShare()">
                                 <img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"  style="height: 40px;"/>
                             </a>
                         {% else %}
-                            <h6>카카오톡 공유하기</h6>
-                            <span style="pointer-events: none; opacity: 0.6;">
-                                <img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"  style="height: 40px;"/>
-                            </span>
+                            <h6>카카오톡 공유</h6>
+                            <span>'카카오톡 공유' 기능은 카카오 계정으로 로그인하면 사용 가능합니다.</span>
+
                         {% endif %}
                         <div class="d-flex justify-content-end">
                             {% if question.modify_date %}
