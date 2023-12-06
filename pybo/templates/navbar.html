@@ -2,12 +2,39 @@
   #category-menu:hover {
     text-decoration: none;
   }
+
   #big-category-menu:hover {
     text-decoration: none;
   }
+
   .kakao_login:hover {
     cursor: pointer;
   }
+
+  .signin-btn:hover {
+    animation-duration: 2s;
+    animation-name: sparkle;
+    animation-iteration-count: infinite;
+  }
+
+  .login-btn:hover {
+    animation-duration: 2s;
+    animation-name: sparkle;
+    animation-iteration-count: infinite;
+  }
+
+  @keyframes sparkle {
+    from {
+      color: #f2f2f2;
+    }
+    30% {
+      color: #4d8bd1;
+    }
+    to {
+      color: #825099;
+    }
+  }
+
 </style>
 <nav class="navbar navbar-expand-lg navbar-light" style="border-bottom: 4px dashed #ededed; margin-top: 10px; background-color: #b9c4c0;">
   <a href="#" id="category-menu" style="font-size: 30px; color: white; margin-right: 10px;">☰</a>
@@ -41,10 +68,10 @@
     {% else %}
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('auth.signup') }}" style="color: #dbdbd9; font-size: 20px; margin-left: 10px; font-family: yeongdeok_font;">계정생성</a>
+        <a class="nav-link signin-btn" href="{{ url_for('auth.signup') }}" style="color: #f2f2f2; font-size: 20px; margin-left: 10px; font-family: yeongdeok_font;">계정생성</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('auth.login') }}" style="color: #dbdbd9; font-size: 20px; margin-left: 10px; font-family: yeongdeok_font;">로그인</a>
+        <a class="nav-link login-btn" href="{{ url_for('auth.login') }}" style="color: #f2f2f2; font-size: 20px; margin-left: 10px; font-family: yeongdeok_font;">로그인</a>
       </li>
     </ul>
     {% endif %}
