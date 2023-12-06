@@ -7,6 +7,7 @@ from config.default import BASE_DIR
 from .auth_views import login_required
 from .. import db
 from ..forms import CategoryForm, StatisticForm
+from ..functions import get_total_visit_count, get_yesterday_visit_count, get_total_posts_count, get_today_visit_count
 from ..models import Category, Statistic
 from collections import Counter
 import csv, requests
@@ -17,6 +18,10 @@ bp = Blueprint('statistic', __name__, url_prefix='/statistic')
 @bp.route('/s_list/')
 @login_required
 def s_list():
+    total_visit_count = get_total_visit_count()
+    yesterday_visit_count = get_yesterday_visit_count()
+    total_posts_count = get_total_posts_count()
+    today_visit_user_count = get_today_visit_count()
     grp = request.args.get('grp', type=str, default=1)
     form_for_new_category = CategoryForm()
     category_list = []
@@ -53,12 +58,18 @@ def s_list():
     return render_template('statistic/statistic_list.html', form_for_new_category=form_for_new_category,
                            category_list=category_list, title=title, labels=labels, data=data, stepsize=stepsize,
                            border_color=border_color, type=type, title_list=title_list,
-                           view_name='statistic.s_list', background_color=background_color, border_width=border_width)
+                           view_name='statistic.s_list', background_color=background_color, border_width=border_width,
+                           total_posts_count=total_posts_count, total_visit_count=total_visit_count,
+                           today_visit_user_count=today_visit_user_count, yesterday_visit_count=yesterday_visit_count)
 
 
 @bp.route('/create/', methods=['GET', 'POST'])
 @login_required
 def create():
+    total_visit_count = get_total_visit_count()
+    yesterday_visit_count = get_yesterday_visit_count()
+    total_posts_count = get_total_posts_count()
+    today_visit_user_count = get_today_visit_count()
     form = StatisticForm()
     form_for_new_category = CategoryForm()
     category_list = []
@@ -81,12 +92,18 @@ def create():
         return redirect(url_for('statistic.s_list'))
 
     return render_template('statistic/statistic_form.html', category_list=category_list,
-                           form_for_new_category=form_for_new_category, form=form, view_name='statistic.create')
+                           form_for_new_category=form_for_new_category, form=form, view_name='statistic.create',
+                           total_visit_count=total_visit_count, today_visit_user_count=today_visit_user_count,
+                           total_posts_count=total_posts_count, yesterday_visit_count=yesterday_visit_count)
 
 
 @bp.route('/live_chart')
 @login_required
 def live_chart():
+    total_visit_count = get_total_visit_count()
+    yesterday_visit_count = get_yesterday_visit_count()
+    total_posts_count = get_total_posts_count()
+    today_visit_user_count = get_today_visit_count()
     form_for_new_category = CategoryForm()
     seoul_time_list, seoul_temperature_list, seoul_humidity_list, seoul_description_list = [], [], [], []
     url_path = os.path.join(BASE_DIR, "pybo/static/statistic_data/weather_data_Seoul.txt")
@@ -208,5 +225,6 @@ def live_chart():
                            incheon_temperature_list=str(incheon_temperature_list).strip('[]'),
                            incheon_humidity_list=str(incheon_humidity_list).strip('[]'),
                            incheon_description_list=str(incheon_description_list).strip('[]'),
-                           incheon_time_list=str(incheon_time_list).strip('[]')
-                           )
+                           incheon_time_list=str(incheon_time_list).strip('[]'),
+                           total_visit_count=total_visit_count, today_visit_user_count=today_visit_user_count,
+                           total_posts_count=total_posts_count, yesterday_visit_count=yesterday_visit_count)

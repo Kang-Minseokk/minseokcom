@@ -1,4 +1,5 @@
-from pybo.functions import get_redirect_url
+from pybo.functions import get_redirect_url, get_total_visit_count, get_yesterday_visit_count, get_total_posts_count, \
+    get_today_visit_count
 import smtplib
 from datetime import datetime
 from email.mime.multipart import MIMEMultipart
@@ -21,6 +22,10 @@ bp = Blueprint('question', __name__, url_prefix='/question')
 @login_required
 def ds_list(category):
     # 입력 파라미터
+    total_visit_count = get_total_visit_count()
+    yesterday_visit_count = get_yesterday_visit_count()
+    total_posts_count = get_total_posts_count()
+    today_visit_user_count = get_today_visit_count()
     page = request.args.get('page', type=int, default=1)
     kw = request.args.get('kw', type=str, default='')
     so = request.args.get('so', type=str, default='recent')
@@ -72,14 +77,20 @@ def ds_list(category):
         category_list.append(selected_category.category)
 
     return render_template('question/question_list.html', question_list=question_list, page=page,
-                            kw=kw, so=so, view_name='question.ds_list', tag_list=tag_list, category=category, form=form,
-                            category_list=category_list, form_for_new_category=form_for_new_category)
+                           kw=kw, so=so, view_name='question.ds_list', tag_list=tag_list, category=category, form=form,
+                           category_list=category_list, form_for_new_category=form_for_new_category,
+                           today_visit_user_count=today_visit_user_count, total_visit_count=total_visit_count,
+                           total_posts_count=total_posts_count, yesterday_visit_count=yesterday_visit_count)
 
 
 @bp.route('/development_list/')
 @login_required
 def d_list():
     # 입력 파라미터
+    total_visit_count = get_total_visit_count()
+    yesterday_visit_count = get_yesterday_visit_count()
+    total_posts_count = get_total_posts_count()
+    today_visit_user_count = get_today_visit_count()
     tag_list = Question.query.with_entities(Question.tag).all()
     tag_list = list(set(tag_list))
     tag_list = [tag[0] for tag in tag_list]
@@ -101,13 +112,19 @@ def d_list():
     return render_template('question/development_list.html', question_list=question_list, page=page,
                            kw=kw, so=so, view_name='question.d_list', tag_list=tag_list, category='Development',
                            form=form, category_list=category_list, form_for_new_category=form_for_new_category,
-                           redirect_url=redirect_url)
+                           redirect_url=redirect_url, total_posts_count=total_posts_count,
+                           total_visit_count=total_visit_count, today_visit_user_count=today_visit_user_count,
+                           yesterday_visit_count=yesterday_visit_count)
 
 
 @bp.route('/computer_science_list/')
 @login_required
 def cs_list():
     # 입력 파라미터
+    total_visit_count = get_total_visit_count()
+    yesterday_visit_count = get_yesterday_visit_count()
+    total_posts_count = get_total_posts_count()
+    today_visit_user_count = get_today_visit_count()
     kw = request.args.get('kw', type=str, default='')
     form_for_new_category = CategoryForm()
     redirect_url = get_redirect_url()
@@ -142,13 +159,18 @@ def cs_list():
     return render_template('question/computer_science_list.html', question_list=question_list,
                            kw=kw, view_name='question.cs_list', tag_list=tag_list, category='Computer Science', form=form,
                            category_list=category_list, form_for_new_category=form_for_new_category,
-                           redirect_url=redirect_url)
+                           redirect_url=redirect_url, total_posts_count=total_posts_count, total_visit_count=total_visit_count,
+                           today_visit_user_count=today_visit_user_count, yesterday_visit_count=yesterday_visit_count)
 
 
 @bp.route('/artificial_intelligence_list/<int:num>')
 @login_required
 def ai_list(num):
     # 입력 파라미터
+    total_visit_count = get_total_visit_count()
+    yesterday_visit_count = get_yesterday_visit_count()
+    total_posts_count = get_total_posts_count()
+    today_visit_user_count = get_today_visit_count()
     page = request.args.get('page', type=int, default=1)
     kw = request.args.get('kw', type=str, default='')
     so = request.args.get('so', type=str, default='recent')
@@ -185,13 +207,19 @@ def ai_list(num):
     return render_template('question/ai_list.html', question_list=question_list, page=page,
                            kw=kw, so=so, view_name='question.ai_list', tag_list=tag_list,
                            category='Artificial Intelligence', num=num, form=form, category_list=category_list,
-                           form_for_new_category=form_for_new_category)
+                           form_for_new_category=form_for_new_category, today_visit_user_count=today_visit_user_count,
+                           total_visit_count=total_visit_count, total_posts_count=total_posts_count,
+                           yesterday_visit_count=yesterday_visit_count)
 
 
 @bp.route('/relaxation_list/<int:num>')
 @login_required
 def r_list(num):
     # 입력 파라미터
+    total_visit_count = get_total_visit_count()
+    yesterday_visit_count = get_yesterday_visit_count()
+    total_posts_count = get_total_posts_count()
+    today_visit_user_count = get_today_visit_count()
     page = request.args.get('page', type=int, default=1)
     kw = request.args.get('kw', type=str, default='')
     so = request.args.get('so', type=str, default='recent')
@@ -240,13 +268,19 @@ def r_list(num):
         category_list.append(selected_category.category)
     return render_template('question/relaxation_list.html', question_list=question_list, page=page,
                            kw=kw, so=so, view_name='question.r_list', tag_list=tag_list, category='Relaxation', num=num,
-                           form=form, category_list=category_list, form_for_new_category=form_for_new_category)
+                           form=form, category_list=category_list, form_for_new_category=form_for_new_category,
+                           total_posts_count=total_posts_count, total_visit_count=total_visit_count,
+                           today_visit_user_count=today_visit_user_count, yesterday_visit_count=yesterday_visit_count)
 
 
 @bp.route('/communication_list/')
 @login_required
 def c_list():
     # 입력 파라미터
+    total_visit_count = get_total_visit_count()
+    yesterday_visit_count = get_yesterday_visit_count()
+    total_posts_count = get_total_posts_count()
+    today_visit_user_count = get_today_visit_count()
     kw = request.args.get('kw', type=str, default='')
     form_for_new_category = CategoryForm()
     redirect_url = get_redirect_url()
@@ -280,12 +314,18 @@ def c_list():
     return render_template('question/communication_list.html', question_list=question_list, kw=kw,
                            view_name='question.c_list', tag_list=tag_list, category='Communication',
                            list_count=list_count, form=form, category_list=category_list,
-                           form_for_new_category=form_for_new_category, redirect_url=redirect_url)
+                           form_for_new_category=form_for_new_category, redirect_url=redirect_url,
+                           total_posts_count=total_posts_count, total_visit_count=total_visit_count,
+                           today_visit_user_count=today_visit_user_count, yesterday_visit_count=yesterday_visit_count)
 
 
 @bp.route('/detail/<int:question_id>/')
 @login_required
 def detail(question_id):
+    total_visit_count = get_total_visit_count()
+    yesterday_visit_count = get_yesterday_visit_count()
+    total_posts_count = get_total_posts_count()
+    today_visit_user_count = get_today_visit_count()
     question = Question.query.get_or_404(question_id)
     form = AnswerForm()
     form_for_new_category = CategoryForm()
@@ -309,12 +349,18 @@ def detail(question_id):
         return response
 
     return render_template('question/question_detail.html', question=question, form=form,
-                           question_content=question_content, form_for_new_category=form_for_new_category)
+                           question_content=question_content, form_for_new_category=form_for_new_category,
+                           today_visit_user_count=today_visit_user_count, total_visit_count=total_visit_count,
+                           total_posts_count=total_posts_count, yesterday_visit_count=yesterday_visit_count)
 
 
 @bp.route('/create/', methods=('GET', 'POST'))
 @login_required
 def create():
+    total_visit_count = get_total_visit_count()
+    yesterday_visit_count = get_yesterday_visit_count()
+    total_posts_count = get_total_posts_count()
+    today_visit_user_count = get_today_visit_count()
     form = QuestionForm()
     form_for_new_category = CategoryForm()
     tag_list = Question.query.with_entities(Question.tag).all()
@@ -398,12 +444,18 @@ def create():
         return redirect(url_for('main.index'))
 
     return render_template('question/question_form.html', form=form, tag_list=tag_list,
-                           category_list=category_list, form_for_new_category=form_for_new_category)
+                           category_list=category_list, form_for_new_category=form_for_new_category,
+                           today_visit_user_count=today_visit_user_count, total_visit_count=total_visit_count,
+                           total_posts_count=total_posts_count, yesterday_visit_count=yesterday_visit_count)
 
 
 @bp.route('/modify/<int:question_id>', methods=('GET', 'POST'))
 @login_required
 def modify(question_id):
+    total_visit_count = get_total_visit_count()
+    yesterday_visit_count = get_yesterday_visit_count()
+    total_posts_count = get_total_posts_count()
+    today_visit_user_count = get_today_visit_count()
     form_for_new_category = CategoryForm()
     question = Question.query.get_or_404(question_id)
     if g.user != question.user:
@@ -418,7 +470,9 @@ def modify(question_id):
             return redirect(url_for('question.detail', question_id=question_id, form_for_new_category=form_for_new_category))
     else:
         form = QuestionForm(obj=question)
-    return render_template('question/question_form.html', form=form, form_for_new_category=form_for_new_category)
+    return render_template('question/question_form.html', form=form, form_for_new_category=form_for_new_category,
+                           today_visit_user_count=today_visit_user_count, total_visit_count=total_visit_count,
+                           total_posts_count=total_posts_count, yesterday_visit_count=yesterday_visit_count)
 
 
 @bp.route('/delete/<int:question_id>')
@@ -437,11 +491,17 @@ def delete(question_id):
 @bp.route('/tagged_list/<string:tag>/<string:category>')
 @login_required
 def tagged_list(tag, category):
+    total_visit_count = get_total_visit_count()
+    yesterday_visit_count = get_yesterday_visit_count()
+    total_posts_count = get_total_posts_count()
+    today_visit_user_count = get_today_visit_count()
     question_list = Question.query.filter(Question.tag == tag, Question.category == category)
     form_for_new_category = CategoryForm()
     page = request.args.get('page', type=int, default=1)
     question_list = question_list.paginate(page=page, per_page=10, error_out=False)
     return render_template('question/tagged_list.html', question_list=question_list, page=page, tag=tag,
-                           category=category, view_name='question.tagged_list', form_for_new_category=form_for_new_category)
+                           category=category, view_name='question.tagged_list', form_for_new_category=form_for_new_category,
+                           today_visit_user_count=today_visit_user_count, total_visit_count=total_visit_count,
+                           total_posts_count=total_posts_count, yesterday_visit_count=yesterday_visit_count)
 
 

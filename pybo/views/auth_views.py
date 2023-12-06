@@ -9,7 +9,8 @@ from sqlalchemy import desc
 from pybo import db
 from pybo.forms import UserCreateForm, UserLoginForm, EmailForm, CategoryForm
 from pybo.functions import get_redirect_url, login_time_management, get_rest_api_kakao, get_access_token, get_user_info, \
-    kakao_logout, get_client_id_google, get_client_secret_google
+    kakao_logout, get_client_id_google, get_client_secret_google, get_total_visit_count, get_yesterday_visit_count, \
+    get_total_posts_count, get_today_visit_count
 from pybo.models import User, Question, question_voter, Subscriber, LoginStatus
 import random, string
 
@@ -41,6 +42,10 @@ def signup():
     form = UserCreateForm()
     form_for_new_category = CategoryForm()
     redirect_url = get_redirect_url()
+    total_visit_count = get_total_visit_count()
+    yesterday_visit_count = get_yesterday_visit_count()
+    total_posts_count = get_total_posts_count()
+    today_visit_user_count = get_today_visit_count()
     if request.method == 'POST' and form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if not user:
@@ -73,14 +78,20 @@ def signup():
         else:
             flash('이미 존재하는 사용자입니다.')
     return render_template('auth/signup.html', form=form, form_for_new_category=form_for_new_category,
-                           redirect_url=redirect_url)
+                           redirect_url=redirect_url, total_visit_count=total_visit_count,
+                           yesterday_visit_count=yesterday_visit_count, total_posts_count=total_posts_count,
+                           today_visit_user_count=today_visit_user_count)
 
 
 @bp.route('/login/', methods=('GET', 'POST'))
 def login():
     form = UserLoginForm()
     form_for_new_category = CategoryForm()
+    total_visit_count = get_total_visit_count()
+    yesterday_visit_count = get_yesterday_visit_count()
+    total_posts_count = get_total_posts_count()
     redirect_url = get_redirect_url()
+    today_visit_user_count = get_today_visit_count()
     if request.method == 'POST' and form.validate_on_submit():
         error = None
         user = User.query.filter_by(username=form.username.data).first()
@@ -99,7 +110,9 @@ def login():
         flash(error)
 
     return render_template('auth/login.html', form=form, form_for_new_category=form_for_new_category,
-                           redirect_url=redirect_url)
+                           redirect_url=redirect_url, total_visit_count=total_visit_count,
+                           yesterday_visit_count=yesterday_visit_count, total_posts_count=total_posts_count,
+                           today_visit_user_count=today_visit_user_count)
 
 
 @bp.route('/kakao_login', methods=['GET'])
@@ -207,6 +220,10 @@ def google_after_login():
 
 @bp.route('/forgot/', methods=('GET', 'POST'))
 def forgot():
+    total_visit_count = get_total_visit_count()
+    yesterday_visit_count = get_yesterday_visit_count()
+    total_posts_count = get_total_posts_count()
+    today_visit_user_count = get_today_visit_count()
     form = EmailForm()
     form_for_new_category = CategoryForm()
     error = None
@@ -230,7 +247,9 @@ def forgot():
                 user.password = generate_password_hash(user.password)
                 db.session.commit()
 
-    return render_template('auth/forgot.html', form=form, form_for_new_category=form_for_new_category)
+    return render_template('auth/forgot.html', form=form, form_for_new_category=form_for_new_category,
+                           today_visit_user_count=today_visit_user_count, total_posts_count=total_posts_count,
+                           total_visit_count=total_visit_count, yesterday_visit_count=yesterday_visit_count)
 
 
 @bp.route('/logout/')
@@ -247,6 +266,10 @@ def logout():
 @bp.route('/user_info/<int:user_id>/')
 @login_required
 def user_info(user_id):
+    total_visit_count = get_total_visit_count()
+    yesterday_visit_count = get_yesterday_visit_count()
+    total_posts_count = get_total_posts_count()
+    today_visit_user_count = get_today_visit_count()
     form_for_new_category = CategoryForm()
     page = request.args.get('page', type=int, default=1)
     user_question_list = Question.query.filter(Question.user_id == user_id).order_by(Question.create_date.desc())
@@ -261,7 +284,9 @@ def user_info(user_id):
                            user_question_list=user_question_list, user_name=user_name,
                            user_question_num=user_question_num, user_total_recommend=user_total_recommend,
                            profile_img_path=profile_img_path, user_subscribe_num=user_subscribe_num,
-                           form_for_new_category=form_for_new_category)
+                           form_for_new_category=form_for_new_category, today_visit_user_count=today_visit_user_count,
+                           total_posts_count=total_posts_count, total_visit_count=total_visit_count,
+                           yesterday_visit_count=yesterday_visit_count)
 
 
 @bp.route('/subscribe/<int:to_user_id>/<int:from_user_id>/', methods=('GET', 'POST'))

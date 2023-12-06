@@ -1,10 +1,13 @@
 import datetime, re, os, requests
+import json
+
 from dotenv import load_dotenv
 from flask import redirect
 
 from config.default import BASE_DIR
 from pybo import db
-from pybo.models import LoginStatus, Question
+from pybo.models import LoginStatus, Question, DailyVisit
+
 
 #최신 글 반환 함수
 def get_latest_post(posts):
@@ -85,4 +88,38 @@ def kakao_logout():
     else:
         print('로그아웃 요청이 실패했습니다.')
 
+
+# 총 포스트 개수 반환 함수
+def get_total_posts_count():
+    total_posts_count = Question.query.count()
+
+    return total_posts_count
+
+
+# 총 방문자 수 반환 함수
+def get_total_visit_count():
+    total_visit_user = DailyVisit.query.all()
+    total_visit_count = 0
+    for day_visit in total_visit_user:
+        day_visit_list = json.loads(day_visit.only_visit_user_list)
+        day_visit_count = len(day_visit_list)
+        total_visit_count += day_visit_count
+
+    return total_visit_count
+
+
+# 어제 방문자 수 반환 함수
+def get_yesterday_visit_count():
+    yesterday_visit_result = DailyVisit.query.all()[-2]
+    yesterday_visit_count = yesterday_visit_result.only_visit_count
+
+    return yesterday_visit_count
+
+
+# 오늘 방문자 수 반환 함수
+def get_today_visit_count():
+    today_date = datetime.datetime.now().strftime('%Y-%m-%d')
+    today_visit_count = DailyVisit.query.filter_by(date=today_date).first().only_visit_count
+
+    return today_visit_count
 

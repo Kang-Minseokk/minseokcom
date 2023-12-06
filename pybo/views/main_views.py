@@ -9,7 +9,8 @@ from flask import Blueprint, render_template, g, request, redirect, url_for, jso
 
 from config.default import BASE_DIR
 from ..forms import CategoryForm, KakaoForm
-from ..functions import get_redirect_url, get_latest_post
+from ..functions import get_redirect_url, get_latest_post, get_total_visit_count, get_yesterday_visit_count, \
+    get_total_posts_count, get_today_visit_count
 from ..models import Question, DailyVisit, Category, question_voter, User, answer_voter, Answer, Kakao
 from pybo import db
 from collections import Counter
@@ -42,6 +43,9 @@ def index():
     today_visit_user = DailyVisit.query.filter_by(date=today_date).first()
     form_for_new_category = CategoryForm()
     redirect_url = get_redirect_url()
+    total_visit_count = get_total_visit_count()
+    yesterday_visit_count = get_yesterday_visit_count()
+    total_posts_count = get_total_posts_count()
 
     if request.method == 'POST' and form_for_new_category.validate_on_submit():
         category = Category(
@@ -50,10 +54,6 @@ def index():
         db.session.add(category)
         db.session.commit()
         return redirect(url_for('main.index'))
-
-    #어제 방문한 클라이언트의 수
-    yesterday_visit_result = DailyVisit.query.all()[-2]
-    yesterday_visit_count = yesterday_visit_result.only_visit_count
 
     # 테이블에 로그인을 완료한 사용자 추적하기
     if g.user:
@@ -95,15 +95,6 @@ def index():
                 today_visit_user.only_visit_count = json.dumps(len(only_visit_user_list))
                 db.session.commit()
 
-
-    # 총 방문자 리스트
-    total_visit_user = DailyVisit.query.all()
-    total_visit_count = 0
-    for day_visit in total_visit_user:
-        day_visit_list = json.loads(day_visit.only_visit_user_list)
-        day_visit_count = len(day_visit_list)
-        total_visit_count += day_visit_count
-
     # 일별 방문자 리스트
     if DailyVisit.query.filter_by(date=today_date).first():
         pass
@@ -123,8 +114,6 @@ def index():
         daily_visit_list.append(daily_count.count)
     daily_visit_list = str(daily_visit_list).strip('[]')
 
-    # 총 포스트 개수
-    total_posts_count = Question.query.count()
 
     # 카테고리 리스트 전달해주기
     category_list = []
@@ -184,10 +173,11 @@ def index():
         news_list = lines[-1]
 
     return render_template('home.html', question_list=question_list, total_posts_count=total_posts_count,
-                           today_visit_user_count=today_visit_user.only_visit_count, total_visit_count=total_visit_count,
-                           daily_visit_list=daily_visit_list, category_list=category_list, form_for_new_category=form_for_new_category,
-                           post_list=post_list, first_user=first_user, second_user=second_user, third_user=third_user,
-                           first_score=first_score, second_score=second_score, third_score=third_score,
-                           news_list=news_list, redirect_url=redirect_url, news_list_link=news_list_link,
+                           today_visit_user_count=get_today_visit_count(), total_visit_count=total_visit_count,
+                           daily_visit_list=daily_visit_list, category_list=category_list,
+                           form_for_new_category=form_for_new_category, post_list=post_list, first_user=first_user,
+                           second_user=second_user, third_user=third_user, first_score=first_score,
+                           second_score=second_score, third_score=third_score, news_list=news_list,
+                           redirect_url=redirect_url, news_list_link=news_list_link,
                            only_visit_user_ip=only_visit_user_ip, yesterday_visit_count=yesterday_visit_count)
 
