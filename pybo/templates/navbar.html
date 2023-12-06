@@ -23,6 +23,12 @@
     animation-iteration-count: infinite;
   }
 
+  .logout-btn:hover {
+    animation-duration: 2s;
+    animation-name: darkness;
+    animation-iteration-count: infinite;
+  }
+
   @keyframes sparkle {
     from {
       color: #f2f2f2;
@@ -32,6 +38,12 @@
     }
     to {
       color: #825099;
+    }
+  }
+
+  @keyframes darkness {
+    to {
+      color: black;
     }
   }
 
@@ -48,7 +60,7 @@
       {% if g.user.kakao == 0 %}
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('auth.logout') }}" style="color: #7a7a7a; font-size: 18px; font-family: yeongdeok_font;">Logout</a>
+            <a class="nav-link logout-btn" href="{{ url_for('auth.logout') }}" style="color: #7a7a7a; font-size: 18px; font-family: yeongdeok_font;">Logout</a>
           </li>
         </ul>
         <img class="profile-image" src="{{ url_for('static', filename='image/' + g.user.profile_img) }}" style="margin-left: 20px; height: 20px; width: 20px; border-radius: 50%;">

@@ -63,12 +63,20 @@
             }
         }
 
+        .area1 {
+            height: 800px;
+        }
+
+        .area2 {
+            height: 1000px;
+        }
+
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 </head>
 
 <body>
-    <div class="row col-md-10" id="full-content">
+    <div class="row col-md-10 area1" id="full-content">
         <div class="container-fluid">
             <div class="card-deck">
                 {% for question in question_list %}
@@ -98,11 +106,20 @@
             </div>
         </div>
     </div>
-    <div class="col-10 offset-2 owner-info" style="position: relative; width: 200px; height: 400px; border-top: 1px solid #fff; margin-top: 10px; padding: 20px;">
-        <div class="owner-profile" style="position: absolute; width: 800px; height: 30%; left: 200px; background-color: #e3ded5; display: flex; align-items: center; justify-content: center;">
+
+    <div class="col-12 owner-info area2" style="position: relative; width: 200px; height: 400px; border-top: 1px solid #fff; margin-top: 10px; padding: 20px; display: flex; flex-direction: column;">
+        <div class="owner-profile" style="position: absolute; width: 50%; height: 30%; left: 25%; background-color: #e3ded5; display: flex; align-items: center; justify-content: center;">
             <span class="txt" style="font-family: yeongdeok_font; font-size: 20px; display: table-cell; vertical-align: middle; border-right: 0.05em solid #F81857; animation: cursor 0.5s ease infinite;"></span>
         </div>
+        <div class="owner-detail-layout" style="display: flex; flex-direction: row;">
+            <div class="owner-detail" style="width: 25%; border: 1px solid white; border-radius: 10px; height: 300px;">
+
+            </div>
+
+
+        </div>
     </div>
+
 
 
     <div id="data" style="display: none;">{{ daily_visit_list }}</div>
