@@ -115,6 +115,18 @@ def login():
                            today_visit_user_count=today_visit_user_count)
 
 
+@bp.route('/contact_us')
+def contact_us():
+    form_for_new_category = CategoryForm()
+    total_visit_count = get_total_visit_count()
+    yesterday_visit_count = get_yesterday_visit_count()
+    total_posts_count = get_total_posts_count()
+    today_visit_user_count = get_today_visit_count()
+    return render_template('auth/contact_us.html', form_for_new_category=form_for_new_category,
+                           total_posts_count=total_posts_count, total_visit_count=total_visit_count,
+                           yesterday_visit_count=yesterday_visit_count, today_visit_user_count=today_visit_user_count)
+
+
 @bp.route('/kakao_login', methods=['GET'])
 def kakao_login():
     redirect_uri = f"{get_redirect_url()}/auth/after_login"

@@ -47,7 +47,7 @@
     <div class="login-note-area" style="margin-top: 20px; display: flex; flex-direction: column;">
         <span class="login-note">✨ 사용자의 안전한 로그인을 위해 SSL 보안 연결을 사용하고 있습니다.</span>
         <span class="login-note">✨ 저희는 절대로 이메일이나 다른 수단을 통해 비밀번호를 요청하지 않습니다. 사칭에 주의하세요.</span>
-        <span class="login-note">✨ 계정 및 블로그에 관한 질문이나 문제가 있으면 언제든지 <a href="#">[문의처]</a>로 연락해주세요.</span>
+        <span class="login-note">✨ 계정 및 블로그에 관한 질문이나 문제가 있으면 언제든지 <a href="{{ url_for('auth.contact_us') }}">[문의처]</a>로 연락해주세요.</span>
     </div>
     <div class="login-input-area col-md-7">
         <form method="post" class="post-form">

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    .contact-title {
+        font-family: yeongdeok_font;
+        font-size: 35px;
+        color: white;
+        margin-top: 20px;
+    }
+
+    .contact-info {
+        font-family: bada_font;
+        font-size: 25px;
+        color: white;
+        margin-top: 10px;
+    }
+</style>
+<div class="contact-us-layout" style="display: flex; flex-direction: column;">
+    <span class="contact-title">Contant-Us</span>
+    <span class="contact-info">Email: dreampilot920@naver.com</span>
+    <span class="contact-info">Insta: mintok17</span>
+    <span class="contact-info" style="margin-top: 30px;">📌</span>
+    <span class="contact-info">📌 아직 개발이 진행중인 블로그이기 때문에 오류와 완성하지 못한 기능이 많을 수 있습니다.</span>
+    <span class="contact-info">📌 As this blog is still under development, there may be errors and unfinished features.</span>
+    <span class="contact-title" style="margin-top: 50px;">How can I help you?</span>
+
+    <div class="help-method-layout" style="display: flex; flex-direction: row;">
+        <a href="#" style="width: 100px; height: 100px; border: 1px solid #fff; border-radius: 50px; background-color: #cccccc; margin: 20px; text-align: center; color: white; text-decoration: none; font-family: bada_font; line-height: 100px;">Error Occured</a>
+        <a href="#" style="width: 100px; height: 100px; border: 1px solid #fff; border-radius: 50px; background-color: #cccccc; margin: 20px; text-align: center; color: white; text-decoration: none; font-family: bada_font; line-height: 100px;">Give advice</a>
+        <a href="#" style="width: 100px; height: 100px; border: 1px solid #fff; border-radius: 50px; background-color: #cccccc; margin: 20px; text-align: center; color: white; text-decoration: none; font-family: bada_font; line-height: 100px;">Others</a>
+    </div>
+</div>
+
+{% endblock %}

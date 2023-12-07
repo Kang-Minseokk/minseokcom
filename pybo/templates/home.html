@@ -71,6 +71,10 @@
             height: 1000px;
         }
 
+        .card-text {
+            font-family: bada_font;
+        }
+
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 </head>
@@ -85,7 +89,7 @@
                             <h5 class="card-title">
                                 <a href="{{ url_for('question.detail', question_id=question.id) }}" style="color:black; font-size: 20px;">{{ question.subject }}</a>
                             </h5>
-                            <p class="card-text">{{ question.user.username }}</p>
+                            <p class="card-text" style="font-family: bada_font;">{{ question.user.username }}</p>
                             <p class="card-text">{{ question.create_date|datetime }}</p>
                             <p class="card-text">{{ question.category }}</p>
                         </div>
