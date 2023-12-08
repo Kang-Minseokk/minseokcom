@@ -402,7 +402,7 @@ def create():
                     border: 1px solid #007bff;
                     padding: 5px 10px;
                     color: #007bff;
-                    font-weight: bold;
+                    font-family: bada_font;
                 }}
             </style>
         </head>
