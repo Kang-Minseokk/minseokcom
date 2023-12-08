@@ -5,11 +5,12 @@
     <div class="container-fluid">
         <div class="table-container m-3">
             <div class="row justify-content-between my-2">
-                <span style="font-size: 30px; margin-left: 20px; color: white;">{{ category }}</span>
+                <span style="font-size: 40px; margin-left: 20px; color: white; font-family: bada_font;">{{ category }}</span>
                 <div class="container-fluid tag_menu py-2">
+                    <span style="font-family: bada_font; font-size: 20px;">✅ 아래의 태그를 선택하면 해당 태그와 관련된 글을 볼 수 있어요.<br></span>
                     {% for tag in tag_list %}
                     <a class="btn" href="{{ url_for('question.tagged_list', tag=tag if tag else 'etc',
-                    category=category if category else 'default_category') }}" style="margin: 5px; font-family: monospace; background-color: #ed9542; color: white;">{{ tag or 'etc' }}</a>
+                    category=category if category else 'default_category') }}" style="font-size: 18px; margin: 5px; font-family: bada_font; background-color: #ed9542; color: #000;">{{ tag or 'etc' }}</a>
                     {% endfor %}
                 </div>
                 <div class="col-2">
@@ -27,7 +28,7 @@
                 </div>
 
             </div>
-            <table class="table" style="font-family: monospace;">
+            <table class="table" style="font-family: bada_font; font-size: 18px;">
                 <thead>
                 <tr class="text-center thead-dark">
                     <th>번호</th>
@@ -110,7 +111,7 @@
                 {% endif %}
             </ul>
             <!-- 페이징처리 끝 -->
-            <a href="{{ url_for('question.create') }}" class="btn btn-light">✏️ 질문 등록하기</a>
+            <a href="{{ url_for('question.create') }}" class="btn btn-light" style="font-family: bada_font; font-size: 18px;">✏️ 질문 등록하기</a>
         </div>
     </div>
 </div>

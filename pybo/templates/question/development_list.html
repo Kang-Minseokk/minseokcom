@@ -45,18 +45,23 @@
             margin-top: 10px;
             margin-left: 30px;
         }
+
+        .development-title {
+            font-family: bada_font;
+            font-size: 20px;
+        }
     </style>
 </head>
 <body>
 <!--for 문을 이용해서 태그에 대한 리스트를 루프돌며 a태그를 생성한다. 그렇게 하기 위해서는 해당 리스트는 view함수에서 인자로 전달해야 한다.-->
 <div class="col-md-10" id="full-content">
     <div class="row" style="margin-top: 30px;">
-        <span style="font-size: 30px; margin-left: 35px; color: white;">Development</span>
+        <span style="font-size: 40px; margin-left: 35px; color: white; font-family: bada_font;">Development</span>
     </div>
     <div class="container-fluid tag_menu">
         {% for tag in tag_list %}
         <a class="btn" href="{{ url_for('question.tagged_list', tag=tag if tag else 'etc',
-        category=category if category else 'default_category') }}" style="margin: 5px; background-color: #ed9542; color: white; font-family: monospace;">{{ tag or 'etc' }}</a>
+        category=category if category else 'default_category') }}" style="margin: 5px; background-color: #ed9542; color: black; font-family: bada_font; font-size: 18px;">{{ tag or 'etc' }}</a>
         {% endfor %}
     </div>
     <div class="container-fluid">
@@ -68,7 +73,7 @@
                     <img class="tag-image-content" src="/static/image/python.png">
                 </div>
                 <div class="tag-title">
-                    <h5>Python</h5>
+                    <h5 class="development-title">Python</h5>
                 </div>
                 <div class="tag-info" style="margin-top: 25px; padding: 5px; border-top: 1px solid #d0d5db;">
                     <span>👍 태그 총 좋아요 수  👀 태그 총 조회수</span>
@@ -79,7 +84,7 @@
                     <img class="tag-image-content" src="/static/image/ai.png">
                 </div>
                 <div class="tag-title">
-                    <h5>AI</h5>
+                    <h5 class="development-title">AI</h5>
                 </div>
                 <div class="tag-info" style="margin-top: 25px; padding: 5px; border-top: 1px solid #d0d5db;">
                     <span>👍 태그 총 좋아요 수  👀 태그 총 조회수</span>
@@ -90,7 +95,7 @@
                     <img class="tag-image-content" src="/static/image/html.png">
                 </div>
                 <div class="tag-title">
-                    <h5>HTML</h5>
+                    <h5 class="development-title">HTML</h5>
                 </div>
                 <div class="tag-info" style="margin-top: 25px; padding: 5px; border-top: 1px solid #d0d5db;">
                     <span>👍 태그 총 좋아요 수  👀 태그 총 조회수</span>
@@ -103,7 +108,7 @@
                     <img class="tag-image-content" src="/static/image/js.png">
                 </div>
                 <div class="tag-title">
-                    <h5>JavaScript</h5>
+                    <h5 class="development-title">JavaScript</h5>
                 </div>
                 <div class="tag-info" style="margin-top: 25px; padding: 5px; border-top: 1px solid #d0d5db;">
                     <span>👍 태그 총 좋아요 수  👀 태그 총 조회수</span>
@@ -114,7 +119,7 @@
                     <img class="tag-image-content" src="/static/image/github.png">
                 </div>
                 <div class="tag-title">
-                    <h5>GitHub</h5>
+                    <h5 class="development-title">GitHub</h5>
                 </div>
                 <div class="tag-info" style="margin-top: 25px; padding: 5px; border-top: 1px solid #d0d5db;">
                     <span>👍 태그 총 좋아요 수  👀 태그 총 조회수</span>
@@ -125,7 +130,7 @@
                     <img class="tag-image-content" src="/static/image/java.png">
                 </div>
                 <div class="tag-title">
-                    <h5>Java</h5>
+                    <h5 class="development-title">Java</h5>
                 </div>
                 <div class="tag-info" style="margin-top: 25px; padding: 5px; border-top: 1px solid #d0d5db;">
                     <span>👍 태그 총 좋아요 수  👀 태그 총 조회수</span>
