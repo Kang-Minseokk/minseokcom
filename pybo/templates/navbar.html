@@ -47,11 +47,29 @@
     }
   }
 
+  @keyframes rotate {
+    to {
+      transform: rotate( 360deg );
+    }
+  }
+
+  .newjeans_icon {
+     width: 35px;
+     height: 35px;
+     border-radius: 50%;
+     margin-right: 5px;
+     border: solid 2px #fff;
+     animation-name: rotate;
+     animation-timing-function: linear;
+     animation-duration: 4s;
+     animation-iteration-count: infinite;
+  }
+
 </style>
 <nav class="navbar navbar-expand-lg navbar-light" style="border-bottom: 4px dashed #ededed; margin-top: 10px; background-color: #b9c4c0;">
   <a href="#" id="category-menu" style="font-size: 30px; color: white; margin-right: 10px;">☰</a>
   <a href="#" id="big-category-menu" onclick="showContent()" style="font-size: 30px; color: #ed9542; margin-right: 20px; ">☰</a>
-  <a class="navbar-brand" href="{{ url_for('main.index') }}" style="color: white; margin-top: 5px; font-family: yeongdeok_font;"><img src="/static/image/newjeans.jpeg" style="width: 35px; height: 35px; border-radius: 50%; margin-right: 10px;">Min</a>
+  <a class="navbar-brand" href="{{ url_for('main.index') }}" style="color: white; margin-top: 5px; font-family: yeongdeok_font;"><img class="newjeans_icon" src="/static/image/newjeans.jpeg">Min</a>
   <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
