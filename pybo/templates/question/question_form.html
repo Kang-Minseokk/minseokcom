@@ -49,7 +49,15 @@
             </div>
             <div class="form-group">
                 <label for="content">내용</label>
-                <textarea class="form-control" name="content" id="content" rows="15">{{ form.content.data or '' }}</textarea>
+                <div class="tool-buttons" style="border: 1px solid #fff; height: 40px; width: 100%; display: flex; flex-direction: row; background-color: #9c9c9c; position: relative;">
+                    <a href="#" class="bold-btn" style="font-weight: bold; color: black; position: absolute; top: 20%; left: 2%;">B</a>
+                    <a href="#" class="italic-btn" style="font-style: italic; color: black; position: absolute; top: 20%; left: 4.3%;">i</a>
+                    <a href="#" class="underline-btn" style="text-decoration: underline; color: black; position: absolute; top: 20%; left: 6%;">U</a>
+                    <a href="#" class="font-family-btn" style="color: black; position: absolute; top: 20%; left: 8%;">🅰</a>
+                    <a href="#" class="font-size-btn" style="color: black; position: absolute; top: 20%; left: 10%;">💤</a>
+                    <a href="#" class="color-btn" style="color: black; position: absolute; top: 20%; left: 12%;">🎨</a>
+                </div>
+                <textarea class="form-control" name="content" id="content" rows="15" style="font-family: bada_font;">{{ form.content.data or '' }}</textarea>
             </div>
             <a href="#" class="btn btn-secondary">코드 입력</a>
             <button id="submitBtn" type="submit" class="btn btn-primary">저장하기</button>
