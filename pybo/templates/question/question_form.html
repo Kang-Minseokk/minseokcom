@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
 <head>
+    <link href="/static/node_modules/froala-editor/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/static/node_modules/froala-editor/js/froala_editor.pkgd.min.js"></script>
     <style>
         .checkbox {
             margin: 10px;
@@ -51,12 +53,27 @@
                 <label for="content">내용</label>
                 <textarea class="form-control" name="content" id="content" rows="15">{{ form.content.data or '' }}</textarea>
             </div>
+
+            <div id="example">
+                <p id="editorContent">Here comes Javascript</p>
+            </div>
+
             <a href="#" class="btn btn-secondary">코드 입력</a>
-            <button type="submit" class="btn btn-primary">저장하기</button>
+            <button id="submitBtn" type="submit" class="btn btn-primary">저장하기</button>
         </form>
     </div>
 </div>
 <script>
+    var editor = new FroalaEditor('#example');
+    var editorContent = document.getElementById('editorContent').innerText;
+    console.log(editorContent)
+
+    var submitBtn = document.getElementById('submitBtn');
+    submitBtn.addEventListener('click', function() {
+    });
+
+
+
     document.addEventListener('DOMContentLoaded', function() {
         var tagSelect = document.getElementById('tag');
         var newTagInput = document.getElementById('newTagInput');
