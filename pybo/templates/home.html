@@ -52,15 +52,18 @@
 
         .category.active .category-details {
             display: block;
+        }
+
+        .modal-select-button {
+            font-family: bada_font;
+            color: black;
+            font-size: 18px;
+            border: solid 1px #000;
+            border-radius: 4px;
+        }
 
         .content-container {
             display: flex;
-        }
-
-        @keyframes cursor {
-            to {
-                border-color: transparent;
-            }
         }
 
         .area1 {
@@ -75,6 +78,15 @@
             font-family: bada_font;
         }
 
+        @keyframes cursor {
+            to {
+                border-color: transparent;
+            }
+        }
+
+        .create-account-btn:hover {
+            color: blue;
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 </head>
@@ -134,9 +146,19 @@
         </div>
     </div>
 
+    {% if not g.user %}
+        <div class="suggest-modal" id="LoginModal" style="position: fixed; top: 40%; left: 30%; border: 1px solid #fff; background-color: #fff; opacity: 0.7; text-align: center; width: 40%; height: 30%; display: none;">
+            <span style="font-family: yeongdeok_font; font-size: 30px;">민석 블로그에 오신 것을 환영해요!</span>
+            <p style="white-space: pre-line; font-family: bada_font; font-size: 20px;">
+                계정 생성을 하고 로그인을 하면 글이 올라오는 소식을 바로 받아볼 수 있어요.
 
-
-
+                댓글 작성과 게시글 작성을 통해 함께 공부할 수 있어요.
+            </p>
+            <a class="modal-select-button create-account-btn" href="{{ url_for('auth.signup') }}">계정을 만들고 싶어요.</a>
+            <a class="modal-select-button account-already-btn" href="{{ url_for('auth.login') }}">이미 계정이 있어요.</a>
+            <a id="closeBtn" class="modal-select-button refuse-btn" href="#">다음에 할래요.</a>
+        </div>
+    {% endif %}
 
     <div id="data" style="display: none;">{{ daily_visit_list }}</div>
     <div id="post_list" style="display: none;">{{ post_list }}</div>
@@ -237,8 +259,19 @@
                 n = 0;
             }
         };
-
         setInterval(typing, 200);
+
+        var modalLogin = document.getElementById('LoginModal');
+        function loginSuggestModal() {
+            console.log(window.location.href)
+                modalLogin.style.display = 'block';
+            };
+        setTimeout(loginSuggestModal, 10000);
+
+        var closeBtn = document.getElementById('closeBtn');
+        closeBtn.addEventListener('click', function() {
+            modalLogin.style.display = 'none';
+        });
     </script>
 </body>
 {% endblock %}
