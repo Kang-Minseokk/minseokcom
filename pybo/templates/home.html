@@ -123,6 +123,7 @@
         </div>
     </div>
 
+
     <div class="col-12 owner-info area2" style="width: 200px; height: 400px; border-top: 1px solid #fff; margin-top: 10px; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
         <div class="owner-profile" style="position: relative; width: 50%; height: 30%; background-color: #e3ded5; display: flex; align-items: center; justify-content: center;">
             <span class="txt" style="font-family: yeongdeok_font; font-size: 20px; display: table-cell; vertical-align: middle; border-right: 0.05em solid #F81857; animation: cursor 0.5s ease infinite;"></span>
@@ -161,6 +162,8 @@
             <a class="modal-select-button account-already-btn" href="{{ url_for('auth.login') }}">이미 계정이 있어요.</a>
             <a id="closeBtn" class="modal-select-button refuse-btn" href="#">다음에 할래요.</a>
         </div>
+
+
     {% endif %}
 
     <div id="data" style="display: none;">{{ daily_visit_list }}</div>
@@ -275,6 +278,8 @@
         closeBtn.addEventListener('click', function() {
             modalLogin.style.display = 'none';
         });
+
+
     </script>
 </body>
 {% endblock %}

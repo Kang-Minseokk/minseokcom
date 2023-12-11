@@ -56,8 +56,9 @@
 <!--for 문을 이용해서 태그에 대한 리스트를 루프돌며 a태그를 생성한다. 그렇게 하기 위해서는 해당 리스트는 view함수에서 인자로 전달해야 한다.-->
 <div class="col-md-10" id="full-content">
     <div class="row" style="margin-top: 30px;">
-        <span style="font-size: 40px; margin-left: 35px; color: white; font-family: bada_font;">Development</span>
+        <span style="font-size: 40px; margin-left: 15px; color: white; font-family: bada_font;">Development</span>
     </div>
+    <span style="font-family: bada_font; font-size: 20px;">✅ 아래의 태그를 선택하면 해당 태그와 관련된 글을 볼 수 있어요.<br></span>
     <div class="container-fluid tag_menu">
         {% for tag in tag_list %}
         <a class="btn" href="{{ url_for('question.tagged_list', tag=tag if tag else 'etc',

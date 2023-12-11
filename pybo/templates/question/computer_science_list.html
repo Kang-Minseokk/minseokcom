@@ -23,8 +23,9 @@
 <div class="col-md-10" id="full-content">
     <div class="row">
         <div class="col-6" style="margin-top: 10px;">
-            <span style="font-size: 30px; margin-left: 20px; color: white;">Computer Science</span>
+            <span style="font-size: 40px; color: white; font-family: bada_font;">Computer Science</span>
         </div>
+
         <div class="col-4 input-group" style="padding: 10px; margin-top: 10px;">
             <input type="text" class="form-control kw" value="{{ kw or '' }}">
             <div class="input-group-append">
@@ -35,10 +36,11 @@
             <a href="{{ url_for('question.create') }}" class="btn btn-light" style="margin-top: 20px; border: 1px solid #000;">✏️ 질문 등록하기</a>
         </div>
     </div>
+    <span style="font-family: bada_font; font-size: 20px;">✅ 아래의 태그를 선택하면 해당 태그와 관련된 글을 볼 수 있어요.<br></span>
     <div class="row" style="margin-left: 15px;">
     {% for tag in tag_list %}
         <a class="btn" href="{{ url_for('question.tagged_list', tag=tag if tag else 'etc',
-        category=category if category else 'default_category') }}" style="margin: 5px; background-color: #ed9542; color: white; font-family: monospace;">{{ tag or 'etc' }}</a>
+        category=category if category else 'default_category') }}" style="margin: 5px; margin-top: 10px; background-color: #ed9542; color: black; font-family: bada_font; font-size: 18px;">{{ tag or 'etc' }}</a>
     {% endfor %}
     </div>
     {% for question in question_list %}

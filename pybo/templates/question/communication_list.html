@@ -34,7 +34,7 @@
 <div class="col-md-10" id="full-content">
     <div class="row" style="height: 70px;">
         <div class="col-md-4" style="margin: 10px;">
-            <span style="font-size: 30px; color: white;">Communication</span>
+            <span style="font-size: 40px; color: white; font-family: bada_font;">Communication</span>
         </div>
         <div class="col-md-4 input-group" style="padding: 10px; margin-top: 10px;">
             <input type="text" class="form-control kw" value="{{ kw or '' }}">
@@ -46,9 +46,10 @@
             <a href="{{ url_for('question.create') }}" class="btn btn-light">✏️ 질문 등록하기</a>
         </div>
     </div>
+    <span style="font-family: bada_font; font-size: 20px;">✅ 아래의 태그를 선택하면 해당 태그와 관련된 글을 볼 수 있어요.<br></span>
     {% for tag in tag_list %}
     <a class="btn" href="{{ url_for('question.tagged_list', tag=tag if tag else 'etc',
-    category=category if category else 'default_category') }}" style="margin: 5px; background-color: #ed9542; color: white; font-family: monospace;">{{ tag or 'etc' }}</a>
+    category=category if category else 'default_category') }}" style="margin: 5px; background-color: #ed9542; color: black; font-family: bada_font; font-size: 18px;">{{ tag or 'etc' }}</a>
     {% endfor %}
     <div class="row" style="border-top: 1px solid #fff; margin: 10px;">
         {% for question in question_list %}

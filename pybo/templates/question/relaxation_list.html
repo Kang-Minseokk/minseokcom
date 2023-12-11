@@ -6,11 +6,12 @@
 
 <div class="col-md-10" id="full-content">
   <div class="row">
-    <span style="font-size: 30px; margin-left: 20px; color: white; margin-bottom: 10px;">Relaxation</span>
+    <span style="font-size: 40px; margin-left: 10px; color: white; margin-bottom: 10px; font-family: bada_font;">Relaxation</span>
   </div>
+  <span style="font-family: bada_font; font-size: 20px;">✅ 아래의 태그를 선택하면 해당 태그와 관련된 글을 볼 수 있어요.<br></span>
   {% for tag in tag_list %}
   <a class="btn" href="{{ url_for('question.tagged_list', tag=tag if tag else 'etc',
-  category=category if category else 'default_category') }}" style="margin: 5px; background-color: #ed9542; color: white; font-family: monospace;">{{ tag or 'etc' }}</a>
+  category=category if category else 'default_category') }}" style="margin: 5px; background-color: #ed9542; color: black; font-family: bada_font; font-size: 18px;">{{ tag or 'etc' }}</a>
   {% endfor %}
   <div class="row" style="margin: 50px;">
     <div class="container" style="height: 400px; border: 1px solid #000; margin: 10px; border-radius: 10px; background-color: white;">

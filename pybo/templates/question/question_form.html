@@ -86,6 +86,7 @@
             </div>
             <a href="#" class="btn btn-secondary" style="font-family: bada_font;">코드 입력</a>
             <button id="submitBtn" type="submit" class="btn btn-primary" style="font-family: bada_font;">글 업로드</button>
+
         </form>
 
 
@@ -94,6 +95,22 @@
 <script>
     var questionText = document.getElementById('question_content');
     var result = {};
+
+    // 그래그한 글자 선택하기
+
+
+    function dragRange() {
+        var selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+          var range = selection.getRangeAt(0);
+          console.log(range.toString());
+          // range를 사용하여 작업 수행
+        } else {
+          // 선택된 범위가 없을 경우 처리
+          console.log('wait');
+        }
+    };
+    setInterval(dragRange, 1000);
 
     // 폰트 두께 설정하기
     var boldBtn = document.getElementById('bold-btn');
