@@ -21,19 +21,19 @@
 </head>
 <div class="col-md-10" id="full-content">
     <div class="table-container m-5">
-        <h5 class="my-3 border-bottom pb-2">질문등록</h5>
+        <span class="my-3 border-bottom pb-2" style="font-family: bada_font; font-size: 30px;">글 작성하기</span>
         <form method="post" class="post-form my-3">
             {{ form.csrf_token }}
             <!-- 오류표시 start -->
             {% include "form_errors.html" %}
             <!-- 오류표시 End -->
-            <div class="form-group">
-                <label for="subject">제목</label>
-                <input type="text" class="form-control" name="subject" id="subject" value="{{ form.subject.data or '' }}">
+            <div class="form-group" style="margin-top: 20px;">
+                <label for="subject" style="font-family: bada_font; font-size: 20px;">제목</label>
+                <input type="text" class="form-control" name="subject" id="subject" style="width: 400px; overflow: scroll;" value="{{ form.subject.data or '' }}">
             </div>
             <div class="form-group">
-                <label for="category">카테고리</label>
-                <select class="form-control" name="category" id="category">
+                <label for="category" style="font-family: bada_font; font-size: 20px;">카테고리</label>
+                <select class="form-control" name="category" id="category" style="width: 400px;">
                     <option value="">Select a category</option>
                     <option value="Data Science">Data Science</option>
                     <option value="Development">Development</option>
@@ -49,8 +49,8 @@
                 </select>
             </div>
             <div class="form-group">
-                <label>태그</label>
-                <select class="form-control" name="tag" id="tag">
+                <label style="font-family: bada_font; font-size: 20px;">태그</label>
+                <select class="form-control" name="tag" id="tag" style="width: 400px;">
                     <option value="">Select a Tag</option>
                     {% for tag in tag_list %}
                     <option value="{{ tag }}">{{ tag }}</option>
@@ -60,9 +60,9 @@
                 <button type="button" id="addTagButton">Create</button>
             </div>
             <div class="form-group">
-                <label for="question_content" style="margin-bottom: 40px;">내용</label>
+                <label for="question_content" style="font-family: bada_font; font-size: 20px;">내용</label>
 
-                <div class="tool-buttons" style="border: 1px solid #fff; height: 40px; width: 100%; display: flex; flex-direction: row; background-color: #9c9c9c;">
+                <div class="tool-buttons" style="border: 1px solid #fff; height: 40px; width: 100%; display: flex; flex-direction: row; background-color: #9c9c9c; border-radius: 5px;">
                     <button type="button" class="btn btn-outline-dark" id="bold-btn" style="font-weight: bold; left: 2%;">B</button>
                     <button type="button" class="btn btn-outline-dark" id="italic-btn" style="font-style: italic; left: 6%;">i</button>
                     <button type="button" class="btn btn-outline-dark" id="underline-btn" style="text-decoration: underline; left: 10%;">U</button>
@@ -84,8 +84,8 @@
                 </div>
                 <textarea class="form-control" name="content" id="question_content" rows="15" style="font-family: bada_font; font-size: 16px; height: 400px; overflow: scroll;">{{ form.content.data or '' }}</textarea>
             </div>
-            <a href="#" class="btn btn-secondary">코드 입력</a>
-            <button id="submitBtn" type="submit" class="btn btn-primary">저장하기</button>
+            <a href="#" class="btn btn-secondary" style="font-family: bada_font;">코드 입력</a>
+            <button id="submitBtn" type="submit" class="btn btn-primary" style="font-family: bada_font;">글 업로드</button>
         </form>
 
 
