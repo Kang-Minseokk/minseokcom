@@ -5,6 +5,20 @@
         .checkbox {
             margin: 10px;
         }
+
+        .btn-outline-dark {
+            color: black;
+            position: absolute;
+            top: 10%;
+            height: 30px;
+            text-align: center;
+            width: 40px;
+        }
+
+        .font-size-dropdown {
+            border: solid 1px #000;
+            width: 40px;
+        }
     </style>
 </head>
 <div class="col-md-10" id="full-content">
@@ -48,23 +62,71 @@
                 <button type="button" id="addTagButton">Create</button>
             </div>
             <div class="form-group">
-                <label for="content">내용</label>
-                <div class="tool-buttons" style="border: 1px solid #fff; height: 40px; width: 100%; display: flex; flex-direction: row; background-color: #9c9c9c; position: relative;">
-                    <a href="#" class="bold-btn" style="font-weight: bold; color: black; position: absolute; top: 20%; left: 2%;">B</a>
-                    <a href="#" class="italic-btn" style="font-style: italic; color: black; position: absolute; top: 20%; left: 4.3%;">i</a>
-                    <a href="#" class="underline-btn" style="text-decoration: underline; color: black; position: absolute; top: 20%; left: 6%;">U</a>
-                    <a href="#" class="font-family-btn" style="color: black; position: absolute; top: 20%; left: 8%;">🅰</a>
-                    <a href="#" class="font-size-btn" style="color: black; position: absolute; top: 20%; left: 10%;">💤</a>
-                    <a href="#" class="color-btn" style="color: black; position: absolute; top: 20%; left: 12%;">🎨</a>
-                </div>
-                <textarea class="form-control" name="content" id="content" rows="15" style="font-family: bada_font;">{{ form.content.data or '' }}</textarea>
+                <label for="question_content" style="margin-bottom: 40px;">내용</label>
+                <textarea class="form-control" name="content" id="question_content" rows="15" style="font-family: bada_font;">{{ form.content.data or '' }}</textarea>
             </div>
             <a href="#" class="btn btn-secondary">코드 입력</a>
             <button id="submitBtn" type="submit" class="btn btn-primary">저장하기</button>
         </form>
+
+        <div class="tool-buttons" style="border: 1px solid #fff; height: 40px; width: 100%; display: flex; flex-direction: row; background-color: #9c9c9c; position: relative; bottom: 480px;">
+            <button class="btn btn-outline-dark" id="bold-btn" style="font-weight: bold; left: 2%;">B</button>
+            <button class="btn btn-outline-dark" id="italic-btn" style="font-style: italic; left: 6%;">i</button>
+            <button class="btn btn-outline-dark" id="underline-btn" style="text-decoration: underline; left: 10%;">U</button>
+
+            <select class="btn-outline-dark" id="font-family-btn" style="left: 14%; width: 60px;" name="font-family">
+                <option value="sans-serif">sans-serif</option>
+                <option value="bada_font">bada</option>
+                <option value="yeongdeok_font" style="font-family: yeongdeok_font; width: 40px;">영덕대게</option>
+            </select>
+
+            <select class="btn-outline-dark" name="font-size" id="dropdown-content" style="left: 20%;">
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+            </select>
+
+            <input type="color" class="btn btn-outline-dark" id="color-btn" style="left: 24%;"/>
+        </div>
     </div>
 </div>
 <script>
+    var questionText = document.getElementById('question_content');
+
+    // 폰트 두께 설정하기
+    var boldBtn = document.getElementById('bold-btn');
+    boldBtn.addEventListener('click', function() {
+        if (questionText.style.fontWeight === "normal") {
+            questionText.style.fontWeight = "bold";
+        } else {
+            questionText.style.fontWeight = "normal";
+        }
+    })
+
+    // 폰트 기울기 설정하기
+    var italicBtn = document.getElementById('italic-btn');
+    italicBtn.addEventListener('click', function() {
+        if (questionText.style.fontStyle === "normal") {
+            questionText.style.fontStyle = "italic";
+        } else {
+            questionText.style.fontStyle = "normal";
+        }
+    });
+
+    // 폰트 밑줄 설정하기
+    var underlineBtn = document.getElementById('underline-btn');
+    underlineBtn.addEventListener('click', function() {
+        if (questionText.style.textDecoration === "none") {
+            questionText.style.textDecoration = "underline";
+        } else {
+            questionText.style.textDecoration = "none";
+        }
+    });
+
+
     document.addEventListener('DOMContentLoaded', function() {
         var tagSelect = document.getElementById('tag');
         var newTagInput = document.getElementById('newTagInput');
