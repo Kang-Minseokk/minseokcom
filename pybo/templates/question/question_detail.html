@@ -34,6 +34,7 @@
         }
 
     </style>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 </head>
 
@@ -150,9 +151,9 @@
                         </div>
                         {% if g.user == answer.user %}
                         <div class="my-3">
-                            <a href="{{ url_for('answer.modify', answer_id=answer.id) }}"
+                            <a id="modifyBtn" href="{{ url_for('answer.modify', answer_id=answer.id) }}"
                                 class="btn btn-sm btn-outline-secondary">수정</a>
-                            <a href="#" class="delete btn btn-sm btn-outline-secondary "
+                            <a id="deleteBtn" href="#" class="delete btn btn-sm btn-outline-secondary "
                                 data-uri="{{ url_for('answer.delete', answer_id=answer.id) }}">삭제</a>
                         </div>
                         {% endif %}
@@ -207,7 +208,7 @@
     </div>
 </div>
 
-<script type='text/javascript'>
+<script>
     $(document).ready(function(){
         $(".delete").on('click', function() {
             if(confirm("정말로 삭제하시겠습니까?")) {
