@@ -96,7 +96,7 @@
         <div class="container-fluid">
             <div class="card-deck">
                 {% for question in question_list %}
-                    <div class="card" style="height: 300px; margin: 15px;">
+                    <div class="card" style="height: 300px; margin: 5px;">
                         <div class="card-body">
                             <h5 class="card-title">
                                 <a href="{{ url_for('question.detail', question_id=question.id) }}" style="color:black; font-size: 20px;">{{ question.subject }}</a>
