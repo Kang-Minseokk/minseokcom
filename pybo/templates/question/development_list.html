@@ -54,7 +54,7 @@
 </head>
 <body>
 <!--for 문을 이용해서 태그에 대한 리스트를 루프돌며 a태그를 생성한다. 그렇게 하기 위해서는 해당 리스트는 view함수에서 인자로 전달해야 한다.-->
-<div class="col-md-10" id="full-content">
+<div class="container-fluid" id="full-content" style="max-width: 70%; justify-content: center;">
     <div class="row" style="margin-top: 30px;">
         <span style="font-size: 40px; margin-left: 15px; color: white; font-family: bada_font;">Development</span>
     </div>
@@ -65,80 +65,71 @@
         category=category if category else 'default_category') }}" style="margin: 5px; background-color: #ed9542; color: black; font-family: bada_font; font-size: 18px;">{{ tag or 'etc' }}</a>
         {% endfor %}
     </div>
-    <div class="container-fluid">
-<!--        # 나중에는 태그를 내가 원하는 대로 선택해서 6개를 올려놓을 수 있게끔 설정한다. 태그를 사용자가 6개 선택을 하면 그에 해당하는 6개의 태그를-->
-<!--        # 밑에 있는 6개의 카드에 각각 나타내준다.-->
-        <div class="row">
-            <div class="card" onclick="window.location.href = '{{redirect_url}}/question/tagged_list/python/Development';">
-                <div class="tag-image">
-                    <img class="tag-image-content" src="/static/image/python.png">
+
+    <div class="container">
+        <div class="col-md-12">
+    <!--        # 나중에는 태그를 내가 원하는 대로 선택해서 6개를 올려놓을 수 있게끔 설정한다. 태그를 사용자가 6개 선택을 하면 그에 해당하는 6개의 태그를-->
+    <!--        # 밑에 있는 6개의 카드에 각각 나타내준다.-->
+            <div class="row">
+                <div class="card" onclick="window.location.href = '{{redirect_url}}/question/tagged_list/python/Development';">
+                    <div class="tag-image">
+                        <img class="tag-image-content" src="/static/image/python.png">
+                    </div>
+                    <div class="tag-title">
+                        <h5 class="development-title">Python</h5>
+                    </div>
+
                 </div>
-                <div class="tag-title">
-                    <h5 class="development-title">Python</h5>
+                <div class="card" onclick="window.location.href = '{{redirect_url}}/question/tagged_list/ai/Development';">
+                    <div class="tag-image">
+                        <img class="tag-image-content" src="/static/image/ai.png">
+                    </div>
+                    <div class="tag-title">
+                        <h5 class="development-title">AI</h5>
+                    </div>
+
                 </div>
-                <div class="tag-info" style="margin-top: 25px; padding: 5px; border-top: 1px solid #d0d5db;">
-                    <span>👍 태그 총 좋아요 수  👀 태그 총 조회수</span>
-                </div>
-            </div>
-            <div class="card" onclick="window.location.href = '{{redirect_url}}/question/tagged_list/ai/Development';">
-                <div class="tag-image">
-                    <img class="tag-image-content" src="/static/image/ai.png">
-                </div>
-                <div class="tag-title">
-                    <h5 class="development-title">AI</h5>
-                </div>
-                <div class="tag-info" style="margin-top: 25px; padding: 5px; border-top: 1px solid #d0d5db;">
-                    <span>👍 태그 총 좋아요 수  👀 태그 총 조회수</span>
-                </div>
-            </div>
-            <div class="card" onclick="window.location.href = '{{redirect_url}}/question/tagged_list/html/Development';">
-                <div class="tag-image">
-                    <img class="tag-image-content" src="/static/image/html.png">
-                </div>
-                <div class="tag-title">
-                    <h5 class="development-title">HTML</h5>
-                </div>
-                <div class="tag-info" style="margin-top: 25px; padding: 5px; border-top: 1px solid #d0d5db;">
-                    <span>👍 태그 총 좋아요 수  👀 태그 총 조회수</span>
+                <div class="card" onclick="window.location.href = '{{redirect_url}}/question/tagged_list/html/Development';">
+                    <div class="tag-image">
+                        <img class="tag-image-content" src="/static/image/html.png">
+                    </div>
+                    <div class="tag-title">
+                        <h5 class="development-title">HTML</h5>
+                    </div>
+
                 </div>
             </div>
+            <div class="row">
+                <div class="card" onclick="window.location.href = '{{redirect_url}}/question/tagged_list/javascript/Development';">
+                    <div class="tag-image">
+                        <img class="tag-image-content" src="/static/image/js.png">
+                    </div>
+                    <div class="tag-title">
+                        <h5 class="development-title">JavaScript</h5>
+                    </div>
+
+                </div>
+                <div class="card" onclick="window.location.href = '{{redirect_url}}/question/tagged_list/github/Development';">
+                    <div class="tag-image">
+                        <img class="tag-image-content" src="/static/image/github.png">
+                    </div>
+                    <div class="tag-title">
+                        <h5 class="development-title">GitHub</h5>
+                    </div>
+
+                </div>
+                <div class="card" onclick="window.location.href = '{{redirect_url}}/question/tagged_list/java/Development';">
+                    <div class="tag-image">
+                        <img class="tag-image-content" src="/static/image/java.png">
+                    </div>
+                    <div class="tag-title">
+                        <h5 class="development-title">Java</h5>
+                    </div>
+
+                </div>
+            </div>
+            <a href="{{ url_for('question.create') }}" class="btn btn-light" style="margin-top: 20px; box-shadow: 0.2px 0.2px 0.2px 1px; #d4d8d9;">✏️ 질문 등록하기</a>
         </div>
-        <div class="row">
-            <div class="card" onclick="window.location.href = '{{redirect_url}}/question/tagged_list/javascript/Development';">
-                <div class="tag-image">
-                    <img class="tag-image-content" src="/static/image/js.png">
-                </div>
-                <div class="tag-title">
-                    <h5 class="development-title">JavaScript</h5>
-                </div>
-                <div class="tag-info" style="margin-top: 25px; padding: 5px; border-top: 1px solid #d0d5db;">
-                    <span>👍 태그 총 좋아요 수  👀 태그 총 조회수</span>
-                </div>
-            </div>
-            <div class="card" onclick="window.location.href = '{{redirect_url}}/question/tagged_list/github/Development';">
-                <div class="tag-image">
-                    <img class="tag-image-content" src="/static/image/github.png">
-                </div>
-                <div class="tag-title">
-                    <h5 class="development-title">GitHub</h5>
-                </div>
-                <div class="tag-info" style="margin-top: 25px; padding: 5px; border-top: 1px solid #d0d5db;">
-                    <span>👍 태그 총 좋아요 수  👀 태그 총 조회수</span>
-                </div>
-            </div>
-            <div class="card" onclick="window.location.href = '{{redirect_url}}/question/tagged_list/java/Development';">
-                <div class="tag-image">
-                    <img class="tag-image-content" src="/static/image/java.png">
-                </div>
-                <div class="tag-title">
-                    <h5 class="development-title">Java</h5>
-                </div>
-                <div class="tag-info" style="margin-top: 25px; padding: 5px; border-top: 1px solid #d0d5db;">
-                    <span>👍 태그 총 좋아요 수  👀 태그 총 조회수</span>
-                </div>
-            </div>
-        </div>
-        <a href="{{ url_for('question.create') }}" class="btn btn-light" style="margin-top: 20px; box-shadow: 0.2px 0.2px 0.2px 1px; #d4d8d9;">✏️ 질문 등록하기</a>
     </div>
 </div>
 </body>

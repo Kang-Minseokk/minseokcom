@@ -452,6 +452,9 @@ def create():
 @bp.route('/modify/<int:question_id>', methods=('GET', 'POST'))
 @login_required
 def modify(question_id):
+    category_list = []
+    for selected_category in Category.query.all():
+        category_list.append(selected_category.category)
     total_visit_count = get_total_visit_count()
     yesterday_visit_count = get_yesterday_visit_count()
     total_posts_count = get_total_posts_count()
@@ -472,7 +475,8 @@ def modify(question_id):
         form = QuestionForm(obj=question)
     return render_template('question/question_form.html', form=form, form_for_new_category=form_for_new_category,
                            today_visit_user_count=today_visit_user_count, total_visit_count=total_visit_count,
-                           total_posts_count=total_posts_count, yesterday_visit_count=yesterday_visit_count)
+                           total_posts_count=total_posts_count, yesterday_visit_count=yesterday_visit_count,
+                           category_list=category_list)
 
 
 @bp.route('/delete/<int:question_id>')

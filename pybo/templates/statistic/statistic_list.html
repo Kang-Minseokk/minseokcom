@@ -7,9 +7,7 @@
     <title>Title</title>
 
     <style>
-        .col-md-3 {
-            margin: 10px;
-            margin-left: 30px;
+        .col-3 {
             height: 600px;
             border: 1px solid #fff;
             border-radius: 10px;
@@ -19,12 +17,9 @@
             flex-direction: column;
         }
 
-        .col-md-6 {
-            margin: 10px;
+        .col-6 {
             height: 600px;
-            border: 1px solid #fff;
-            border-radius: 10px;
-            box-shadow: 0.5px 1px 1px 2px #424242;
+
         }
 
         .topic-menu:hover {
@@ -64,17 +59,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 </head>
 <body>
-    <div class="col-md-3">
+
+    <div class="col-3 offset-1">
         <h2 style="color: white; border-bottom: 1px solid #fff;">Select a topic</h2>
         {% for title in title_list %}
-
         <a class="topic-menu" href="#" style="display: flex; flex-direction: row;">{{ loop.index }}.<h5>{{ title }}</h5></a>
-
         {% endfor %}
         <a href="{{ url_for('statistic.create') }}" class="btn btn-light" style="margin-top: 20px; border: 1px solid #000;">✏️ 그래프 추가하기</a>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-6">
         <h2 style="color: white; border-bottom: 1px solid #fff;">Graphs</h2>
         <h5 class="graph-data" id="title_list">{{ title_list }}</h5>
         <h5 class="graph-data" id="title">{{ title }}</h5>
@@ -89,10 +83,9 @@
             <canvas id="line-chart" width="300" height="250"></canvas>
         </div>
     </div>
-    <div class="col-md-2">
-    </div>
 
-    <div class="col-md-9">
+
+    <div class="col-9 offset-2" style="margin-top: 40px;">
         <table class="table">
             <thead>
             <tr class="text-center thead-dark">

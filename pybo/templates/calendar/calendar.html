@@ -86,7 +86,7 @@
 </head>
 
 <body>
-<div class="col-md-4" style="margin-top:20px;">
+<div class="col-4 offset-1" style="margin-top:20px; justify-content: center;">
   <h3 style="color: white;">List For Today</h3>
   <table class="table">
     <thead>
@@ -107,12 +107,8 @@
     </tbody>
   </table>
 </div>
-<div class="col">
-  <div class="row">
-    <div class="col-md-10">
-      <div id="calendar" style="margin: 10px; color: white;"></div>
-    </div>
-  </div>
+<div class="col-5">
+  <div id="calendar" style="margin: 10px; color: white;"></div>
   <div class="row">
     <a href="{{ url_for('calendar.create') }}" class="btn btn-light m-3" style="box-shadow:0.2px 1px 1px 2px #636363;">일정 추가하기</a>
   </div>

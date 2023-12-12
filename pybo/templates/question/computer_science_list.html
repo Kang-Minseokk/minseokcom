@@ -20,7 +20,7 @@
 </head>
 
 
-<div class="col-md-10" id="full-content">
+<div class="container-fluid" id="full-content" style="max-width: 70%; justify-content: flex-end;">
     <div class="row">
         <div class="col-6" style="margin-top: 10px;">
             <span style="font-size: 40px; color: white; font-family: bada_font;">Computer Science</span>
@@ -29,11 +29,11 @@
         <div class="col-4 input-group" style="padding: 10px; margin-top: 10px;">
             <input type="text" class="form-control kw" value="{{ kw or '' }}">
             <div class="input-group-append">
-                <button class="btn btn-outline-light" type="button" id="btn_search" style="background-color: #8a8988;">찾기</button>
+                <button class="btn btn-outline-light" type="button" id="btn_search" style="background-color: #8a8988; height: 40px;">찾기</button>
             </div>
         </div>
         <div class="col-2">
-            <a href="{{ url_for('question.create') }}" class="btn btn-light" style="margin-top: 20px; border: 1px solid #000;">✏️ 질문 등록하기</a>
+            <a href="{{ url_for('question.create') }}" class="btn btn-light" style="margin-top: 20px; border: 1px solid #000; height: 40px; width: 150px;">✏️ 질문 등록하기</a>
         </div>
     </div>
     <span style="font-family: bada_font; font-size: 20px;">✅ 아래의 태그를 선택하면 해당 태그와 관련된 글을 볼 수 있어요.<br></span>

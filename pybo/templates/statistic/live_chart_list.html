@@ -3,7 +3,6 @@
 <head>
     <style>
         .search_section {
-            margin-left: 20px;
             margin-top: 10px;
             border-radius: 5px;
             border: 1px solid #fff;
@@ -12,8 +11,6 @@
 
         .chart_section {
             margin-top: 10px;
-            border-radius: 5px;
-            border: 1px solid #fff;
             height: 600px;
             overflow: auto;
         }
@@ -23,14 +20,14 @@
 </head>
 
 <body>
-    <div class="col-md-3 search_section input-group">
+    <div class="col-3 offset-1 search_section input-group">
         <input type="text" class="form-control kw" value="{{ kw or '' }}" style="margin-top: 10px;">
         <div class="input-group-append" style="margin-top: 10px;">
             <button class="btn btn-outline-light" type="button" id="btn_search" style="background-color: #8a8988; height: 38px;">찾기</button>
         </div>
     </div>
 
-    <div class="col-md-6 chart_section">
+    <div class="col-6 chart_section">
         <canvas id="weather-chart" width="300" height="230"></canvas>
     </div>
 
