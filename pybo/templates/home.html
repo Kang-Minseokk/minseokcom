@@ -92,61 +92,51 @@
 </head>
 
 <body>
-    <div class="container-fluid area1" id="full-content" style="max-width: 80%; justify-content: center;">
-        <div class="container-fluid">
-            <div class="card-deck">
-                {% for question in question_list %}
-                    <div class="card" style="height: 300px; margin: 5px;">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <a href="{{ url_for('question.detail', question_id=question.id) }}" style="color:black; font-size: 20px;">{{ question.subject }}</a>
-                            </h5>
-                            <p class="card-text" style="font-family: bada_font;">{{ question.user.username }}</p>
-                            <p class="card-text">{{ question.create_date|datetime }}</p>
-                            <p class="card-text">{{ question.category }}</p>
-                        </div>
+    <div class="container-fluid area1" id="full-content" style="max-width: 80%; justify-content: center; margin-top: 10px;">
+        <div class="row">
+            {% for question in question_list %}
+                <div class="card" style="height: 300px; width: 18%; margin: 5px;">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="{{ url_for('question.detail', question_id=question.id) }}" style="color:black; font-size: 20px;">{{ question.subject }}</a>
+                        </h5>
+                        <p class="card-text" style="font-family: bada_font;">{{ question.user.username }}</p>
+                        <p class="card-text">{{ question.create_date|datetime }}</p>
+                        <p class="card-text">{{ question.category }}</p>
                     </div>
-                {% endfor %}
-            </div>
+                </div>
+            {% endfor %}
         </div>
-        <div class="blogPlugIn" style="display: flex;">
-            <div class="col-md-6">
-                <img class="news_bg_image" src="{{ url_for('static', filename='image/paper.jpg') }}" style="border-radius: 10px; margin-top: 10px; padding: 5px; box-shadow: 0.5px 1px 1px 2px #636363; height: 380px; max-width: 110%; position: relative;">
+
+        <div class="row" style="display: flex; margin-top: 10px;">
+            <div class="col-md-6 col-xs-6">
+                <img class="news_bg_image" src="{{ url_for('static', filename='image/paper.jpg') }}" style="border-radius: 10px; box-shadow: 0.5px 1px 1px 2px #636363; height: 80%; max-width: 100%; position: relative;">
                 <h5 style="position: absolute; top: 30px; left: 40px;">Daily News Topic</h5>
-                <span style="position: absolute; top: 60px; left: 40px; font-family: monospace; max-width: 480px;">👉 매일 8시 30분, 19시 00분에 새로운 인공지능 관련 기사가 업데이트됩니다.</span>
-                <span style="position: absolute; top: 110px; left: 40px; font-family: monospace; max-width: 480px;">👉 아래의 기사제목을 누르면 링크를 통해 기사를 볼 수 있습니다.</span>
-                <a id="newsLink" href="#" style="color: gray; position: absolute; top: 160px; left: 40px; max-width: 480px; font-family: monospace;"><h6 id="newsText" style="font-size: 20px;">준비중입니다...</h6></a>
+                <span style="position: absolute; top: 60px; left: 5%; font-family: monospace; width: 70%;">👉 매일 8시 30분, 19시 00분에 새로운 인공지능 관련 기사가 업데이트됩니다.</span>
+                <span style="position: absolute; top: 110px; left: 5%; font-family: monospace; width: 70%;">👉 아래의 기사제목을 누르면 링크를 통해 기사를 볼 수 있습니다.</span>
+                <a id="newsLink" href="#" style="color: gray; position: absolute; top: 160px; left: 40px; width: 70%; font-family: monospace;"><h6 id="newsText" style="font-size: 20px;">준비중입니다...</h6></a>
             </div>
 
-            <div class="container-fluid">
-                <canvas id="line-chart" width="100" height="80%"></canvas>
+            <div class="col-md-5 col-xs-5">
+                <div class="owner-profile" style="width: 100%; height: 20%; background-color: #e3ded5; display: flex; align-items: center; justify-content: center;">
+                    <span class="txt" style="font-family: yeongdeok_font; font-size: 20px; display: table-cell; vertical-align: middle; border-right: 0.05em solid #F81857; animation: cursor 0.5s ease infinite;"></span>
+                </div>
+                <div class="owner-detail" style="position: relative; width: 90%; height: 40%; border-radius: 10px; height: 300px; margin-top: 20px; white-space: pre-line;">
+                    <p style="font-size: 20px; font-family: bada_font;">인공지능에 관심이 많은 사람의 공부기록 블로그입니다.
+
+                    Git Hub: Kang-Minseokk
+                    Email: dreampilot920@naver.com
+                    </p>
+                </div>
             </div>
         </div>
     </div>
 
+    <canvas id="line-chart" width="100" height="80"></canvas>
 
-    <div class="col-12 owner-info area2" style="width: 200px; height: 400px; border-top: 1px solid #fff; margin-top: 10px; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-        <div class="owner-profile" style="position: relative; width: 50%; height: 30%; background-color: #e3ded5; display: flex; align-items: center; justify-content: center;">
-            <span class="txt" style="font-family: yeongdeok_font; font-size: 20px; display: table-cell; vertical-align: middle; border-right: 0.05em solid #F81857; animation: cursor 0.5s ease infinite;"></span>
-        </div>
-        <div class="owner-detail" style="position: relative; width: 50%; height: 40%; border-radius: 10px; height: 300px; margin-top: 20px; white-space: pre-line;">
-            <p style="font-size: 20px; font-family: bada_font;">인공지능에 관심이 많은 개발자입니다.
-            인공지능으로 인간의 뇌가 하는 역할을 대신 수행할 수 있게끔 만들고 싶습니다.
-            특히 자율 주행 자동차, 자연어 처리에 대한 분야에 관심이 많습니다.
 
-            인공지능을 활용해서 다양한 시도를 하기 위해서 열심히 공부합니다.
 
-            I am a developer with a keen interest in artificial intelligence.
-            I aspire to create AI systems that can take on the roles performed by the human brain.
-            I am particularly fascinated by the fields of autonomous driving and natural language processing.
 
-            I am diligently studying to explore various endeavors using artificial intelligence. My goal is to leverage AI in innovative ways and contribute to advancements in the field.
-
-            Git Hub: Kang-Minseokk
-            Email: dreampilot920@naver.com
-            </p>
-        </div>
-    </div>
 
     {% if not g.user %}
         <div class="suggest-modal" id="LoginModal" style="position: fixed; top: 35%; left: 30%; border: 1px solid #fff; background-color: #fff; opacity: 0.7; text-align: center; width: 40%; height: 40%; display: none;">
@@ -241,7 +231,6 @@
         newsListText[0] = newsListText[0].slice(29);
         newsListText[newsListText.length - 1] = newsListText[newsListText.length - 1].slice(0, -1);
         var num = 0;
-        console.log(newsListLink)
 
         setInterval(function() {
             if (newsListText[num]) {
@@ -255,7 +244,7 @@
             }
         }, 5000);
 
-        const content = '안녕하세요! 강민석입니다. 만나서 반가워요!';
+        const content = '안녕하세요! 만나서 반가워요 :)';
         const txt = document.querySelector('.txt');
         let n=0;
 
@@ -270,7 +259,6 @@
 
         var modalLogin = document.getElementById('LoginModal');
         function loginSuggestModal() {
-            console.log(window.location.href)
                 modalLogin.style.display = 'block';
             };
         setTimeout(loginSuggestModal, 10000);
