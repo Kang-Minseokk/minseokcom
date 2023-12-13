@@ -66,46 +66,42 @@
   }
 
 </style>
-<nav class="navbar navbar-expand-lg navbar-light" style="border-bottom: 4px dashed #ededed; margin-top: 10px; background-color: #b9c4c0;">
-  <a href="#" id="category-menu" style="font-size: 30px; color: white; margin-right: 10px;">☰</a>
-  <a href="#" id="big-category-menu" onclick="showContent()" style="font-size: 30px; color: #ed9542; margin-right: 20px; ">☰</a>
-  <a class="navbar-brand" href="{{ url_for('main.index') }}" style="color: white; margin-top: 5px; font-family: yeongdeok_font;"><img class="newjeans_icon" src="/static/image/newjeans.jpeg">Min</a>
-  <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse flex-grow-0" id="navbarNav" style="position: relative; left: 1100px; overflow: auto; white-space: nowrap;">
+<nav class="navbar" style="margin-top: 10px; background-color: #adaaa3; box-shadow: 0px 5px 5px -2px; z-index: 1;">
+    <a href="#" id="category-menu" style="font-size: 30px; color: white; margin-right: 10px;">☰</a>
+    <a href="#" id="big-category-menu" onclick="showContent()" style="font-size: 30px; color: #ed9542; margin-right: 20px; ">☰</a>
+    <a class="navbar-brand" href="{{ url_for('main.index') }}" style="color: white; margin-top: 5px; font-family: yeongdeok_font;"><img class="newjeans_icon" src="/static/image/newjeans.jpeg">Min</a>
+
+
     {% if g.user %}
-      {% if g.user.kakao == 0 %}
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link logout-btn" href="{{ url_for('auth.logout') }}" style="color: #7a7a7a; font-size: 18px; font-family: yeongdeok_font;">Logout</a>
-          </li>
-        </ul>
-        <img class="profile-image" src="{{ url_for('static', filename='image/' + g.user.profile_img) }}" style="margin-left: 20px; height: 20px; width: 20px; border-radius: 50%;">
-        <a href="{{ url_for('auth.user_info', user_id=g.user.id) }}" style="color: #7a7a7a; font-size: 18px; margin-left: 10px; font-family: yeongdeok_font;">{{ g.user.username }}</a>
-        <a href="#" style="color: #dbdbd9; font-size: 18px; margin-left: 10px;"></a>
-      {% else %}
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a href="{{ url_for('auth.logout') }}"><span id="kakaoLogout" class="nav-link" style="background-color: #ffe812; color: #000000; font-size: 10px; font-family: yeongdeok_font; border-radius: 5px; border: 1px solid #fff;">Logout</span></a>
-          </li>
-        </ul>
-        <img class="profile-image" src="{{ g.user.profile_img }}" style="margin-left: 20px; height: 20px; width: 20px; border-radius: 50%;">
-        <a id="user-name" href="{{ url_for('auth.user_info', user_id=g.user.id) }}" style="color: #dbdbd9; font-size: 18px; margin-left: 10px; font-family: yeongdeok_font;">{{ g.user.username }}</a>
-        <a href="#" style="color: #dbdbd9; font-size: 18px; margin-left: 10px;"></a>
-      {% endif %}
+        {% if g.user.kakao == 0 %}
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link logout-btn" href="{{ url_for('auth.logout') }}" style="color: #7a7a7a; font-size: 18px; font-family: yeongdeok_font;">Logout</a>
+                </li>
+            </ul>
+            <img class="profile-image" src="{{ url_for('static', filename='image/' + g.user.profile_img) }}" style="margin-left: 20px; height: 20px; width: 20px; border-radius: 50%;">
+            <a href="{{ url_for('auth.user_info', user_id=g.user.id) }}" style="color: #7a7a7a; font-size: 18px; margin-left: 10px; font-family: yeongdeok_font;">{{ g.user.username }}</a>
+            <a href="#" style="color: #dbdbd9; font-size: 18px; margin-left: 10px;"></a>
+        {% else %}
+          <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                  <a href="{{ url_for('auth.logout') }}"><span id="kakaoLogout" class="nav-link" style="background-color: #ffe812; color: #000000; font-size: 10px; font-family: yeongdeok_font; border-radius: 5px; border: 1px solid #fff;">Logout</span></a>
+              </li>
+          </ul>
+          <img class="profile-image" src="{{ g.user.profile_img }}" style="margin-left: 20px; height: 20px; width: 20px; border-radius: 50%;">
+          <a id="user-name" href="{{ url_for('auth.user_info', user_id=g.user.id) }}" style="color: #dbdbd9; font-size: 18px; margin-left: 10px; font-family: yeongdeok_font;">{{ g.user.username }}</a>
+          <a href="#" style="color: #dbdbd9; font-size: 18px; margin-left: 10px;"></a>
+        {% endif %}
 
     {% else %}
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link signin-btn" href="{{ url_for('auth.signup') }}" style="color: #f2f2f2; font-size: 20px; margin-left: 10px; font-family: yeongdeok_font;">계정생성</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link login-btn" href="{{ url_for('auth.login') }}" style="color: #f2f2f2; font-size: 20px; margin-left: 10px; font-family: yeongdeok_font;">로그인</a>
-      </li>
-    </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item" style="display: flex;">
+                <a class="nav-link signin-btn" href="{{ url_for('auth.signup') }}" style="color: #f2f2f2; font-size: 20px; margin-left: 10px; font-family: yeongdeok_font;">계정생성</a>
+                <a class="nav-link login-btn" href="{{ url_for('auth.login') }}" style="color: #f2f2f2; font-size: 20px; margin-left: 10px; font-family: yeongdeok_font;">로그인</a>
+            </li>
+        </ul>
     {% endif %}
-  </div>
+
 </nav>
 
 

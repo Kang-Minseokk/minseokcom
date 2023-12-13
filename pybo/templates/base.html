@@ -49,21 +49,6 @@
             src: url('../../../static/fonts/TAEBAEK milkyway.ttf') format('truetype');
         }
 
-        .sidebar {
-            width: 200px;
-            height: 400px;
-            background-color: white;
-            overflow: auto;
-            margin-top: 10px;
-            box-shadow: 1px 2px 2px 4px #ababab;
-            border-radius: 20px;
-            margin-left: 5px;
-            opacity: 0.9;
-            top: 10px;
-            position: sticky;
-            z-index: 1;
-        }
-
         .sidebar:hover {
             opacity: 1;
         }
@@ -74,7 +59,15 @@
         }
 
         .category-text {
-            font-family: oblique;
+            font-family: bada_font;
+            font-size: 18px;
+            margin-left: 20px;
+            margin-top: 10px;
+            color: black;
+        }
+
+        .category-text:hover {
+            text-decoration: none;
         }
 
         #up-button {
@@ -158,11 +151,6 @@
             margin: 5px;
         }
 
-
-        .category-text:hover {
-            text-decoration: none;
-        }
-
         .blog-info {
             height: 200px;
             width: 200px;
@@ -212,7 +200,6 @@
                 <a class="big-category-text below-live-menu" href="{{ url_for('statistic.live_chart') }}" style="display: none; margin-left: 20px;">Temperature</a>
                 <a class="big-category-text below-live-menu" href="#" style="display: none; margin-left: 20px;"></a>
                 <a class="big-category-text below-live-menu" href="#" style="display: none; margin-left: 20px;">Hot Topic</a>
-
             </div>
             <div class="container" style="width: 30%; height: 550px; display: flex; flex-direction: column; overflow: auto;">
                 <h2 class="big-category-subject">...</h2>
@@ -220,34 +207,26 @@
                 <a class="big-category-text" href="{{ url_for('auth.friends') }}">Friends</a>
             </div>
         </div>
-
     </div>
-    <div class="col-2" style="display: flex; flex-direction: column;">
-        <div class="sidebar">
-            <div class="category">
-                <ul>
-                    <li class="category-layout"><a class="category-text" href="{{ url_for('question.ds_list', category='Data Science') }}">Data Science</a></li>
-                    <li class="category-layout"><a class="category-text" href="{{ url_for('question.d_list') }}">Development</a></li>
-                    <li class="category-layout"><a class="category-text" href="{{ url_for('question.cs_list') }}">Computer Science</a></li>
-                    <li class="category-layout"><a class="category-text" href="{{ url_for('question.ai_list', num=0) }}">Artificial Intelligence</a></li>
-                    <li class="category-layout"><a class="category-text" href="{{ url_for('question.r_list', num=0) }}">Relaxation</a></li>
-                    <li class="category-layout"><a class="category-text" href="{{ url_for('question.c_list') }}">Communication</a></li>
-                    <li class="category-layout"><a class="category-text" href="{{ url_for('goal.list') }}">My Goal</a></li>
-                    <li class="category-layout"><a class="category-text" href="{{ url_for('calendar.show') }}">Calendar</a></li>
-                    <li class="category-layout"><a class="category-text" href="{{ url_for('statistic.s_list') }}">Statistic</a></li>
-                    {% for category in category_list %}
-                        <li class="category-layout"><a class="category-text" href="{{ url_for('question.ds_list', category=category) }}">{{ category }}</a></li>
-                    {% endfor %}
-                    <li class="category-layout"><button id="add-category" class="category-text">Add Category</button></li>
-                </ul>
-            </div>
+
+    <div class="sidebar-layout" style="width: 20%;">
+        <div class="sidebar" style="background-color: #b9c4c0; overflow: auto; opacity: 0.9; z-index: 0; display: flex; flex-direction: column; width: 80%; height: 100%; border-right: 1px solid #000;">
+            <a class="category-text" href="{{ url_for('question.ds_list', category='Data Science') }}">Data Science</a>
+            <a class="category-text" href="{{ url_for('question.d_list') }}">Development</a>
+            <a class="category-text" href="{{ url_for('question.cs_list') }}">Computer Science</a>
+            <a class="category-text" href="{{ url_for('question.ai_list', num=0) }}">Artificial Intelligence</a>
+            <a class="category-text" href="{{ url_for('question.r_list', num=0) }}">Relaxation</a>
+            <a class="category-text" href="{{ url_for('question.c_list') }}">Communication</a>
+            <a class="category-text" href="{{ url_for('goal.list') }}">My Goal</a>
+            <a class="category-text" href="{{ url_for('calendar.show') }}">Calendar</a>
+            <a class="category-text" href="{{ url_for('statistic.s_list') }}">Statistic</a>
+            {% for category in category_list %}
+                <a class="category-text" href="{{ url_for('question.ds_list', category=category) }}">{{ category }}</a>
+            {% endfor %}
+            <button id="add-category" class="category-text">Add Category</button>
+
         </div>
-        <div class="blog-info">
-            <span>⌛ yesterday: {{ yesterday_visit_count }}</span>
-            <span>⏳ today: {{ today_visit_user_count }}</span>
-            <span>🚀 total: {{ total_visit_count }}</span>
-            <span>🧑🏻‍💻 posts: {{ total_posts_count }}</span>
-        </div>
+
         <div class="button-area" style="display: flex; flex-direction: row; background-color: white;">
             <button class="up-button" id="up-button">^</button>
             {% if g.user %}

@@ -92,7 +92,7 @@
 </head>
 
 <body>
-    <div class="container-fluid area1" id="full-content" style="max-width: 70%; justify-content: center;">
+    <div class="container-fluid area1" id="full-content" style="max-width: 80%; justify-content: center;">
         <div class="container-fluid">
             <div class="card-deck">
                 {% for question in question_list %}
@@ -109,7 +109,7 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="blogplugin" style="display: flex;">
+        <div class="blogPlugIn" style="display: flex;">
             <div class="col-md-6">
                 <img class="news_bg_image" src="{{ url_for('static', filename='image/paper.jpg') }}" style="border-radius: 10px; margin-top: 10px; padding: 5px; box-shadow: 0.5px 1px 1px 2px #636363; height: 380px; max-width: 110%; position: relative;">
                 <h5 style="position: absolute; top: 30px; left: 40px;">Daily News Topic</h5>
