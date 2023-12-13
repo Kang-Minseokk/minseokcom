@@ -211,20 +211,18 @@
 
     <div class="sidebar-layout" style="width: 20%;">
         <div class="sidebar" style="background-color: #b9c4c0; overflow: auto; z-index: 0; display: flex; flex-direction: column; width: 80%; height: 100%; border-right: 2px solid #adaaa3;">
+            <span style="margin-left: 20px; font-family: bada_font; font-size: 30px;">Study</span>
             <a class="category-text" href="{{ url_for('question.ds_list', category='Data Science') }}">Data Science</a>
             <a class="category-text" href="{{ url_for('question.d_list') }}">Development</a>
             <a class="category-text" href="{{ url_for('question.cs_list') }}">Computer Science</a>
             <a class="category-text" href="{{ url_for('question.ai_list', num=0) }}">Artificial Intelligence</a>
-            <a class="category-text" href="{{ url_for('question.r_list', num=0) }}">Relaxation</a>
+            <span style="margin-left: 20px; font-family: bada_font; font-size: 30px;">Free_Time</span>
+            <a class="category-text" href="{{ url_for('question.r_list', num=0) }}">Free Time</a>
             <a class="category-text" href="{{ url_for('question.c_list') }}">Communication</a>
+            <span style="margin-left: 20px; font-family: bada_font; font-size: 30px;">Private</span>
             <a class="category-text" href="{{ url_for('goal.list') }}">My Goal</a>
             <a class="category-text" href="{{ url_for('calendar.show') }}">Calendar</a>
             <a class="category-text" href="{{ url_for('statistic.s_list') }}">Statistic</a>
-            {% for category in category_list %}
-                <a class="category-text" href="{{ url_for('question.ds_list', category=category) }}">{{ category }}</a>
-            {% endfor %}
-
-
         </div>
 
         <div class="button-area" style="display: flex; flex-direction: row; background-color: white;">
