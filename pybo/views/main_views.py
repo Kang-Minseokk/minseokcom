@@ -108,7 +108,7 @@ def index():
         )
         db.session.add(today_visit)
         db.session.commit()
-    daily_count_list = reversed(DailyVisit.query.order_by(DailyVisit.id.desc()).limit(8).all())
+    daily_count_list = reversed(DailyVisit.query.order_by(DailyVisit.id.desc()).limit(5).all())
     daily_visit_list = []
     for daily_count in daily_count_list:
         daily_visit_list.append(daily_count.count)
@@ -122,7 +122,7 @@ def index():
 
     # 일별 게시글 개수 리스트 전달
     post_list = []
-    for i in range(8):
+    for i in range(5):
         now = datetime.datetime.now()
         date = ((now - datetime.timedelta(days=7-i)).strftime("%Y-%m-%d"))
         count = 0

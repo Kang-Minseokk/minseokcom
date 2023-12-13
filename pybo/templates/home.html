@@ -66,14 +66,6 @@
             display: flex;
         }
 
-        .area1 {
-            height: 800px;
-        }
-
-        .area2 {
-            height: 1000px;
-        }
-
         .card-text {
             font-family: bada_font;
         }
@@ -109,15 +101,14 @@
         </div>
 
         <div class="row" style="display: flex; margin-top: 10px;">
-            <div class="col-md-6 col-xs-6">
-                <img class="news_bg_image" src="{{ url_for('static', filename='image/paper.jpg') }}" style="border-radius: 10px; box-shadow: 0.5px 1px 1px 2px #636363; height: 80%; max-width: 100%; position: relative;">
-                <h5 style="position: absolute; top: 30px; left: 40px;">Daily News Topic</h5>
-                <span style="position: absolute; top: 60px; left: 5%; font-family: monospace; width: 70%;">👉 매일 8시 30분, 19시 00분에 새로운 인공지능 관련 기사가 업데이트됩니다.</span>
-                <span style="position: absolute; top: 110px; left: 5%; font-family: monospace; width: 70%;">👉 아래의 기사제목을 누르면 링크를 통해 기사를 볼 수 있습니다.</span>
-                <a id="newsLink" href="#" style="color: gray; position: absolute; top: 160px; left: 40px; width: 70%; font-family: monospace;"><h6 id="newsText" style="font-size: 20px;">준비중입니다...</h6></a>
+            <div class="image-area" style="width: 40%; position: relative;"><img class="news_bg_image" src="{{ url_for('static', filename='image/paper.jpg') }}" style="width: 100%; height: 100%;">
+                <span style="position: absolute; top: 5%; left: 5%; font-family: bada_font; font-size: 18px;">Daily News Topic</span><br>
+                <span style="position: absolute; top: 15%; left: 5%; font-family: bada_font;">👉 매일 8시 30분, 19시 00분에 새로운 인공지능 관련 기사가 업데이트됩니다.</span>
+                <span style="position: absolute; top: 35%; left: 5%; font-family: bada_font;">👉 아래의 기사제목을 누르면 링크를 통해 기사를 볼 수 있습니다.</span>
+                <a id="newsLink" href="#" style="color: gray; position: absolute; top: 60%; left: 5%;; font-family: bada_font;"><h6 id="newsText" style="font-size: 20px;">준비중입니다...</h6></a>
             </div>
 
-            <div class="col-md-5 col-xs-5">
+            <div class="owner-info" style="margin-left: 15px; width: 40%;">
                 <div class="owner-profile" style="width: 100%; height: 20%; background-color: #e3ded5; display: flex; align-items: center; justify-content: center;">
                     <span class="txt" style="font-family: yeongdeok_font; font-size: 20px; display: table-cell; vertical-align: middle; border-right: 0.05em solid #F81857; animation: cursor 0.5s ease infinite;"></span>
                 </div>
@@ -130,13 +121,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <canvas id="line-chart" width="100" height="80"></canvas>
-
-
-
-
 
     {% if not g.user %}
         <div class="suggest-modal" id="LoginModal" style="position: fixed; top: 35%; left: 30%; border: 1px solid #fff; background-color: #fff; opacity: 0.7; text-align: center; width: 40%; height: 40%; display: none;">
@@ -164,54 +148,6 @@
     <input type="hidden" name="newsListLink" id="newsListLink" value="{{ news_list_link or '' }}"/>
 
     <script>
-        var dateList = [];
-        var today = new Date();
-        var visitCountList = document.getElementById('data').textContent.split(',').map(Number);
-        var postList = document.getElementById('post_list').textContent.split(',').map(Number);
-
-
-        for (var i = 7; i > -1; i--) {
-            var date = new Date(today);
-            date.setDate(today.getDate() - i);
-            var month = date.getMonth() + 1;
-            var day = date.getDate();
-            var formattedDate = month + '/' + day;
-            dateList.push(formattedDate);
-        }
-
-        new Chart(document.getElementById("line-chart"), {
-            type: 'line',
-            data: {
-                labels: dateList,
-                datasets: [{
-                    data: visitCountList,
-                    label: "Login User",
-                    borderColor: "#ed9542",
-                    fill: false
-                },
-                {
-                    data: postList,
-                    label: "New Posts",
-                    borderColor: "#500aa6",
-                    fill: false
-                }]
-            },
-            options: {
-                responsive: true,
-                title: {
-                    display: true,
-                    text: 'Daily Info Graph'
-                },
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            stepSize: 10
-                        }
-                    }]
-                }
-            }
-        });
-
         // 플래그 변수
         var isWindowLoaded = false;
 

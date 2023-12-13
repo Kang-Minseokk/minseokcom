@@ -152,18 +152,15 @@
         }
 
         .blog-info {
-            height: 200px;
-            width: 200px;
-            background-color: white;
-            position: sticky;
-            top: 500px;
-            margin-left: 5px;
+            height: 20%;
+            width: 80%;
+            border: 1px solid gray;
+            margin-left: 15px;
             border-radius: 5px;
-            padding: 15px;
             display: flex;
             flex-direction: column;
-            font-family: monospace;
-            z-index: 0;
+            font-family: bada_font;
+            font-size: 18px;
         }
 
     </style>
@@ -223,6 +220,13 @@
             <a class="category-text" href="{{ url_for('goal.list') }}">My Goal</a>
             <a class="category-text" href="{{ url_for('calendar.show') }}">Calendar</a>
             <a class="category-text" href="{{ url_for('statistic.s_list') }}">Statistic</a>
+            <canvas id="line-chart" width="60" height="60" style="margin-left: 10px;"></canvas>
+            <div class="blog-info">
+                <span>⌛ yesterday: {{ yesterday_visit_count }}</span>
+                <span>⏳ today: {{ today_visit_user_count }}</span>
+                <span>🚀 total: {{ total_visit_count }}</span>
+                <span>🧑🏻‍💻 posts: {{ total_posts_count }}</span>
+            </div>
         </div>
 
         <div class="button-area" style="display: flex; flex-direction: row; background-color: white;">
@@ -253,6 +257,8 @@
 </div>
 
 <input type="hidden" id="redirect_url" value="{{ redirect_url }}">
+<div id="data" style="display: none;">{{ daily_visit_list }}</div>
+<div id="post_list" style="display: none;">{{ post_list }}</div>
 
 <!-- 기본 템플릿에 삽입할 내용 End -->
 <!-- jQuery JS -->
@@ -260,6 +266,54 @@
 <!-- Bootstrap JS -->
 <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
 <script>
+    var dateList = [];
+    var today = new Date();
+    var visitCountList = document.getElementById('data').textContent.split(',').map(Number);
+    var postList = document.getElementById('post_list').textContent.split(',').map(Number);
+
+
+    for (var i = 4; i > -1; i--) {
+        var date = new Date(today);
+        date.setDate(today.getDate() - i);
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        var formattedDate = month + '/' + day;
+        dateList.push(formattedDate);
+    }
+
+    new Chart(document.getElementById("line-chart"), {
+        type: 'line',
+        data: {
+            labels: dateList,
+            datasets: [{
+                data: visitCountList,
+                label: "Login User",
+                borderColor: "#ed9542",
+                fill: false
+            },
+            {
+                data: postList,
+                label: "New Posts",
+                borderColor: "#500aa6",
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                text: 'Daily Info Graph'
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        stepSize: 10
+                    }
+                }]
+            }
+        }
+    });
+
     let io = 0;
 
     document.getElementById('category-menu').addEventListener('click', function() {
