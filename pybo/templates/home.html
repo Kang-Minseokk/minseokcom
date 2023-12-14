@@ -79,6 +79,12 @@
         .create-account-btn:hover {
             color: blue;
         }
+
+        @media screen and (max-width: 767px) {
+            body {
+                font-size: 20px;
+            }
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 </head>
@@ -137,7 +143,7 @@
             <a class="modal-select-button account-already-btn" href="{{ url_for('auth.login') }}">이미 계정이 있어요.</a>
             <a id="closeBtn" class="modal-select-button refuse-btn" href="#">다음에 할래요.</a>
         </div>
-
+    </div>
 
     {% endif %}
 
