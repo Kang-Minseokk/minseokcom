@@ -49,7 +49,7 @@
         <span class="login-note">✨ 저희는 절대로 이메일이나 다른 수단을 통해 비밀번호를 요청하지 않습니다. 사칭에 주의하세요.</span>
         <span class="login-note">✨ 계정 및 블로그에 관한 질문이나 문제가 있으면 언제든지 <a href="{{ url_for('auth.contact_us') }}">[문의처]</a>로 연락해주세요.</span>
     </div>
-    <div class="login-input-area col-7">
+    <div class="login-input-area col-8">
         <form method="post" class="post-form">
             {{ form.csrf_token }}
             {% include "form_errors.html" %}
@@ -67,7 +67,7 @@
             <span style="font-size: 20px; font-family: bada_font; color: white;">✨ 소셜 로그인을 사용하면 간편하게 계정을 생성하고 로그인할 수 있습니다.</span>
             <div class="login-button-area" style="margin-top: 60px; display: flex;">
                 <button type="submit" class="btn btn-primary">로그인</button>
-                <a onclick="kakaoLoginWindow()"><img id="kakaoBtn" class="kakao_login" src="/static/image/kakao_login_medium.png" style="margin-left: 20px; width: 80px; height: 40px;"></a>
+                <a onclick="kakaoLoginWindow()"><img id="kakaoBtn" class="kakao_login" src="/static/image/kakao_login_medium.png" style="margin-left: 30px; width: 80px; height: 40px;"></a>
                 <a onclick="googleLoginWindow()"><img id="googleSignUp" class="google_login" src="/static/image/google_SI.png" style="height: 40px;"></a>
             </div>
         </form>
