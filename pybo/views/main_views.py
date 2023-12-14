@@ -114,7 +114,6 @@ def index():
         daily_visit_list.append(daily_count.count)
     daily_visit_list = str(daily_visit_list).strip('[]')
 
-
     # 카테고리 리스트 전달해주기
     category_list = []
     for selected_category in Category.query.all():
@@ -124,7 +123,7 @@ def index():
     post_list = []
     for i in range(5):
         now = datetime.datetime.now()
-        date = ((now - datetime.timedelta(days=7-i)).strftime("%Y-%m-%d"))
+        date = ((now - datetime.timedelta(days=4-i)).strftime("%Y-%m-%d"))
         count = 0
         for question in Question.query.all():
             if question.create_date.strftime("%Y-%m-%d") == date:
