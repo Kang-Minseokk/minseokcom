@@ -12,8 +12,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 import requests
-
-
 pymysql.install_as_MySQLdb()
 db = SQLAlchemy()
 migrate = Migrate()
