@@ -187,12 +187,11 @@
                 <a class="big-category-text below-tool-menu" href="#" style="display: none; margin-left: 20px;">Chart.js</a>
                 <a class="big-category-text below-tool-menu" href="#" style="display: none; margin-left: 20px;">Pandas</a>
                 <a class="big-category-text below-tool-menu" href="#" style="display: none; margin-left: 20px;">Matplotlib</a>
-                <a class="big-category-text below-tool-menu" href="#" style="display: none; margin-left: 20px;">other</a>
-                <a class="big-category-text below-tool-menu" href="#" style="display: none; margin-left: 20px;">the other</a>
                 <a class="big-category-text" id="liveChartFolder" href="#">📁 Live Charts</a>
                 <a class="big-category-text below-live-menu" href="{{ url_for('statistic.live_chart') }}" style="display: none; margin-left: 20px;">Temperature</a>
                 <a class="big-category-text below-live-menu" href="#" style="display: none; margin-left: 20px;"></a>
                 <a class="big-category-text below-live-menu" href="#" style="display: none; margin-left: 20px;">Hot Topic</a>
+
             </div>
             <div class="container" style="width: 30%; height: 550px; display: flex; flex-direction: column; overflow: auto;">
                 <h2 class="big-category-subject">...</h2>
@@ -234,22 +233,6 @@
     </div>
     {% block content %}
     {% endblock %}
-    <div id="fullCategory" class="fullCategory">
-        <div class="modal-content">
-            <span id="close-button" class="close">&times;</span>
-            <form method="post">
-                {{ form_for_new_category.csrf_token }}
-                <!-- 오류표시 start include 사용시 에러가 발생해서 직접 코드를 작성해준다. -->
-                {% for field, errors in form_for_new_category.errors.items() %}
-                <div class="alert alert-danger" role="alert">
-                    <strong>{{ form_for_new_category[field].label }}</strong>: {{ ', '.join(errors) }}
-                </div>
-                {% endfor %}
-                <input type="text" name="category" value="{{ form_for_new_category.category.data or '' }}">
-                <button type="submit">추가하기</button>
-            </form>
-        </div>
-    </div>
 </div>
 
 <input type="hidden" id="redirect_url" value="{{ redirect_url }}">
@@ -262,6 +245,7 @@
 <!-- Bootstrap JS -->
 <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
 <script>
+
     var dateList = [];
     var today = new Date();
     var visitCountList = document.getElementById('data').textContent.split(',').map(Number);
@@ -317,17 +301,6 @@
         });
     });
 
-    var fullCategory = document.getElementById("fullCategory");
-    var btn = document.getElementById("add-category");
-    var span = document.getElementById("close-button");
-    btn.addEventListener('click', function() {
-        fullCategory.style.display = "block";
-    });
-
-    span.onclick = function() {
-        fullCategory.style.display = "none";
-    }
-
     function showContent() {
         const categoryContent = document.getElementById('category-content');
         if (categoryContent.style.top === '-700px') {
@@ -338,8 +311,9 @@
         }
     }
 
+
     var toolFolder = document.getElementById('toolFolder');
-    var belowToolMenu = document.querySelectorAll('below-tool-menu');
+    var belowToolMenu = document.querySelectorAll('.below-tool-menu');
     toolFolder.addEventListener('click', function() {
         if (belowToolMenu[0].style.display === 'none') {
             for (var i=0; i<belowToolMenu.length; i++) {
@@ -353,7 +327,7 @@
     });
 
     var liveChartFolder = document.getElementById('liveChartFolder');
-    var belowLiveMenu = document.querySelectorAll('below-live-menu');
+    var belowLiveMenu = document.querySelectorAll('.below-live-menu');
     liveChartFolder.addEventListener('click', function() {
         if (belowLiveMenu[0].style.display === 'none') {
             for (var i=0; i<belowLiveMenu.length; i++) {
