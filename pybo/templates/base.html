@@ -310,24 +310,6 @@
         }
     });
 
-    let io = 0;
-
-    document.getElementById('category-menu').addEventListener('click', function() {
-        var sidebar = document.querySelector('.sidebar');
-        sidebar.style.transition = 'left 0.3s ease';
-        var content = document.getElementById('full-content');
-        if (io === 0) {
-            sidebar.style.left = '-230px';
-            io = 1;
-            content.classList.remove('col-md-10');
-            content.classList.add('col-md-12');
-        } else {
-            sidebar.style.left = '0';
-            io = 0;
-            content.classList.remove('col-md-12');
-            content.classList.add('col-md-10');
-        }
-    });
     document.getElementById('up-button').addEventListener('click', function() {
         window.scrollTo({
             top: 0,
@@ -357,7 +339,7 @@
     }
 
     var toolFolder = document.getElementById('toolFolder');
-    var belowToolMenu = document.querySelectorAll('.below-tool-menu');
+    var belowToolMenu = document.querySelectorAll('below-tool-menu');
     toolFolder.addEventListener('click', function() {
         if (belowToolMenu[0].style.display === 'none') {
             for (var i=0; i<belowToolMenu.length; i++) {
@@ -371,7 +353,7 @@
     });
 
     var liveChartFolder = document.getElementById('liveChartFolder');
-    var belowLiveMenu = document.querySelectorAll('.below-live-menu');
+    var belowLiveMenu = document.querySelectorAll('below-live-menu');
     liveChartFolder.addEventListener('click', function() {
         if (belowLiveMenu[0].style.display === 'none') {
             for (var i=0; i<belowLiveMenu.length; i++) {
