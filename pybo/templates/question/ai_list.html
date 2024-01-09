@@ -28,12 +28,12 @@
             <div class="container" style="border-radius: 20px;  max-height: 500px; background-color: white; display: relative;">
                 <div class="col-md-12">
                     <div class="row" style="height: 10%;">
-                        <div class="col-4" style="font-size: 40px; margin-top: 10px; height: 50px;">{{ question_list[num].subject }}</div>
-                        <div class="col-6" style="margin-top: 20px; text-align: right;">{{ question_list[num].create_date|datetime }}</div>
-                        <div class="col-2" style="margin-top: 20px;">{{ question_list[num].user.username }}</div>
+                        <div class="col-7" style="font-size: 30px; margin-top: 10px; height: 50px; overflow: auto; white-space: nowrap;">{{ question_list[num].subject }}</div>
+                        <div class="col-3" style="margin-top: 20px; text-align: right; overflow: auto; white-space: nowrap;">{{ question_list[num].create_date|datetime }}</div>
+                        <div class="col-2" style="margin-top: 20px; overflow: auto; white-space: nowrap;">{{ question_list[num].user.username }}</div>
                     </div>
                     <div class="row">
-                        <pre class="container" style="margin-top: 10px; border: 1px solid #000; max-height: 350px; overflow: auto; border-radius: 10px; font-family: Verdana;">{{ question_list[num].content }}</pre>
+                        <pre class="container" style="margin-top: 10px; border: 1px solid #000; max-height: 350px; overflow: auto; border-radius: 10px; font-family: Verdana; padding: 20px;">{{ question_list[num].content }}</pre>
                     </div>
                     <div class="row">
                         <a href="#" class="recommend btn btn-secondary"

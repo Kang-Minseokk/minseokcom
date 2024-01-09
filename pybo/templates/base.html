@@ -148,7 +148,7 @@
         }
 
         .blog-info {
-            height: 20%;
+            height: 120px;
             width: 80%;
             border: 1px solid gray;
             margin-left: 15px;
@@ -157,6 +157,7 @@
             flex-direction: column;
             font-family: bada_font;
             font-size: 18px;
+            margin-bottom: 20px;
         }
 
     </style>
@@ -191,7 +192,9 @@
                 <a class="big-category-text below-live-menu" href="{{ url_for('statistic.live_chart') }}" style="display: none; margin-left: 20px;">Temperature</a>
                 <a class="big-category-text below-live-menu" href="#" style="display: none; margin-left: 20px;"></a>
                 <a class="big-category-text below-live-menu" href="#" style="display: none; margin-left: 20px;">Hot Topic</a>
-
+                <a class="big-category-text" id="studySites" href="#">📁 Sites for Study</a>
+                <a class="big-category-text below-sites-menu" href="https://www.kaggle.com/" style="display: none; margin-left: 20px;">Kaggle</a>
+                <a class="big-category-text below-sites-menu" href="https://huggingface.co/" style="display: none; margin-left: 20px;">Hugging Face</a>
             </div>
             <div class="container" style="width: 30%; height: 550px; display: flex; flex-direction: column; overflow: auto;">
                 <h2 class="big-category-subject">...</h2>
@@ -311,7 +314,6 @@
         }
     }
 
-
     var toolFolder = document.getElementById('toolFolder');
     var belowToolMenu = document.querySelectorAll('.below-tool-menu');
     toolFolder.addEventListener('click', function() {
@@ -336,6 +338,20 @@
         } else {
             for (var i=0; i<belowLiveMenu.length; i++) {
                 belowLiveMenu[i].style.display = 'none';
+            }
+        }
+    });
+
+    var sitesFolder = document.getElementById('studySites');
+    var belowSitesMenu = document.querySelectorAll('.below-sites-menu');
+    sitesFolder.addEventListener('click', function() {
+        if (belowSitesMenu[0].style.display === 'none') {
+            for (var i=0; i<belowSitesMenu.length; i++) {
+                belowSitesMenu[i].style.display = 'block';
+            }
+        } else {
+            for (var i=0; i<belowSitesMenu.length; i++) {
+                belowSitesMenu[i].style.display = 'none';
             }
         }
     });
