@@ -1,3 +1,5 @@
+from flask_uploads import UploadSet, IMAGES, configure_uploads
+
 from pybo.functions import get_redirect_url, get_total_visit_count, get_yesterday_visit_count, get_total_posts_count, \
     get_today_visit_count
 import smtplib
@@ -5,12 +7,12 @@ from datetime import datetime
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-from flask import Blueprint, render_template, request, url_for, g, flash, make_response, current_app
+from flask import Blueprint, render_template, request, url_for, g, flash, make_response
 from sqlalchemy import func
 from werkzeug.utils import redirect
 
 from config.default import SMTP_SERVER, SMTP_PORT, EMAIL_ADDR, EMAIL_PASSWORD
-from .. import db
+from .. import db, create_app
 from ..forms import QuestionForm, AnswerForm, CategoryForm
 from ..models import Question, Answer, User, question_voter, Subscriber, Category
 from ..views.auth_views import login_required
@@ -369,6 +371,20 @@ def create():
     subscriber_rows = Subscriber.query.filter_by(to_user_id=g.user.id).all()
     user_emails = [User.query.get_or_404(row.from_user_id).email for row in subscriber_rows]
     redirect_url = get_redirect_url()
+
+    photos = UploadSet('photos')
+
+    if request.method == 'POST':
+        if 'photo' in request.files:
+            photo = request.files['photo']
+            if photo:
+                filename = photos.save(photo)
+                print(photo)
+                print("Saved filename:", filename)
+                full_path = photos.path(filename)
+                print("Full path:", full_path)
+
+
     # 카테고리 리스트 전달해주기
     category_list = []
     for selected_category in Category.query.all():
