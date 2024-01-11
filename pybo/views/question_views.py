@@ -372,17 +372,17 @@ def create():
     user_emails = [User.query.get_or_404(row.from_user_id).email for row in subscriber_rows]
     redirect_url = get_redirect_url()
 
-    photos = UploadSet('photos')
-
-    if request.method == 'POST':
-        if 'photo' in request.files:
-            photo = request.files['photo']
-            if photo:
-                filename = photos.save(photo)
-                print(photo)
-                print("Saved filename:", filename)
-                full_path = photos.path(filename)
-                print("Full path:", full_path)
+    # photos = UploadSet('photos')
+    #
+    # if request.method == 'POST':
+    #     if 'photo' in request.files:
+    #         photo = request.files['photo']
+    #         if photo:
+    #             filename = photos.save(photo)
+    #             print(photo)
+    #             print("Saved filename:", filename)
+    #             full_path = photos.path(filename)
+    #             print("Full path:", full_path)
 
 
     # 카테고리 리스트 전달해주기

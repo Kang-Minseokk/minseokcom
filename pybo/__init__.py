@@ -32,8 +32,8 @@ def create_app():
     app.config.from_envvar('APP_CONFIG_FILE')
     CORS(app)
 
-    photos = UploadSet('photos', IMAGES)
-    configure_uploads(app, photos)
+    # photos = UploadSet('photos', IMAGES)
+    # configure_uploads(app, photos)
 
     # ORM
     db.init_app(app)
