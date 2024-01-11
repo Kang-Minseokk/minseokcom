@@ -1,5 +1,3 @@
-from flask_uploads import UploadSet, IMAGES, configure_uploads
-
 from pybo.functions import get_redirect_url, get_total_visit_count, get_yesterday_visit_count, get_total_posts_count, \
     get_today_visit_count
 import smtplib
