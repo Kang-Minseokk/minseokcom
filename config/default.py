@@ -8,3 +8,5 @@ SMTP_PORT = 465
 EMAIL_ADDR = 'm23235180@gmail.com'
 EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
 PERMANENT_SESSION_LIFETIME = timedelta(minutes=60)
+UPLOADED_PHOTOS_DEST = 'pybo/static/image/image_content'
+UPLOADS_DEFAULT_URL = 'pybo/static/image/image_content/'

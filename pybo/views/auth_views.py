@@ -63,7 +63,7 @@ def signup():
             else:
                 profile_img = form.profile_img.data
                 filename = profile_img.filename
-                profile_img.save(os.path.join('/Users/minseokkang/projects/myproject/pybo/static/image', filename))
+                profile_img.save(os.path.join('pybo/static/image', filename))
                 user = User(username=form.username.data, password=generate_password_hash(form.password1.data),
                             email=form.email.data, profile_img=filename, kakao=0)
                 db.session.add(user)

@@ -1,5 +1,8 @@
 import datetime
 import os
+
+from flask_uploads import configure_uploads, UploadSet, IMAGES
+
 from config.default import SMTP_SERVER, SMTP_PORT, EMAIL_ADDR, EMAIL_PASSWORD, BASE_DIR
 from flask_cors import CORS
 import pymysql
@@ -12,6 +15,9 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 import requests
+
+
+
 pymysql.install_as_MySQLdb()
 db = SQLAlchemy()
 migrate = Migrate()
@@ -25,6 +31,9 @@ def create_app():
     app = Flask(__name__)
     app.config.from_envvar('APP_CONFIG_FILE')
     CORS(app)
+
+    photos = UploadSet('photos', IMAGES)
+    configure_uploads(app, photos)
 
     # ORM
     db.init_app(app)
