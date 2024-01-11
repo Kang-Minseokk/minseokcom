@@ -1,8 +1,5 @@
 import datetime
 import os
-
-from flask_uploads import configure_uploads, UploadSet, IMAGES
-
 from config.default import SMTP_SERVER, SMTP_PORT, EMAIL_ADDR, EMAIL_PASSWORD, BASE_DIR
 from flask_cors import CORS
 import pymysql
