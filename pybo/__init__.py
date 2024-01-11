@@ -16,8 +16,6 @@ from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 import requests
 
-
-
 pymysql.install_as_MySQLdb()
 db = SQLAlchemy()
 migrate = Migrate()
@@ -31,9 +29,6 @@ def create_app():
     app = Flask(__name__)
     app.config.from_envvar('APP_CONFIG_FILE')
     CORS(app)
-
-    # photos = UploadSet('photos', IMAGES)
-    # configure_uploads(app, photos)
 
     # ORM
     db.init_app(app)
