@@ -62,26 +62,6 @@
             <div class="form-group">
                 <label for="question_content" style="font-family: bada_font; font-size: 20px;">내용</label>
 
-                <div class="tool-buttons" style="border: 1px solid #fff; height: 40px; width: 100%; display: flex; flex-direction: row; background-color: #9c9c9c; border-radius: 5px;">
-                    <button type="button" class="btn btn-outline-dark" id="bold-btn" style="font-weight: bold; left: 2%;">B</button>
-                    <button type="button" class="btn btn-outline-dark" id="italic-btn" style="font-style: italic; left: 6%;">i</button>
-                    <button type="button" class="btn btn-outline-dark" id="underline-btn" style="text-decoration: underline; left: 10%;">U</button>
-
-                    <select class="btn-outline-dark" name="font-family" id="font-family-dropdown" onchange="selectFontFamily()">
-                        <option value="sans-serif">sans-serif</option>
-                        <option style="font-family: bada_font;" value="bada_font">Bada</option>
-                        <option style="font-family: yeongdeok_font; width: 40px;" value="yeongdeok_font">Snow Crab</option>
-                        <option style="font-family: milkyway_font; width: 40px;" value="milkyway_font">Milkyway</option>
-                    </select>
-
-                    <select class="btn-outline-dark" name="font-size" id="font-size-dropdown" style="left: 20%;" onchange="selectFontSize()">
-                        {% for i in range(20, 41, 2) %}
-                            <option value="{{ i }}px">{{ i }}</option>
-                        {% endfor %}
-                    </select>
-
-                    <input type="color" class="btn btn-outline-dark" name="color" id="color-btn" style="left: 24%;" value="{{ color }}" onchange="selectFontColor()"/>
-                </div>
                 <textarea class="form-control" name="content" id="question_content" rows="15" style="font-family: bada_font; font-size: 16px; height: 400px; overflow: scroll;">{{ form.content.data or '' }}</textarea>
             </div>
             <a href="#" class="btn btn-secondary" style="font-family: bada_font;">코드 입력</a>
@@ -93,84 +73,6 @@
 <script>
     var questionText = document.getElementById('question_content');
     var result = {};
-
-    // 그래그한 글자 선택하기
-
-
-    function dragRange() {
-        var selection = window.getSelection();
-        if (selection.rangeCount > 0) {
-          var range = selection.getRangeAt(0);
-          console.log(range.toString());
-          // range를 사용하여 작업 수행
-        } else {
-          // 선택된 범위가 없을 경우 처리
-          console.log('wait');
-        }
-    };
-    setInterval(dragRange, 1000);
-
-    // 폰트 두께 설정하기
-    var boldBtn = document.getElementById('bold-btn');
-    boldBtn.addEventListener('click', function() {
-        if (questionText.style.fontWeight === "normal") {
-            questionText.style.fontWeight = "bold";
-        } else {
-            questionText.style.fontWeight = "normal";
-        }
-    })
-
-    // 폰트 기울기 설정하기
-    var italicBtn = document.getElementById('italic-btn');
-    italicBtn.addEventListener('click', function() {
-        if (questionText.style.fontStyle === "normal") {
-            questionText.style.fontStyle = "italic";
-        } else {
-            questionText.style.fontStyle = "normal";
-        }
-    });
-
-    // 폰트 밑줄 설정하기
-    var underlineBtn = document.getElementById('underline-btn');
-    underlineBtn.addEventListener('click', function() {
-        if (questionText.style.textDecoration === "none") {
-            questionText.style.textDecoration = "underline";
-        } else {
-            questionText.style.textDecoration = "none";
-        }
-    });
-
-    // 폰트 설정하기
-    var fontFamilyBtn = document.getElementById('font-family-btn');
-    var fontFamilyDropdown = document.getElementById('font-family-dropdown');
-    fontFamilyBtn.addEventListener('click', function() {
-        if (fontFamilyDropdown.style.display === "none") {
-            fontFamilyDropdown.style.display = "block";
-        } else {
-            fontFamilyDropdown.style.display = "none";
-        }
-    });
-
-    // 폰트 크기 설정하기
-    function selectFontSize() {
-        const fontSize = document.getElementById('font-size-dropdown');
-        result.fontSize = fontSize.options[fontSize.selectedIndex].value;
-        questionText.style.fontSize = result.fontSize;
-    };
-
-    // 폰트 설정하기
-    function selectFontFamily() {
-        const fontFamily = document.getElementById('font-family-dropdown');
-        result.fontFamily = fontFamily.options[fontFamily.selectedIndex].value;
-        questionText.style.fontFamily = result.fontFamily;
-    }
-
-    // 폰트 색 정하기
-    function selectFontColor() {
-        const fontColor = document.getElementById('color-btn');
-        result.fontColor = fontColor.value;
-        questionText.style.color = result.fontColor;
-    }
 
     document.addEventListener('DOMContentLoaded', function() {
         var tagSelect = document.getElementById('tag');

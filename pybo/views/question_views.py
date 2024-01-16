@@ -461,6 +461,9 @@ def modify(question_id):
     total_posts_count = get_total_posts_count()
     today_visit_user_count = get_today_visit_count()
     form_for_new_category = CategoryForm()
+    tag_list = Question.query.with_entities(Question.tag).all()
+    tag_list = list(set(tag_list))
+    tag_list = [tag[0] for tag in tag_list]
     question = Question.query.get_or_404(question_id)
     if g.user != question.user:
         flash('수정권한이 없습니다')
@@ -477,7 +480,7 @@ def modify(question_id):
     return render_template('question/question_form.html', form=form, form_for_new_category=form_for_new_category,
                            today_visit_user_count=today_visit_user_count, total_visit_count=total_visit_count,
                            total_posts_count=total_posts_count, yesterday_visit_count=yesterday_visit_count,
-                           category_list=category_list)
+                           category_list=category_list, tag_list=tag_list)
 
 
 @bp.route('/delete/<int:question_id>')
