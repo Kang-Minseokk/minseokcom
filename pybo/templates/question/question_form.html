@@ -64,16 +64,20 @@
 
                 <textarea class="form-control" name="content" id="question_content" rows="15" style="font-family: bada_font; font-size: 16px; height: 400px; overflow: scroll;">{{ form.content.data or '' }}</textarea>
             </div>
-            <a href="#" class="btn btn-secondary" style="font-family: bada_font;">이미지 넣기</a>
+            <input type="file" class="btn btn-secondary" style="font-family: bada_font; height: 40px;">
             <button id="submitBtn" type="submit" class="btn btn-primary" style="font-family: bada_font;">글 업로드</button>
         </form>
 
     </div>
 </div>
 <script>
-    var questionText = document.getElementById('question_content');
-    var result = {};
+    // 이미지 파일 미리보기 기능 구현
+    function readFile(FILE_ELEMENT, CALLBACK){
+        const READER = new FileReader();
+        READER.onload = function () {
 
+
+    // 새로운 태그 추가하는 동작 구현
     document.addEventListener('DOMContentLoaded', function() {
         var tagSelect = document.getElementById('tag');
         var newTagInput = document.getElementById('newTagInput');
