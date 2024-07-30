@@ -3,10 +3,7 @@
 {% block content %}
 <head>
 
-    src="{{ url_for('static', filename='jquery-3.7.0.min.js') }}"
-    <script src="/pybo/resource/summernote/lang/summernote-ko-KR.js"></script>
-    <script src="pybo/resource/summernote/summernote-lite.js"></script>
-    <link rel="stylesheet" href="/pybo/resource/summernote/summernote-lite.css">
+
     <style>
         .checkbox {
             margin: 10px;
@@ -57,7 +54,7 @@
             <div class="form-group">
                 <label style="font-family: bada_font; font-size: 20px;">태그</label>
                 <select class="form-control" name="tag" id="tag" style="width: 400px;">
-                    <option value="">Select a Tag</option>
+                    <option value="" id="optionVal">Select a Tag</option>
                     {% for tag in tag_list %}
                     <option value="{{ tag }}">{{ tag }}</option>
                     {% endfor %}
@@ -67,13 +64,10 @@
             </div>
             <div class="form-group">
                 <label for="question_content" style="font-family: bada_font; font-size: 20px;">내용</label>
-
                 <textarea class="form-control" name="content" id="question_content" rows="15" style="font-family: bada_font; font-size: 16px; height: 400px; overflow: scroll;">{{ form.content.data or '' }}</textarea>
             </div>
             <input type="file" class="btn btn-secondary" style="font-family: bada_font; height: 40px;">
             <button id="submitBtn" type="submit" class="btn btn-primary" style="font-family: bada_font;">글 업로드</button>
-
-            <textarea id="summernote" name="editordata"></textarea>
         </form>
 
     </div>
@@ -81,33 +75,16 @@
 
 
 <script>
-    $(document).ready(function() {
-        $('#summernote').summernote({
-            height: 300,
-            minHeight: null,
-            maxHeight: null,
-            focus: true,
-            lang: "ko-KR",
-            placeholder: '최대 2048자까지 쓸 수 있습니다'
+    document.addEventListener('DOMContentLoaded', () => {
+        const tagAddBtn = document.getElementById('addTagButton');
+        const newTagValue = document.getElementById('newTagInput');
+
+        tagAddBtn.addEventListener('click', () => {
+            console.log(newTagValue.value);
+            document.getElementById('optionVal').value = newTagValue.value;
+            document.getElementById('optionVal').text = newTagValue.value;
         });
     });
-    // 서머노트에 text 쓰기
-    $('#summernote').summernote('insertText', 써머노트에 쓸 텍스트);
-
-    // 서머노트 쓰기 비활성화
-    $('#summernote').summernote('disable');
-
-    // 서머노트 쓰기 활성화
-    $('#summernote').summernote('enable');
-
-    // 서머노트 리셋
-    $('#summernote').summernote('reset');
-
-    // 마지막으로 한 행동 취소 ( 뒤로가기 )
-    $('#summernote').summernote('undo');
-
-    // 앞으로가기
-    $('#summernote').summernote('redo');
 </script>
 
 
