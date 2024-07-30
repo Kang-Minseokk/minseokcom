@@ -1,6 +1,12 @@
+
 {% extends 'base.html' %}
 {% block content %}
 <head>
+
+    src="{{ url_for('static', filename='jquery-3.7.0.min.js') }}"
+    <script src="/pybo/resource/summernote/lang/summernote-ko-KR.js"></script>
+    <script src="pybo/resource/summernote/summernote-lite.js"></script>
+    <link rel="stylesheet" href="/pybo/resource/summernote/summernote-lite.css">
     <style>
         .checkbox {
             margin: 10px;
@@ -66,60 +72,46 @@
             </div>
             <input type="file" class="btn btn-secondary" style="font-family: bada_font; height: 40px;">
             <button id="submitBtn" type="submit" class="btn btn-primary" style="font-family: bada_font;">글 업로드</button>
+
+            <textarea id="summernote" name="editordata"></textarea>
         </form>
 
     </div>
 </div>
+
+
 <script>
-    // 이미지 파일 미리보기 기능 구현
-    function readFile(FILE_ELEMENT, CALLBACK){
-        const READER = new FileReader();
-        READER.onload = function () {
-
-
-    // 새로운 태그 추가하는 동작 구현
-    document.addEventListener('DOMContentLoaded', function() {
-        var tagSelect = document.getElementById('tag');
-        var newTagInput = document.getElementById('newTagInput');
-        var addTagButton = document.getElementById('addTagButton');
-
-        addTagButton.addEventListener("click", function() {
-            var newTagValue = newTagInput.value.trim();
-            if (newTagValue !== "") {
-                // 중복 체크
-                var isDuplicate = Array.from(tagSelect.options).some(function(option) {
-                    return option.value.toLowerCase() === newTagValue.toLowerCase();
-                });
-                if (!isDuplicate) {
-                    var newOption = document.createElement("option");
-                    newOption.value = newTagValue;
-                    newOption.textContent = newTagValue;
-                    tagSelect.appendChild(newOption);
-                    newTagInput.value = "";
-                } else {
-                    alert("중복된 태그입니다.");
-                }
-            }
+    $(document).ready(function() {
+        $('#summernote').summernote({
+            height: 300,
+            minHeight: null,
+            maxHeight: null,
+            focus: true,
+            lang: "ko-KR",
+            placeholder: '최대 2048자까지 쓸 수 있습니다'
         });
     });
+    // 서머노트에 text 쓰기
+    $('#summernote').summernote('insertText', 써머노트에 쓸 텍스트);
+
+    // 서머노트 쓰기 비활성화
+    $('#summernote').summernote('disable');
+
+    // 서머노트 쓰기 활성화
+    $('#summernote').summernote('enable');
+
+    // 서머노트 리셋
+    $('#summernote').summernote('reset');
+
+    // 마지막으로 한 행동 취소 ( 뒤로가기 )
+    $('#summernote').summernote('undo');
+
+    // 앞으로가기
+    $('#summernote').summernote('redo');
 </script>
 
 
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

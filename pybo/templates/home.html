@@ -80,10 +80,25 @@
             color: blue;
         }
 
-        @media screen and (max-width: 767px) {
+        @media screen and (max-width: 768px) {
             body {
                 font-family: milkyway_font;
             }
+        }
+
+
+        .suggest-modal {
+             position: fixed;
+             top: 50%;
+             left: 50%;
+             border: 1px solid #fff;
+             background-color: #fff;
+             opacity: 0.7;
+             text-align: center;
+             transform: translate(-50%, -50%);
+             display: none;
+             width: 80%;
+             max-height: auto;
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
@@ -129,7 +144,7 @@
         </div>
 
     {% if not g.user %}
-        <div class="suggest-modal" id="LoginModal" style="position: fixed; top: 35%; left: 30%; border: 1px solid #fff; background-color: #fff; opacity: 0.7; text-align: center; width: 40%; height: 40%; display: none;">
+        <div class="suggest-modal" id="LoginModal">
             <span style="font-family: yeongdeok_font; font-size: 30px;">민석 블로그에 오신 것을 환영해요!</span>
             <p style="white-space: pre-line; font-family: bada_font; font-size: 20px;">
                 계정 생성을 하고 로그인을 하면 글이 올라오는 소식을 바로 받아볼 수 있어요.
